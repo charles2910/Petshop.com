@@ -1,0 +1,101 @@
+<div class="janela">
+        <div id="promocoes_interativo">
+            <input  id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
+            <div class="produtos">
+                <div class="produto" onclick="navegarCompra()">
+                    <img src="../IMAGES/PRODUTOS/produto.png"/>
+                    <h3>Produto 0</h3>
+                    <h6>De <del>R$ 999,99</del> por</h6>
+                    <h4>R$ 999,99</h4>
+                </div>
+                <div class="produto" onclick="navegarCompra()">
+                    <img src="../IMAGES/PRODUTOS/produto.png"/>
+                    <h3>Produto 1</h3>
+                    <h6>De <del>R$ 999,99</del> por</h6>
+                    <h4>R$ 999,99</h4>
+                </div>
+                <div class="produto" onclick="navegarCompra()">
+                <img src="../IMAGES/PRODUTOS/produto.png"/>
+                    <h3>Produto 2</h3>
+                    <h6>De <del>R$ 999,99</del> por</h6>
+                    <h4>R$ 999,99</h4>
+                </div>
+                <div class="produto" onclick="navegarCompra()">
+                    <img src="../IMAGES/PRODUTOS/produto.png"/>
+                    <h3>Produto 3</h3>
+                    <h6>De <del>R$ 999,99</del> por</h6>
+                    <h4>R$ 999,99</h4>
+                </div>
+            </div>
+            <input id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
+        </div>
+    </div>
+    <h4 id="navegacao_atual"><a href="index.html">Principal</a> > <a id="pagina_atual"> Carrinho</a> </h4>
+    <div id="conteudo_carrinho">
+        <h1>Meu carrinho</h1><hr>
+        <table>
+            <tr>
+                <th>Produto</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Remover</th>
+            </tr>
+            <tr class="item_carrinho">
+                <td><img src="../IMAGES/PRODUTOS/produto.png"></td>
+                <td><p>Nome completo do produto</p></td>
+                <td>
+                    <select>
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                    </select>
+                </td>
+                <td>R$ 999,99</td>
+                <td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>
+            </tr>
+            <tr class="item_carrinho">
+                <td><img src="../IMAGES/PRODUTOS/produto.png"></td>
+                <td><p>Nome completo do produto</p></td>
+                <td>
+                    <select>
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                    </select>
+                </td>
+                <td>R$ 999,99</td>
+                <td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>
+            </tr>
+            <tr class="item_carrinho">
+                <td><img src="../IMAGES/PRODUTOS/produto.png"></td>
+                <td><p>Nome completo do produto</p></td>
+                <td>
+                    <select>
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                    </select>
+                </td>
+                <td>R$ 999,99</td>
+                <td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>
+            </tr>
+            <tr class="item_carrinho">
+                <td><h2>Total:</h2></td>
+                <td></td>
+                <td>3 itens</td>
+                <td>R$ 999,999</td>
+                <td></td>
+            </tr>
+        </table>
+        <button>Finalizar compra</button>
+    </div>

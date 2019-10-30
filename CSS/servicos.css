@@ -1,0 +1,64 @@
+h4#navegacao_atual a{
+    cursor: pointer;
+    text-decoration: none;
+    color:black;
+}
+
+h4#navegacao_atual{
+    margin-top: calc(var(--altitude_conteudo) + 100px);
+}
+
+h4#navegacao_atual a:hover{
+    text-decoration: underline;
+}
+
+div#conteudo_servicos{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+div#conteudo_servicos div#janela_servicos form{
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 250px;
+    align-items: center;
+    margin-right: 25%;
+    margin-left: 25%
+}
+
+div#conteudo_servicos textarea{
+    width: 40%;
+    height: 20px;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+div#conteudo_servicos textarea#descricao_servico{
+    width: 80%;
+    min-width: 200px;
+    height: 200px;
+}
+
+div#conteudo_servicos button{
+    height: 60px;
+    background-color: yellow;
+    color: black;
+    margin: 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 80%;
+    font-size: 20px;
+    opacity: 0.8;
+}
+
+
+div#conteudo_servicos button:hover{
+    opacity: 1;
+}

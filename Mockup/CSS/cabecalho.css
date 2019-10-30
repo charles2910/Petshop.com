@@ -1,0 +1,280 @@
+@charset "UTF-8";
+
+:root{
+        --altitude_nav:15px;
+        --altitude_conteudo:0px;
+
+}
+@media (max-width:1290px) {
+    :root{
+    --altitude_nav:75px;
+    --altitude_conteudo:60px;
+    }
+}
+@media (max-width:683px) {
+    :root{
+    --altitude_nav:135px;
+    --altitude_conteudo:120px;
+    }
+}
+@media (max-width:525px) {
+    :root{
+    --altitude_nav:117px;
+    --altitude_conteudo:102px;
+    }
+}
+
+header{
+    position: relative;
+}
+
+header div#cab_fixo{
+    position: fixed;
+    margin-top: -10px;
+    margin-left: -8px;
+    width: 100%;
+    background-color: #3c73b1;
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header div#logo img{
+    float: right;
+    margin-top: 5px;
+    top:10px;
+    height: 95px;
+    padding-left: 8px;
+    margin-right: 3%;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+header div#navegacao_site{
+    width: auto;
+    margin-right: -3px;
+    margin-left: -3px;
+    position: relative;
+    top:75px;
+    margin-bottom: 105px;
+}
+
+nav{
+    display: block;
+}
+
+nav li{
+    display: inline-block;
+}
+nav a{
+    color: black;
+    transition: color 400ms;
+    text-decoration: none;
+}
+
+nav#btns_superiores ul{
+    list-style: none;
+    position: absolute;
+    top: -15px;
+    right: 10px;
+}
+
+nav#btns_superiores img{
+    margin-bottom: -3px;
+    width: 20px;
+}
+
+nav#btns_superiores li{
+    padding: 5px;
+}
+
+nav#btns_superiores a:hover{
+    color: white;
+}
+
+ nav#navegacao ul{
+        list-style: none;
+        position: relative;
+        background-color: yellow;
+        top:var(--altitude_nav);
+        margin: auto -5px 5px -5px;
+        padding-left: 13%;
+    }
+
+nav#navegacao li{
+    padding: 12px;
+    transition: background-color 400ms;
+    font-weight:bold;
+    font-size: 15px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+nav#navegacao li:hover{
+    background-color: white;
+}
+
+nav#navegacao li#promocoes{
+    background-color: white;
+}
+
+nav#navegacao li.dropdown{
+    background-color :lightblue;
+}
+
+nav#navegacao li.dropdown img{
+    margin-bottom: -10px;
+}
+
+nav#navegacao li.dropdown img#img_icon_1{
+    float: left;
+    margin-top: -4px;
+    width: 25px;
+    height: 25px;
+}
+
+nav#navegacao li.dropdown img#img_icon_2{
+    float: right;
+    margin-top: -3px;
+    width: 25px;
+    height: 25px;
+}
+
+nav#navegacao div.content{
+    display: none;
+    position: absolute;
+    margin-left: -14px;
+    top: 41px;
+    background-color: lightblue;
+    min-width: 160px;
+    width:190px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1; 
+}
+
+nav#navegacao div.content img{
+    float: right;
+    width: 20px;
+    height: 20px;
+}
+
+nav#navegacao div.content a{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+nav#navegacao div.content :hover{
+    background-color: white;
+}
+
+nav#navegacao .dropdown:hover .content {
+    display: block;
+}
+
+div.barra_pesquisa{
+    display: flex;
+    position: relative;
+    border-radius:7px;
+    background-color:#E0EEEE;
+    border:solid 1px yellow;
+    width: 55%;
+    max-width:60%;
+    min-width: 400px;
+    height:40px;
+}
+
+div.barra_pesquisa input{
+    position: relative;
+    background-color:transparent;
+    box-shadow: 0 0 0 0;
+    outline: 0;
+    padding-left:5px; 
+    font-size:18px;
+    border:none;
+    height:100%;
+    width: 40%;
+    flex-grow: 1;
+}
+
+div.barra_pesquisa button{
+    position: relative;
+    border:none;
+    float: right;
+    box-shadow: 0 0 0 0;
+    outline: 0;
+    height:100%;
+    width: auto;
+    border-radius:0 7px 7px 0;
+    font-weight:bold;
+    background: yellow;
+}
+
+div.abc{
+    display: none;
+}
+
+div.barra_pesquisa button:hover{
+    cursor: pointer;
+}
+
+div.barra_pesquisa img{
+    position: relative;
+    float:left;
+    width: 41px;
+    height: 100%;
+    opacity: 0.5;
+}
+
+div.btn_padrao{
+    position: relative;
+    display: block;
+    float: right;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius:4px;
+    height: 40px; 
+    width: auto;
+}
+
+div.btn_padrao#btn_carrinho{
+    float: right;
+}
+
+div.btn_padrao#btn_login{
+    float: right;
+}
+
+div.btn_padrao button{               
+    float: right;
+    text-decoration: none;
+    border:none;
+    background: yellow;
+    border-radius: 0px 4px 4px 0px;
+    font-weight:bold;
+    box-shadow: 0 0 0 0;
+    outline: 0;
+    height: 100%;
+    color: black;
+}
+
+div.btn_padrao img{
+    float: left;
+    background-color: yellow;
+    border-radius: 4px 0px 0px 4px;
+    padding: 5px;
+    width: 32px;
+    height: 75%;
+}
+
+div.btn_padrao:hover{
+    cursor: pointer;
+}
+
+div.btn_padrao button:hover{
+    cursor: pointer;
+}

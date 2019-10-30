@@ -1,0 +1,50 @@
+h4#navegacao_atual a{
+    cursor: pointer;
+    text-decoration: none;
+    color:black;
+}
+
+h4#navegacao_atual{
+    margin-top: calc(var(--altitude_conteudo) + 120px);
+}
+
+h4#navegacao_atual a:hover{
+    text-decoration: underline;
+    
+    
+}
+
+div#conteudo_perfil{
+    display: flex;
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+
+div#conteudo_perfil a{
+    text-decoration: none;
+    color: black;
+}
+
+div#conteudo_perfil aside{
+    width: 250px;
+    margin-right: 0px;
+}
+
+div#conteudo_perfil .conteudo_cadastro{
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+div#conteudo_perfil aside h3{
+    cursor: pointer;
+
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    border-bottom: solid lightgray 2px;
+}
+
+div#conteudo_perfil aside h3:hover{
+    color:#3c73b1;
+    border-bottom: solid #3c73b1 2px;
+}

@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+div .produto{
+    padding: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+    transition: 0.3s;
+    width:  20%;
+    max-width: 150px;
+    min-width: 100px;
+}
+
+div.produto img{
+    width: 100%;
+}
+
+div.produto h6{
+    margin-top: 2px;
+    padding-top: 2px;
+}
+
+div.produto h3{
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+}
+
+div.produto h4{
+    font-weight: bold;
+}
+
+div.produto:hover{
+    cursor: pointer;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}

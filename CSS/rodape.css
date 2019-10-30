@@ -1,0 +1,30 @@
+ 
+ @charset "UTF-8";
+
+
+
+footer{
+    widows: 100%;
+    margin-right: -8px;
+    margin-left: -8px;
+    position: relative;
+    background-color: lightgrey;
+    text-align: center;
+    padding-bottom: 10px;
+    bottom: -50px;
+}
+
+footer div#social{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+footer input{
+    outline: none;
+    width: 30px;
+    margin: 10px
+}
+            
