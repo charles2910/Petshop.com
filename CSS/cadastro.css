@@ -80,6 +80,11 @@ div.conteudo_cadastro input[type=number]#telefone{
 
 }
 
+div.conteudo_cadastro input[type=number]#celular{
+    width: 54%;
+
+}
+
 input[type=number]::-webkit-inner-spin-button { 
     -webkit-appearance: none;
     
