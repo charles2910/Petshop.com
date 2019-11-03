@@ -10,6 +10,8 @@
     <link rel ="stylesheet" type="text/css" href="../CSS/rodape.css"/>
     <link rel="stylesheet"  type="text/css" href="../CSS/popupSenha.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/popupLogin.css" />
+    <link rel="stylesheet"  type="text/css" href="../CSS/perfil_pedidos.css" />
+    <link rel="stylesheet"  type="text/css" href="../CSS/servicos_admin.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/produto.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/listaProdutos.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/carrinho.css" />
@@ -35,7 +37,7 @@
             </div>
             <div class="btn_padrao" id="btn_carrinho">
                 <img src="../IMAGES/ICONS/carrinho.png"/>
-                <button id="btn_carrinho" onclick="AJAX_navegacao('../conteudos/carrinho.html')">Meu carrinho</button>
+                <button id="btn_carrinho" onclick="AJAX_navegacao('../conteudos/carrinho.html',false,'Carrinho')">Meu carrinho</button>
             </div>
             <div id = "botoes_superior">
                 <nav id= "btns_superiores">
@@ -48,35 +50,35 @@
                 </nav>
             </div>
         </div>
-            <div id="navegacao_site">
-                <nav id="navegacao">
-                    <ul>
-                        <li class="dropdown">
-                            <img src="../IMAGES/ICONS/menu.png" id ="img_icon_1"/>
-                            <a href="#">Departamentos</a>
-                            <img src="../IMAGES/ICONS/down_arrow.png" id ="img_icon_2"/>
-                            <div class="content">
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'><p>Brinquedos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'><p>Saúde<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'><p>Alimentos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html")'><p>Serviços<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'><p>Higiene<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'><p>Acessórios<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                                <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'><p>Habitats<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                            </div>
-                        </li>
-                        <li id="promocoes"><a href="#">Promoções</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'>Cachorros</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'>Cachorros</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'>Gatos</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'>Roedores</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'>Passáros</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html")'>Peixes</a></li>
-                        <li><a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html")'>Serviços</a></li>
-                    </ul>
-                </nav>
-            </div>
+        <div id="navegacao_site">
+            <nav id="navegacao">
+                <ul id="ul_navegacao">
+                    <li id="li_dropdown" class="dropdown">
+                        <img src="../IMAGES/ICONS/menu.png" id ="img_icon_1"/>
+                        <a href="#">Departamentos</a>
+                        <img src="../IMAGES/ICONS/down_arrow.png" id ="img_icon_2"/>
+                        <div class="content">
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Brinquedos")'><p>Brinquedos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Saúde")'><p>Saúde<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Alimentos")'><p>Alimentos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html",false,"Serviços")'><p>Serviços<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Higiene")'><p>Higiene<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Acessórios")'><p>Acessórios<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Habitats")'><p>Habitats<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                        </div>
+                    </li>
+                    <li id="li0"><a href="#" onclick='AJAX_navegacao("../conteudos/principal.html","li0","Promoções")'>Promoções</a></li>
+                    <li id="li1"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li1","Cachorros")'>Cachorros</a></li>
+                    <li id="li2"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li2","Gatos")'>Gatos</a></li>
+                    <li id="li3"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li3","Roedores")'>Roedores</a></li>
+                    <li id="li4"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li4","Passáros")'>Passáros</a></li>
+                    <li id="li5"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li5","Peixes")'>Peixes</a></li>
+                    <li id="li6"><a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html","li6","Serviços")'>Serviços</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+    <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('../conteudos/principal.html',false,'')">Principal</a> > <a id="pagina_atual"></a> </h4>
     <div id = "janela_de_conteudo">
         <h1 id="txt_ofertas_do_dia">
         Ofertas especiais do dia:
@@ -274,7 +276,7 @@
             </div>
             <div id="rodape_login">
                 <button id="cancelar_login" onclick="popupLogin(false)">Cancelar</button>
-                <span><a href="#" onclick='popupLogin(false);AJAX_navegacao("../conteudos/cadastro.html")'>Cadastrar</a>, esqueci minha <a href="#"  onclick="popupSenha(true)"  >senha</a></span>
+                <span><a href="#" onclick='popupLogin(false);AJAX_navegacao("../conteudos/cadastro.html",false,"Cadastro")'>Cadastrar</a>, esqueci minha <a href="#"  onclick="popupSenha(true)"  >senha</a></span>
             </div>
         </form>
     </div>

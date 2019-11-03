@@ -65,6 +65,7 @@ div.listaProdutos div.gridProdutos div#selecionar_pagina input{
     width: 50px;
     opacity: 0.5;
     outline: none;
+    top: 20px;
 }
 
 div.listaProdutos aside li{

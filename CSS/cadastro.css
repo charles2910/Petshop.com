@@ -1,16 +1,16 @@
 @charset "UTF-8";
 
 :root{
-        --altitude_conteudo_cadastro:75px;
+        --altitude_conteudo_cadastro: 0px;
     }
     @media (max-width:1315px) {
         :root{
-        --altitude_conteudo_cadastro:130px;
+        --altitude_conteudo_cadastro: 0px;
         }
     }
     @media (max-width:650px) {
         :root{
-        --altitude_conteudo_cadastro:170px;
+        --altitude_conteudo_cadastro: 0px;
         }
     }
 

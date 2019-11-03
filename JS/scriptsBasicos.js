@@ -43,13 +43,23 @@ function navegarCompra(){
     AJAX_navegacao("../conteudos/compra.html");
 }
 
-function AJAX_navegacao(arquivo){
+function AJAX_navegacao(arquivo,id,pagina_atual){
     
     let xhttp = new XMLHttpRequest();
+    if(id !== undefined || id !== false){
+        for(let i=0;i<7;i++){
+            if("li" + i !== id){
+                document.getElementById("li" + i ).style.backgroundColor = "yellow";
+            }else{
+                document.getElementById("li" + i).style.backgroundColor = "white";
+            }
+        }   
+    }
+    if(pagina_atual !== undefined){
+        document.getElementById("pagina_atual").innerHTML = pagina_atual;
+    }
     xhttp.onreadystatechange = function(){
-        console.log(this.readyStage);
         if(this.readyState == 4 && this.status == 200){
-            console.log("tudo certo aqui")
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
         }
     }

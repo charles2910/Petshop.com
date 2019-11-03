@@ -13,7 +13,7 @@ h4#navegacao_atual a:hover{
 div#conteudo_compra{
     margin-right: 15%;
     margin-left: 15%;
-    margin-top: calc(var(--altitude_conteudo) + 150px);
+    margin-top: calc(var(--altitude_conteudo) );
 }
 
 div#tela_compra{
