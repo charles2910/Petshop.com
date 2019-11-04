@@ -1,3 +1,62 @@
+let db_clientes;
+let logged = false;
+window.onload = () =>{
+    console.log("carregada");
+    let request = window.indexedDB.open("clientes",1);
+    request.onsuccess = (event)=>{
+        db_clientes = request.result;
+    }
+    request.onupgradeneeded= (event) =>{
+        db_clientes = event.target.result;
+        let objectStore = db_clientes.createObjectStore("clientes",{keyPath: "email"});
+        objectStore.createIndex("email","email",{unique: true})
+
+    }
+
+}
+
+function writeDb(cliente){
+    let transaction = db_clientes.transaction(["clientes"],"readwrite");
+    let objectStore = transaction.objectStore("clientes");
+    let request = objectStore.add(cliente);
+    request.onsuccess = (event) =>{
+        console.log("sucesso")
+        return true;
+    }
+    request.onerror = (event) =>{
+        window.alert("Email já cadastrado");
+        return false;
+    }
+}
+
+function login(){
+    let nome = document.getElementById("email_login").value;
+    let senha = document.getElementById("psw_login").value;
+    if(nome === "admin" && senha === "admin"){
+        logged = admin;
+    }else if(nome === "user" && senha === "user"){
+        logged = user_teste
+    }else{
+        let transaction = db_clientes.transaction(["clientes"]);
+        let objectStore = transaction.objectStore("clientes");
+        let request = objectStore.get(nome);
+
+        request.onerror = (event)=>{
+            window.alert("Email ou senha incorretos");
+        }
+        request.onsuccess = (event) =>{
+            if(request.result !== undefined){
+                let cliente = request.result;
+                if(cliente.senha === senha){
+                    logged = "usuario";
+                }
+                console.log(cliente);
+            }else{
+                window.alert("Email ou senha incorretos");
+            }
+        }
+    }
+}
 
 function AssistChat(acao){
     if(acao){
@@ -44,13 +103,14 @@ function navegarCompra(){
 }
 
 class Cliente{
-    constructor(nome, email, celular,telefone,nascimento,cpf,senha,endereco,cartao){
+    constructor(nome, email, celular,telefone,nascimento,cpf,senha,endereco,cartao,admin){
         this.nome = nome;
         this.email = email;
         this.celular = celular;
         this.telefone = telefone;
         this.nascimento = nascimento;
         this.cpf = cpf;
+        this.admin = admin;
         this.senha = senha;
         this.endereco = endereco;
         this.cartao = cartao;
@@ -106,10 +166,12 @@ function cadastrarCliente(){
             document.getElementById("telefone").value,
             document.getElementById("nascimento").value,
             document.getElementById("cpf").value,
-            document.getElementById("cpf").senha,
+            document.getElementById("senha1").value,
             endereco,
-            cartao
+            cartao,
+            false
         )
+        writeDb(cliente);
     }else{
         window.alert("As senhas devem ser identicas");
     }

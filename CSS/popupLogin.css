@@ -22,7 +22,7 @@ div.login_form_popup form{
   max-width: 600px;
 }
 
-div.login_form_popup input[type=text],div.login_form_popup input[type=password] {
+div.login_form_popup input[type=email],div.login_form_popup input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

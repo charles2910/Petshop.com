@@ -263,15 +263,14 @@
         </form>
     </div>
     <div class="login_form_popup" id="login_form_popup">
-        <form>
+        <form onsubmit="login()">
             <div id="janela_login_popup">
                 <label><b>Usuário</b></label>
-                <input type="text" placeholder="Nome Sobrenome" required>
+                <input id="email_login" type="email" placeholder="Email" required>
                 <label><b>Senha</b></label>
-                <input type="password" placeholder="Senha">
+                <input id="psw_login" type="password" placeholder="Senha" required>
                 <button type="submit">Login</button>
                 <label>
-                    <input type="checkbox" checked> Lembre-se de mim
                 </label><link rel ="stylesheet" type="text/css" href="../CSS/cadastro.css"/>
             </div>
             <div id="rodape_login">
