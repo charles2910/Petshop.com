@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Shop</title>
-    <script language="JavaScript" src="../JS/scriptsBasicos.js"></script>
+    <script language="JavaScript" src="../JS/indexDB.js"></script>
     <script language="JavaScript" src="../JS/popup.js"></script>
     <script language="JavaScript" src="../JS/login.js"></script>
+    <script language="JavaScript" src="../JS/classes.js"></script>
+    <script language="JavaScript" src="../JS/cadastros.js"></script>
+    <script language="JavaScript" src="../JS/AJAX.js"></script>
     <link rel ="stylesheet" type="text/css" href="../CSS/index4.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/chatPopup.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/cabecalho.css"/>
@@ -24,13 +27,14 @@
     <link rel ="stylesheet" type="text/css" href="../CSS/cadastro.css"/>
     <link rel="stylesheet"  type="text/css" href="../CSS/pets.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/cadastro_produto.css" />
+    <link rel="stylesheet"  type="text/css" href="../CSS/popupCadastro.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
     <header>
         <div id="cab_fixo">
             <div id = "logo">
-                <img src="../IMAGES/logo.png" onclick="AJAX_navegacao('../conteudos/principal.html')">
+                <img src="../IMAGES/logo.png" onclick="AJAX_navegacao('../conteudos/principal.html',false,'')">
             </div>
             <div  class="barra_pesquisa">
                 <img src="../IMAGES/ICONS/lupa.png"/ alt="buscador">
@@ -73,7 +77,7 @@
                             <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Habitats")'><p>Habitats<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                         </div>
                     </li>
-                    <li id="li0"><a href="#" onclick='AJAX_navegacao("../conteudos/principal.html","li0","Promoções")'>Promoções</a></li>
+                    <li id="li0"><a href="#" onclick='AJAX_navegacao("../conteudos/principal.html","li0","")'>Promoções</a></li>
                     <li id="li1"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li1","Cachorros")'>Cachorros</a></li>
                     <li id="li2"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li2","Gatos")'>Gatos</a></li>
                     <li id="li3"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li3","Roedores")'>Roedores</a></li>
@@ -282,6 +286,37 @@
             <div id="rodape_login">
                 <button id="cancelar_login" type="button" onclick="popupLogin(false)">Cancelar</button>
                 <span><a href="#" onclick='popupLogin(false);AJAX_navegacao("../conteudos/cadastro.html",false,"Cadastro")'>Cadastrar</a>, esqueci minha <a href="#"  onclick="popupSenha(true)"  >senha</a></span>
+            </div>
+        </form>
+    </div>
+    <div class="cadastro_form_popup" id="cadastro_form_popup">
+        <form>
+            <div id="janela_login_popup">
+                <label><b>Nome</b></label>
+                <input type="text" placeholder="Nome" required>
+                <label><b>Tipo</b></label><br>
+                <select>
+                    <option>Cachorro</option>
+                    <option>Gato</option>
+                    <option>Roedor</option>
+                    <option>Passáro</option>
+                    <option>Peixe</option>
+                </select><br>
+                <label><b>Raça</b></label>
+                <input type="text"required>
+                <label><b>Idade</b></label><br>
+                <input type="number"required><br>
+                <label><b>Peso</b></label><br>
+                <input type="number"required><br>
+                <label><b>Sexo</b></label><br>
+                <select>
+                    <option>Macho</option>
+                    <option>Fêmea</option>
+                </select>
+            </div>
+            <div id="rodape_login">
+                <button type="submit">Cadastrar</button>
+                <button class="cancelar_login" onclick="popupCadastro(false)">Cancelar</button>
             </div>
         </form>
     </div>
