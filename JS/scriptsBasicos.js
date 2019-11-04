@@ -76,7 +76,7 @@ class Pagamento{
     }
 }
 
-function cadastrarCliente(){
+function cadastrarUsuario(admin){
     if(document.getElementById("senha1").value === document.getElementById("senha2").value){
         let endereco = new Endereco(
             document.getElementById("cep").value,
@@ -87,14 +87,15 @@ function cadastrarCliente(){
             document.getElementById("estado").value,
             document.getElementById("cidade").value
         )
-
-        let cartao = new Pagamento(
-            document.getElementById("nome_cartao").value,
-            document.getElementById("nmr_cartao").value,
-            document.getElementById("validade_cartao").value,
-            document.getElementById("cvv").value
-        )
-
+        let cartao;
+        if(!admin){
+            cartao = new Pagamento(
+                document.getElementById("nome_cartao").value,
+                document.getElementById("nmr_cartao").value,
+                document.getElementById("validade_cartao").value,
+                document.getElementById("cvv").value
+            )
+        }
         let cliente = new Cliente(
             document.getElementById("nome_cliente").value,
             document.getElementById("email").value,
@@ -107,7 +108,7 @@ function cadastrarCliente(){
             document.getElementById("senha1").value,
             endereco,
             cartao,
-            false
+            admin
         )
         if(writeDb(cliente)){
             login(cliente.email, cliente.senha);

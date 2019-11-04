@@ -39,7 +39,6 @@ function login(email1, senha1){
                         document.getElementById("btn_login").innerText = "Perfil";
                         document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html',false,'Meu Perfil')");
                         popupLogin(false);
-                        AJAX_navegacao('../conteudos/perfil.html',false,'Meu Perfil');
                     }
                 }else{
                     window.alert("Email ou senha incorretos");
