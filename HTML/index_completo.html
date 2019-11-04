@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Shop</title>
+    <script language="JavaScript" src="../JS/scriptsBasicos.js"></script>
+    <script language="JavaScript" src="../JS/popup.js"></script>
+    <script language="JavaScript" src="../JS/login.js"></script>
     <link rel ="stylesheet" type="text/css" href="../CSS/index4.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/chatPopup.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/cabecalho.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/rodape.css"/>
     <link rel="stylesheet"  type="text/css" href="../CSS/popupSenha.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/popupLogin.css" />
+    <link rel="stylesheet"  type="text/css" href="../CSS/perfil.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/perfil_pedidos.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/servicos_admin.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/produto.css" />
@@ -18,6 +22,8 @@
     <link rel="stylesheet"  type="text/css" href="../CSS/compras.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/servicos.css" />
     <link rel ="stylesheet" type="text/css" href="../CSS/cadastro.css"/>
+    <link rel="stylesheet"  type="text/css" href="../CSS/pets.css" />
+    <link rel="stylesheet"  type="text/css" href="../CSS/cadastro_produto.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
@@ -31,11 +37,11 @@
                 <input type="text" id="buscador" placeholder="Pesquisar..."/>
                 <button id="btn_buscador">Buscar</button>
             </div>
-            <div class="btn_padrao" id="btn_login">
+            <div class="btn_padrao">
                 <img src="../IMAGES/ICONS/account.png"/>
                 <button id="btn_login" onclick="popupLogin(true)" >Login</button>
             </div>
-            <div class="btn_padrao" id="btn_carrinho">
+            <div class="btn_padrao">
                 <img src="../IMAGES/ICONS/carrinho.png"/>
                 <button id="btn_carrinho" onclick="AJAX_navegacao('../conteudos/carrinho.html',false,'Carrinho')">Meu carrinho</button>
             </div>
@@ -274,7 +280,7 @@
                 </label><link rel ="stylesheet" type="text/css" href="../CSS/cadastro.css"/>
             </div>
             <div id="rodape_login">
-                <button id="cancelar_login" onclick="popupLogin(false)">Cancelar</button>
+                <button id="cancelar_login" type="button" onclick="popupLogin(false)">Cancelar</button>
                 <span><a href="#" onclick='popupLogin(false);AJAX_navegacao("../conteudos/cadastro.html",false,"Cadastro")'>Cadastrar</a>, esqueci minha <a href="#"  onclick="popupSenha(true)"  >senha</a></span>
             </div>
         </form>
@@ -292,5 +298,5 @@
         <p>Petshop@peshop.com.br</p>
     </footer>
 </body>
-    <script language="JavaScript" src="../JS/scriptsBasicos.js"></script>
+
 </html>

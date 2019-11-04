@@ -1,5 +1,4 @@
 let db_clientes;
-let logged = false;
 window.onload = () =>{
     console.log("carregada");
     let request = window.indexedDB.open("clientes",1);
@@ -26,67 +25,6 @@ function writeDb(cliente){
     request.onerror = (event) =>{
         window.alert("Email já cadastrado");
         return false;
-    }
-}
-
-function login(){
-    let nome = document.getElementById("email_login").value;
-    let senha = document.getElementById("psw_login").value;
-    if(nome === "admin" && senha === "admin"){
-        logged = admin;
-    }else if(nome === "user" && senha === "user"){
-        logged = user_teste
-    }else{
-        let transaction = db_clientes.transaction(["clientes"]);
-        let objectStore = transaction.objectStore("clientes");
-        let request = objectStore.get(nome);
-
-        request.onerror = (event)=>{
-            window.alert("Email ou senha incorretos");
-        }
-        request.onsuccess = (event) =>{
-            if(request.result !== undefined){
-                let cliente = request.result;
-                if(cliente.senha === senha){
-                    logged = "usuario";
-                }
-                console.log(cliente);
-            }else{
-                window.alert("Email ou senha incorretos");
-            }
-        }
-    }
-}
-
-function AssistChat(acao){
-    if(acao){
-        document.getElementById("popupChatDiv").style.display="block";
-    }else{
-        document.getElementById("popupChatDiv").style.display="none";
-    }
-}
-function popupSenha(acao){
-    if(acao){
-        document.getElementById("janela_popup_senha").style.display="block";
-        document.getElementById("login_form_popup").style.display="none";
-    }else{
-        document.getElementById("janela_popup_senha").style.display="none";
-    }
-}
-
-function popupLogin(acao){
-    if(acao){
-        document.getElementById("login_form_popup").style.display="block";
-    }else{
-        document.getElementById("login_form_popup").style.display="none";
-    }
-}
-
-function popupCadastro(acao){
-    if(acao){
-        document.getElementById("cadastro_form_popup").style.display="block";
-    }else{
-        document.getElementById("cadastro_form_popup").style.display="none";
     }
 }
 
@@ -171,7 +109,9 @@ function cadastrarCliente(){
             cartao,
             false
         )
-        writeDb(cliente);
+        if(writeDb(cliente)){
+            login(cliente.email, cliente.senha);
+        }
     }else{
         window.alert("As senhas devem ser identicas");
     }
@@ -180,14 +120,16 @@ function cadastrarCliente(){
 function AJAX_navegacao(arquivo,id,pagina_atual){
     
     let xhttp = new XMLHttpRequest();
+    let i=0;
     if(id !== undefined || id !== false){
-        for(let i=0;i<7;i++){
+        while(document.getElementById("li" + i )!== null){
             if("li" + i !== id){
                 document.getElementById("li" + i ).style.backgroundColor = "yellow";
             }else{
                 document.getElementById("li" + i).style.backgroundColor = "white";
             }
-        }   
+            i++ 
+        }
     }
     if(pagina_atual !== undefined){
         document.getElementById("pagina_atual").innerHTML = pagina_atual;
