@@ -4,26 +4,27 @@ function login(email1, senha1){
     let email;
     let senha;
     if(email === undefined && senha === undefined){
-    email = document.getElementById("email_login").value;
-    senha = document.getElementById("psw_login").value;
+        email = document.getElementById("email_login").value;
+        senha = document.getElementById("psw_login").value;
     }else{
         email = email1;
         senha = senha1;
     }
     if(email === "admin@admin.com" && senha === "admin"){
-        logged = "admin";
-        popupLogin(false)
+        document.getElementById("btn_login").innerText = "Admin";
+        addOpcoesAdmin();
+        popupLogin(false);
     }else if(email === "user@user.com" && senha === "user"){
-        logged = "user_teste";
-        popupLogin(false)
+        document.getElementById("btn_login").innerText = "Perfil";
+        document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html',false,'Meu Perfil')");
+        popupLogin(false);
     }else{
-
         let transaction = db_clientes.transaction(["clientes"]);
         let objectStore = transaction.objectStore("clientes");
         let request = objectStore.get(email);
-
         request.onerror = (event)=>{
             window.alert("Email ou senha incorretos");
+            return false;
         }
         request.onsuccess = (event) =>{
             if(request.result !== undefined){
