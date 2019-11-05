@@ -1,5 +1,4 @@
 let banners = new Banner();
-
 function carregarProdutos(){
     let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
     for(let i = 0; i<5;i++){
@@ -19,27 +18,13 @@ function carregarProdutos(){
 
 function carregaBanners(){
     let promocoes = [];
+    let i = 0;
     let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
     objectStore.openCursor().onsuccess = function(event) {
         let cursor = event.target.result;
         if (cursor) {
             if(cursor.value.promocao ==="true"){
-                let temp2 = new Produto(cursor.value.nomeComercial,
-                                            cursor.value.marca,
-                                            cursor.value.categoria,
-                                            cursor.value.departamento,
-                                            cursor.value.preco,
-                                            cursor.value.precoPromocional,
-                                            cursor.value.nomeCompleto,
-                                            cursor.value.codigo,
-                                            cursor.value.qtdEstoque,
-                                            cursor.value.lote,
-                                            cursor.value.validade,
-                                            cursor.value.descricao,
-                                            cursor.value.promocao,
-                                            cursor.value.imgPath,
-                                            );
-                promocoes.push(temp2)
+                promocoes.push(jsonToProduto(cursor.value));
             }
             cursor.continue();
         }else{
@@ -80,6 +65,71 @@ function compare(a,b){
     return b.precoPromocional-a.precoPromocional;
 }
 
-function carregarInicial(){
+function carregarLista(tipo,nome,pag){
+    console.log("lista")
+    let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
+    let i = 0;
+    let produtos = [];
+    objectStore.openCursor().onsuccess = (event)=>{
+        let cursor = event.target.result;
+        if(cursor){
+            if(tipo === "categoria"){
+                if(cursor.value.categoria === nome){
+                    if(i >= (pag)*16){
+                        produtos.push(jsonToProduto(cursor.value));
+                        i++;
+                    }
+                }
+            }else if(tipo === "departamento"){
+                
+                if(cursor.value.departamento === nome){
+                    if(i >= (pag)*16){
+                        produtos.push(jsonToProduto(cursor.value));
+                        i++;
+                    }
+                }
+            }
+            if(i < (pag+1)*16){
+                cursor.continue();  
+            }else{
+                console.log(produtos);
+                document.getElementById("linha1").innerHTML = bannerHtml(produtos.slice(0,4));
+                document.getElementById("linha2").innerHTML = bannerHtml(produtos.slice(4,8));
+                document.getElementById("linha3").innerHTML = bannerHtml(produtos.slice(8,12));
+                document.getElementById("linha4").innerHTML = bannerHtml(produtos.slice(12));
+            }
+        }else{
+            document.getElementById("linha1").innerHTML = bannerHtml(produtos.slice(0,4));
+            document.getElementById("linha2").innerHTML = bannerHtml(produtos.slice(3,8));
+            document.getElementById("linha3").innerHTML = bannerHtml(produtos.slice(7,12));
+            document.getElementById("linha4").innerHTML = bannerHtml(produtos.slice(11));
+        }
+    }
+}
 
+function bannerHtml(produtos){
+    let txt = "";
+    for(let i=0;i< produtos.length;i++){
+        txt+= produtos[i].toProdutoHtml();
+    }
+    return txt;
+}
+
+function jsonToProduto(json){
+    let temp = new Produto(json.nomeComercial,
+                                            json.marca,
+                                            json.categoria,
+                                            json.departamento,
+                                            json.preco,
+                                            json.precoPromocional,
+                                            json.nomeCompleto,
+                                            json.codigo,
+                                            json.qtdEstoque,
+                                            json.lote,
+                                            json.validade,
+                                            json.descricao,
+                                            json.promocao,
+                                            json.imgPath,
+                                            );
+    return temp;
 }

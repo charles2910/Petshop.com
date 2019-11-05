@@ -69,20 +69,20 @@
                         <a href="#">Departamentos</a>
                         <img src="../IMAGES/ICONS/down_arrow.png" id ="img_icon_2"/>
                         <div class="content">
-                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Brinquedos")'><p>Brinquedos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Saúde")'><p>Saúde<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Alimentos")'><p>Alimentos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Brinquedos",()=>{carregarLista("departamento","brinquedos",0)})'><p>Brinquedos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Saúde"),()=>{carregarLista("departamento","saude",0)}'><p>Saúde<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Alimentos",()=>{carregarLista("departamento","alimentos",0)})'><p>Alimentos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                             <a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html",false,"Serviços")'><p>Serviços<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Higiene")'><p>Higiene<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Acessórios")'><p>Acessórios<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Higiene",()=>{carregarLista("departamento","higiene",0)})'><p>Higiene<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/listas.html",false,"Acessórios",()=>{carregarLista("departamento","acessórios",0)})'><p>Acessórios<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                         </div>
                     </li>
                     <li id="li0"><a href="#" onclick='AJAX_navegacao("../conteudos/principal.html","li0","")'>Promoções</a></li>
-                    <li id="li1"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li1","Cachorros")'>Cachorros</a></li>
-                    <li id="li2"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li2","Gatos")'>Gatos</a></li>
-                    <li id="li3"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li3","Roedores")'>Roedores</a></li>
-                    <li id="li4"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li4","Passáros")'>Passáros</a></li>
-                    <li id="li5"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li5","Peixes")'>Peixes</a></li>
+                    <li id="li1"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li1","Cachorros",()=>{carregarLista("categoria","cachorros",0)})'>Cachorros</a></li>
+                    <li id="li2"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li2","Gatos",()=>{carregarLista("categoria","gatos",0)})'>Gatos</a></li>
+                    <li id="li3"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li3","Roedores",()=>{carregarLista("categoria","roedores",0)})'>Roedores</a></li>
+                    <li id="li4"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li4","Passáros",()=>{carregarLista("categoria","passáros",0)})'>Passáros</a></li>
+                    <li id="li5"><a href="#" onclick='AJAX_navegacao("../conteudos/listas.html","li5","Peixes",()=>{carregarLista("categoria","peixes",0)})'>Peixes</a></li>
                     <li id="li6"><a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html","li6","Serviços")'>Serviços</a></li>
                 </ul>
             </nav>

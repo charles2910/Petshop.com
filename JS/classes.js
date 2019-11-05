@@ -89,10 +89,10 @@ class Produto{
     toProdutoHtml(){
         let txt = '<div id="'+this.codigo+'" class="produto" onclick="navegarCompra('+this.codigo+')">';
         txt +=  '<img src="'+this.imgPath+'"/>';
-        txt +=  '<h3>'+this.nome+'</h3>';
-        if(this.promocao){
-            txt +=  '<h6>De <del>'+this.preco+'</del> por</h6>';
-            txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100))+'</h4>';
+        txt +=  '<h3>'+this.nomeComercial+'</h3>';
+        if(this.promocao === "true"){
+            txt +=  '<h6>De <del>'+this.preco+'</del> por: </h6>';
+            txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h4>';
         }else{
             txt +=  '<h6>Por apenas:</h6>';
             txt +=  '<h4>R$ '+this.preco+'</h4>';

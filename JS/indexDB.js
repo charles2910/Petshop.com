@@ -28,7 +28,7 @@ window.onload = () =>{
             carregarProdutos();
         }
         carregaBanners()
-        AJAX_navegacao("../conteudos/principal.html",false,"",carregarInicial());
+        AJAX_navegacao("../conteudos/principal.html",false,"");
     }
     request2.onupgradeneeded= (event) =>{
         db_estoque = event.target.result;

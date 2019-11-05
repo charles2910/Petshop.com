@@ -11,7 +11,7 @@ async function navegarCompra(){
     }
 }
 
-async function AJAX_navegacao(arquivo,id,pagina_atual,callback){
+async function AJAX_navegacao(arquivo,id,pagina_atual,callback,){
     
     let xhttp = new XMLHttpRequest();
     let i=0;
