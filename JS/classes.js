@@ -68,8 +68,8 @@ class servico{
     }
 }
 
-class produto{
-    constructor(nomeComercial,marca,categoria,departamento,preco,precoPromocional,nomeCompleto,codigo,qtdEstoque,lote,validade,descricao,promocao){
+class Produto{
+    constructor(nomeComercial,marca,categoria,departamento,preco,precoPromocional,nomeCompleto,codigo,qtdEstoque,lote,validade,descricao,promocao,img){
         this.nomeComercial = nomeComercial;
         this.marca = marca;
         this.categoria = categoria;
@@ -83,6 +83,33 @@ class produto{
         this.validade = validade;
         this.descricao = descricao;
         this.promocao = promocao;
+        this.imgPath = img;
+    }
+
+    toProdutoHtml(){
+        let txt = '<div id="'+this.codigo+'" class="produto" onclick="navegarCompra('+this.codigo+')">';
+        txt +=  '<img src="'+this.imgPath+'"/>';
+        txt +=  '<h3>'+this.nome+'</h3>';
+        if(this.promocao){
+            txt +=  '<h6>De <del>'+this.preco+'</del> por</h6>';
+            txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100))+'</h4>';
+        }else{
+            txt +=  '<h6>Por apenas:</h6>';
+            txt +=  '<h4>R$ '+this.preco+'</h4>';
+        }
+        txt +=  '</div>';
+        return txt;
+    }
+
+}
+
+class Estoque{
+    constructor(){
+        this.acessorios = [];
+        this.higiente = [];
+        this.brinquedos = [];
+        this.saude = [];
+        this.alimentos = [];
     }
 }
 

@@ -1,5 +1,10 @@
 let db_clientes;
+let estoque = new Estoque();
+
+carregarProdutos();
+
 window.onload = () =>{
+    AJAX_navegacao("../conteudos/principal.html",false,"");
     console.log("carregada");
     let request = window.indexedDB.open("clientes",1);
     request.onsuccess = (event)=>{
@@ -35,4 +40,6 @@ function servicoPet(acao,id){
         document.getElementById(id).style.display="none";
     }
 }
+
+
 

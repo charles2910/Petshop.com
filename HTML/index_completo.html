@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Shop</title>
+    <script language="JavaScript" src="../JS/AJAX.js"></script>
+    <script language="JavaScript" src="../JS/classes.js"></script>
+    <script language="JavaScript" src="../JS/produtos.js"></script>
     <script language="JavaScript" src="../JS/indexDB.js"></script>
     <script language="JavaScript" src="../JS/popup.js"></script>
     <script language="JavaScript" src="../JS/login.js"></script>
-    <script language="JavaScript" src="../JS/classes.js"></script>
     <script language="JavaScript" src="../JS/cadastros.js"></script>
-    <script language="JavaScript" src="../JS/AJAX.js"></script>
     <link rel ="stylesheet" type="text/css" href="../CSS/index4.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/chatPopup.css"/>
     <link rel ="stylesheet" type="text/css" href="../CSS/cabecalho.css"/>
@@ -88,161 +89,7 @@
         </div>
     </header>
     <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('../conteudos/principal.html',false,'')">Principal</a> > <a id="pagina_atual"></a> </h4>
-    <div id = "janela_de_conteudo">
-        <h1 id="txt_ofertas_do_dia">
-        Ofertas especiais do dia:
-        </h1>
-        <div class="janela">
-        <div id="promocoes_interativo">
-            <input  id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
-            <div class="produtos">
-                <div class="produto" onclick="navegarCompra()">
-                    <img src="../IMAGES/PRODUTOS/produto.png"/>
-                    <h3>Produto 0</h3>
-                    <h6>De <del>R$ 999,99</del> por</h6>
-                    <h4>R$ 999,99</h4>
-                </div>
-                <div class="produto" onclick="navegarCompra()">
-                    <img src="../IMAGES/PRODUTOS/produto.png"/>
-                    <h3>Produto 1</h3>
-                    <h6>De <del>R$ 999,99</del> por</h6>
-                    <h4>R$ 999,99</h4>
-                </div>
-                <div class="produto" onclick="navegarCompra()">
-                <img src="../IMAGES/PRODUTOS/produto.png"/>
-                    <h3>Produto 2</h3>
-                    <h6>De <del>R$ 999,99</del> por</h6>
-                    <h4>R$ 999,99</h4>
-                </div>
-                <div class="produto" onclick="navegarCompra()">
-                    <img src="../IMAGES/PRODUTOS/produto.png"/>
-                    <h3>Produto 3</h3>
-                    <h6>De <del>R$ 999,99</del> por</h6>
-                    <h4>R$ 999,99</h4>
-                </div>
-                <div class="produto" onclick="navegarCompra()">
-                    <img src="../IMAGES/PRODUTOS/produto.png"/>
-                    <h3>Produto 4</h3>
-                    <h6>De <del>R$ 999,99</del> por</h6>
-                    <h4>R$ 999,99</h4>
-                </div>
-            </div>
-            <input id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
-        </div>
-        </div>
-        <div class="conteudo">
-        <section id="mais_procurados">
-            <h2>
-                Mais procurados na semana:
-            </h2>
-            <div class="janela">
-                <div id="promocoes_interativo">
-                    <input  id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
-                    <div class="produtos">
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 0</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 1</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                        <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 2</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 3</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                    </div>
-                    <input id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
-                </div>
-            </div>
-        </section>
-        <section id="mais_avaliados">
-            <h2>
-                Favoritos:
-            </h2>
-            <div class="janela">
-                <div id="promocoes_interativo">
-                    <input  id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
-                    <div class="produtos">
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 0</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 1</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                        <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 2</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 3</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                    </div>
-                    <input id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
-                </div>
-            </div>
-        </section>
-        <section id="novivdades">
-            <h2>
-                Novidades:
-            </h2>
-            <div class="janela">
-                <div id="promocoes_interativo">
-                    <input  id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
-                    <div class="produtos">
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 0</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 1</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                        <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 2</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                        <div class="produto" onclick="navegarCompra()">
-                            <img src="../IMAGES/PRODUTOS/produto.png"/>
-                            <h3>Produto 3</h3>
-                            <h6>De <del>R$ 999,99</del> por</h6>
-                            <h4>R$ 999,99</h4>
-                        </div>
-                    </div>
-                    <input id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
-                </div>
-            </div>
-        </section>
-        </div>
+    <div id = "janela_de_conteudo">  
     </div>
     <div id="janela_popup_senha">
     <form id="esqueci_senha">

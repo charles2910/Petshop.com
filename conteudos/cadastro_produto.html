@@ -1,6 +1,6 @@
 <div id="conteudo_cadastro_produto">
     <div id="janela_cadastro_produto">
-        <form>
+        <form onsubmit="cadastrarProduto()">
             <div id="cadastro_pt1">
                 <div class="add_imagem">
                     <img src="../IMAGES/PRODUTOS/produto.png">
@@ -8,11 +8,11 @@
                 </div>
                 <div id="info_principal">
                     <label><i class="fa fa-edit"></i> Nome Comercial</label>
-                    <input type="text" placeholder="" required>
+                    <input id="nome" type="text" placeholder="" required>
                     <label><i class="fa fa-tag"></i> Marca</label>
-                    <input type="text" placeholder="" required>
+                    <input id="marca" type="text" placeholder="" required>
                     <label><i class="fa fa-folder-open"></i> Categoria</label>
-                    <select>
+                    <select id="categoria">
                         <option>Cachorros</option>
                         <option>Gatos</option>
                         <option>Roedores</option>
@@ -20,7 +20,7 @@
                         <option>Peixes</option>
                     </select>
                     <label><i class="fa fa-folder-open"></i> Departamento</label>
-                    <select>
+                    <select id="departamento">
                         <option>Brinquedos</option>
                         <option>Saúde</option>
                         <option>Alimentos</option>
@@ -29,24 +29,24 @@
                         <option>Acessórios</option>
                     </select>
                     <label><i class="fa fa-money"></i> Preço</label>
-                    <input type="number" placeholder="" required>
-                    <label><i class="fa fa-percent"></i> Preço Promocional</label>
-                    <input type="number" placeholder="" required>
+                    <input id="preco" type="number" placeholder="" required>
+                    <label><i class="fa fa-percent"></i> Desconto promocional<input id="promo_ativ" type="checkbox"/></label>
+                    <input id="preco_promo" type="number" placeholder="" required>
                 </div>
             </div>
             <div id="cadastro_pt2">
                 <label><i class="fa fa-edit"></i> Nome Completo</label>
-                <input type="text" placeholder="" required>
+                <input id="nome_comp" type="text" placeholder="" required>
                 <label><i class="fa fa-barcode"></i> Código</label>
-                <input type="text" placeholder="" required>
+                <input id ="codigo" type="text" placeholder="" required>
                 <label><i class="fa fa-bar-chart"></i> Quantidade em estoque</label>
-                <input type="number" placeholder="" required>
+                <input id= "qtd" type="number" placeholder="" required>
                 <label><i class="fa fa-archive"></i> Lote</label>
-                <input type="text" placeholder="" required>
+                <input id="lote" type="text" placeholder="" required>
                 <label><i class="fa fa-calendar"></i> Validade do Lote</label>
-                <input type="date" placeholder="+" required>
+                <input id= "validade" type="date" placeholder="+" required>
                 <label><i class="fa fa-file-text"></i> Descrição</label>
-                <textarea></textarea>
+                <textarea id="desc"></textarea>
             </div>
             <div id="cadastro_botoes">
                 <button id="deletar">Deletar</button>
