@@ -41,7 +41,7 @@ function cadastrarUsuario(admin){
 }
 
 function cadastrarProduto(){
-    let produto = new produto(
+    let produto = new Produto(
         document.getElementById("nome").value,
         document.getElementById("marca").value,
         document.getElementById("categoria").value,
@@ -54,6 +54,8 @@ function cadastrarProduto(){
         document.getElementById("lote").value,
         document.getElementById("validade").value,
         document.getElementById("desc").value,
-        document.getElementById("promo_ativ").value
+        document.getElementById("promo_ativ").value,
+        document.getElementById("imgPath").value
     );
+    writeDbProduto(produto);
 }

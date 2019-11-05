@@ -103,22 +103,28 @@ class Produto{
 
 }
 
-class Estoque{
-    constructor(){
-        this.acessorios = [];
-        this.higiente = [];
-        this.brinquedos = [];
-        this.saude = [];
-        this.alimentos = [];
-    }
-}
-
-class pedido{
+class Pedido{
     constructor(imagem,nome,qtd,preco,entrega){
         this.imagem = imagem;
         this.nome = nome;
         this.qtd = qtd;
         this.preco = preco;
         this.entrega = entrega;
+    }
+}
+
+class Banner{
+    constructor(){
+        this.cachorros=[];
+        this.gatos=[];
+        this.roedores=[];
+        this.passaros=[];
+        this.peixes=[];
+        this.brinquedos=[];
+        this.saude=[];
+        this.alimentos=[];
+        this.higiene=[];
+        this.acessorios=[];
+        this.geral=[];
     }
 }

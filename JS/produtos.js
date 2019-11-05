@@ -1,57 +1,85 @@
+let banners = new Banner();
+
 function carregarProdutos(){
-    let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde","serviços"]
+    let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
     for(let i = 0; i<5;i++){
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 let temp = JSON.parse(this.responseText);
                 for(let j=0; j<temp.length;j++){
-                    let temp2 = new Produto(temp[j].nomeComercial,
-                                            temp[j].marca,
-                                            temp[j].categoria,
-                                            temp[j].departamento,
-                                            temp[j].preco,
-                                            temp[j].precoPromocional,
-                                            temp[j].nomeCompleto,
-                                            temp[j].codigo,
-                                            temp[j].qtdEstoque,
-                                            temp[j].lote,
-                                            temp[j].validade,
-                                            temp[j].descricao,
-                                            temp[j].promocao,
-                                            temp[j].imgPath,
-                                            );
-                    if(i===0){
-                        estoque.acessorios.push(temp2);
-                    }else if(i===1){
-                        estoque.alimentos.push(temp2);
-                    }else if(i===2){
-                        estoque.brinquedos.push(temp2);
-                    }else if(i===3){
-                        estoque.higiente.push(temp2);
-                    }else if(i===4){
-                        estoque.saude.push(temp2);
-                    } 
+                    writeDbProduto(temp[j]); 
                 }
             }
         }
         xhttp.open("GET","../produtos/"+departamento[i]+".json");
         xhttp.send();
     }
-    console.log(estoque);
-
 }
 
-function busca(tipo,nome,qtd){
-    if(tipo === "departamento"){
-
-    }else if(tipo === "categoria"){
-        
-    }else if( tipo === "any"){
-
-    }
+function carregaBanners(){
+    let promocoes = [];
+    let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
+    objectStore.openCursor().onsuccess = function(event) {
+        let cursor = event.target.result;
+        if (cursor) {
+            if(cursor.value.promocao ==="true"){
+                let temp2 = new Produto(cursor.value.nomeComercial,
+                                            cursor.value.marca,
+                                            cursor.value.categoria,
+                                            cursor.value.departamento,
+                                            cursor.value.preco,
+                                            cursor.value.precoPromocional,
+                                            cursor.value.nomeCompleto,
+                                            cursor.value.codigo,
+                                            cursor.value.qtdEstoque,
+                                            cursor.value.lote,
+                                            cursor.value.validade,
+                                            cursor.value.descricao,
+                                            cursor.value.promocao,
+                                            cursor.value.imgPath,
+                                            );
+                promocoes.push(temp2)
+            }
+            cursor.continue();
+        }else{
+            promocoes.sort(compare);
+            for(let i = 0; i < promocoes.length; i++){
+                if(promocoes[i].departamento =="alimentos" &&  banners.alimentos.length <12){
+                    banners.alimentos.push(promocoes[i]);
+                }else if(promocoes[i].departamento =="higiene" &&  banners.higiene.length <12){
+                    banners.higiene.push(promocoes[i]);
+                }else if(promocoes[i].departamento =="acessórios" &&  banners.acessorios.length <12){
+                    banners.acessorios.push(promocoes[i]);
+                }else if(promocoes[i].departamento =="brinquedos" &&  banners.brinquedos.length <12){
+                    banners.brinquedos.push(promocoes[i]);
+                }else if(promocoes[i].departamento =="saúde" &&  banners.saude.length <12){
+                    banners.saude.push(promocoes[i]);
+                }
+                if(promocoes[i].categoria =="cachorros" &&  banners.cachorros.length <12){
+                    banners.cachorros.push(promocoes[i]);
+                }else if(promocoes[i].categoria =="gatos" &&  banners.gatos.length <12){
+                    banners.gatos.push(promocoes[i]);
+                }else if(promocoes[i].categoria =="passáros" &&  banners.passaros.length <12){
+                    banners.passaros.push(promocoes[i]);
+                }else if(promocoes[i].categoria =="peixes" &&  banners.peixes.length <12){
+                    banners.peixes.push(promocoes[i]);
+                }else if(promocoes[i].categoria =="roedores" &&  banners.roedores.length <12){
+                    banners.roedores.push(promocoes[i]);
+                }
+                if(banners.geral.length <15){
+                    banners.geral.push(promocoes[i]);
+                }
+            }
+            console.log(banners);
+        }
+    };
 }
 
-function orderna(key){
-    
+function compare(a,b){
+    return b.precoPromocional-a.precoPromocional;
+}
+
+function carregarInicial(){
+
 }

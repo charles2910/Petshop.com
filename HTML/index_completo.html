@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Shop</title>
-    <script language="JavaScript" src="../JS/AJAX.js"></script>
     <script language="JavaScript" src="../JS/classes.js"></script>
     <script language="JavaScript" src="../JS/produtos.js"></script>
+    <script language="JavaScript" src="../JS/AJAX.js"></script>
     <script language="JavaScript" src="../JS/indexDB.js"></script>
     <script language="JavaScript" src="../JS/popup.js"></script>
     <script language="JavaScript" src="../JS/login.js"></script>
@@ -119,13 +119,13 @@
         </form>
     </div>
     <div class="login_form_popup" id="login_form_popup">
-        <form onsubmit="return login()">
+        <form onsubmit="login();return false">
             <div id="janela_login_popup">
                 <label><b>Usuário</b></label>
                 <input id="email_login" type="email" placeholder="Email" required>
                 <label><b>Senha</b></label>
                 <input id="psw_login" type="password" placeholder="Senha" required>
-                <button type="submit">Login</button>
+                <button type="submit" >Login</button>
                 <label>
                 </label><link rel ="stylesheet" type="text/css" href="../CSS/cadastro.css"/>
             </div>

@@ -10,43 +10,38 @@ function login(email1, senha1){
         email = email1;
         senha = senha1;
     }
-    if(email === "admin@admin.com" && senha === "admin"){
-        document.getElementById("btn_login").innerText = "Admin";
-        addOpcoesAdmin();
-        popupLogin(false);
-    }else if(email === "user@user.com" && senha === "user"){
-        document.getElementById("btn_login").innerText = "Perfil";
-        document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html',false,'Meu Perfil')");
-        popupLogin(false);
-    }else{
-        let transaction = db_clientes.transaction(["clientes"]);
-        let objectStore = transaction.objectStore("clientes");
-        let request = objectStore.get(email);
-        request.onerror = (event)=>{
-            window.alert("Email ou senha incorretos");
-            return false;
-        }
-        request.onsuccess = (event) =>{
-            if(request.result !== undefined){
-                let user = request.result;
-                if(user.senha === senha){
-                    if(user.admin === true){
-                        logged = user;
-                        document.getElementById("btn_login").innerText = "Admin";
-                        addOpcoesAdmin();
-                        popupLogin(false);
-                    }else{
-                        logged = user;
-                        document.getElementById("btn_login").innerText = "Perfil";
-                        document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html',false,'Meu Perfil')");
-                        popupLogin(false);
-                    }
+    let transaction = db_clientes.transaction(["clientes"]);
+    let objectStore = transaction.objectStore("clientes");
+    let request = objectStore.get(email);
+    request.onerror = (event)=>{
+        window.alert("Email ou senha incorretos");
+        return false;
+    }
+    request.onsuccess = (event) =>{
+        if(request.result !== undefined){
+            let user = request.result;
+            if(user.senha === senha){
+                if(user.admin === true){
+                    logged = user;
+                    document.getElementById("btn_login").innerText = "Admin";
+                    addOpcoesAdmin();
+                    popupLogin(false);
+                    console.log("teste");
+                    return true;
                 }else{
-                    window.alert("Email ou senha incorretos");
+                    logged = user;
+                    document.getElementById("btn_login").innerText = "Perfil";
+                    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html',false,'Meu Perfil')");
+                    popupLogin(false);
+                    return true;
                 }
             }else{
                 window.alert("Email ou senha incorretos");
+                return false;
             }
+        }else{
+            window.alert("Email ou senha incorretos");
+            return false;
         }
     }
 }

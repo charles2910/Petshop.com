@@ -3,7 +3,7 @@ import random
 
 produtos = [];
 categorias = ["cachorros","gatos","roedores","passáros","peixes"]
-departamentos = ["brinquedos","saúde","alimentos","serviços","higiene","acessórios"]
+departamentos = ["brinquedos","saúde","alimentos","higiene","acessórios"]
 arquivo = open("produtos.json","w")
 marca = "a"
 z = 0;
@@ -11,12 +11,12 @@ produto = "Produto";
 arquivo.write('[\n')
 txt = "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos error omnis doloribus repellat tempora asperiores sit? "
 for i in range(0,5):
-    for j in range(0,6):
+    for j in range(0,5):
         arquivo = open(departamentos[j]+".json","a")
         for x in range(0,5):
             for  k in range(0,5):
                 promo = ""
-                if(random.randint(0,100) > 80):
+                if(random.randint(0,100) > 75):
                     promo = "true"
                 else:
                     promo = "false"
@@ -31,7 +31,7 @@ for i in range(0,5):
                 arquivo.write('        "categoria":  "{}",\n'.format(categorias[x]))
                 arquivo.write('        "departamento" :  "{}",\n'.format(departamentos[j]))
                 arquivo.write('        "preco" :  "{}",\n'.format(random.randint(2000,15000)/100.0))
-                arquivo.write('        "precoPromocional" :  "{}",\n'.format((random.randint(0,60))/2.0))
+                arquivo.write('        "precoPromocional" :  "{}",\n'.format((random.randint(10,150))/2.0))
                 arquivo.write('        "nomeCompleto" :  "{}",\n'.format(nome))
                 arquivo.write('        "codigo" :  "{}",\n'.format(codigo))
                 arquivo.write('        "qtdEstoque" :  "{}",\n'.format(random.randint(1,50)))

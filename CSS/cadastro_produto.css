@@ -134,7 +134,7 @@ div#janela_cadastro_produto div#cadastro_botoes button{
 }
 
 div#janela_cadastro_produto div#cadastro_botoes button{
-    width: 31%;
+    width: 100%;
     margin-left: 10px;
     height: 40px;
     outline: none;
@@ -146,7 +146,12 @@ div#janela_cadastro_produto div#cadastro_botoes button{
 }
 
 div#janela_cadastro_produto div#cadastro_botoes button#deletar{
-     background-color: #f44336;
+    background-color: #f44336;
+    display: none;
+}
+
+div#janela_cadastro_produto div#cadastro_botoes button#Alterar{
+    display: none;
 }
 
 div#janela_cadastro_produto div#cadastro_botoes button:hover {

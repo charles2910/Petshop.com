@@ -43,7 +43,7 @@ div.janela .produtos{
     flex-wrap: wrap;
 }
 
-div.janela div#promocoes_interativo{
+div.janela div.promocoes_interativo{
     width: auto;
     display: flex;
     flex-flow: row;
