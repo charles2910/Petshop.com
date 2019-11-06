@@ -1,4 +1,4 @@
-async function navegarCompra(){
+async function navegarCompra(codigo){
     if(logged.admin){
         await AJAX_navegacao("../conteudos/cadastro_produto.html",false,"Cadastro de produto",()=>{
             document.getElementById("Alterar").style.display = "block";
@@ -7,7 +7,14 @@ async function navegarCompra(){
             console.log("teste2");
         });
     }else{
-         AJAX_navegacao("../conteudos/compra.html");
+         AJAX_navegacao("../conteudos/compra.html",false,"",()=>{
+             let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
+             request.onsuccess = function(event) {
+                let produto = jsonToProduto(request.result);
+                document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
+                document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
+            };
+         });
     }
 }
 

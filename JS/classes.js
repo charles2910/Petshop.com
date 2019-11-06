@@ -87,17 +87,62 @@ class Produto{
     }
 
     toProdutoHtml(){
-        let txt = '<div id="'+this.codigo+'" class="produto" onclick="navegarCompra('+this.codigo+')">';
+        let txt = '<div id="'+this.codigo+'" class="produto" onclick=navegar'+'Compra("'+this.codigo+'")>';
         txt +=  '<img src="'+this.imgPath+'"/>';
         txt +=  '<h3>'+this.nomeComercial+'</h3>';
         if(this.promocao === "true"){
-            txt +=  '<h6>De <del>'+this.preco+'</del> por: </h6>';
+            txt +=  '<h5>De <del>'+this.preco+'</del> por: </h5>';
             txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h4>';
         }else{
-            txt +=  '<h6>Por apenas:</h6>';
+            txt +=  '<h5>Por apenas:</h5>';
             txt +=  '<h4>R$ '+this.preco+'</h4>';
         }
         txt +=  '</div>';
+        return txt;
+    }
+
+    toCompraHtml(){
+        let txt = '<div id = "img_compra" class="img_produto_compra">';
+        txt+=   '<img src="'+this.imgPath+'">'; 
+        txt+=   '</div>';
+        txt+=   '<div id="detalhes_compra">';
+        if(this.promocao === "true"){
+            txt+=   "<h4>De <del>R$ "+this.preco+"</del> ("+this.precoPromocional+"% de desconto)</h4>";
+            txt+=   '<h2>por</h2> <h1>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h1><h2> à vista</h2><br/>';
+        }else{
+             txt+=  '<h2>Por apenas:</h2> <h1>R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
+        }
+        txt+=   '<button id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        txt+=   '<h3>Consultar prazo e valor do frete</h3>';
+        txt+=   '<div id="pesquisa_cep">';
+        txt+=   '<input type="number" placeholder="999999-999" required>';
+        txt+=   '<button>Ok</button>'
+        txt+=   '</div>';
+        txt+=   '</div>';
+        return txt;
+    }
+
+    toCarrinhoHtml(){
+        let txt ='<tr class="item_carrinho">';
+        txt+=         '<td><img src="'+this.imgPath+'"></td>';
+        txt+=         '<td><p>'+this.nomeComercial+'</p></td>';
+        txt+=         '<td>';
+        txt+=            '<select>';
+        txt+=                '<option value="0">1</option>';
+        txt+=                '<option value="1">1</option>';
+        txt+=                '<option value="2">1</option>';
+        txt+=                '<option value="3">1</option>';
+        txt+=                '<option value="4">1</option>';
+        txt+=                '<option value="5">1</option>';
+        txt+=            '</select>';
+        txt+=        '</td>';
+        if(this.promocao === "true"){
+            txt+=        '<td>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</td>';
+        }else{
+            txt+=        '<td>R$ '+this.preco+'</td>';
+        }
+        txt+=        '<td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+        txt+=    '</tr>'
         return txt;
     }
 
