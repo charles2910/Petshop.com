@@ -3,8 +3,8 @@
 </h1>
 <div class="janela">
         <div class="promocoes_interativo">
-            <input  id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
-            <div class="produtos">
+            <input  onclick="moverBanner(-1)" id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
+            <div id="banner_lista" class="produtos">
                 <div class="produto" onclick="navegarCompra()">
                     <img src="../IMAGES/PRODUTOS/produto.png"/>
                     <h3>Produto 0</h3>
@@ -30,7 +30,7 @@
                     <h4>R$ 999,99</h4>
                 </div>
             </div>
-            <input id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
+            <input onclick="moverBanner(1)" id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
         </div>
 </div>
 <div class="listaProdutos">
@@ -113,12 +113,12 @@
             <div class="janela">
                 <ul>
                     <li><input type="image" id="btn_pag_inicial" src="../IMAGES/ICONS/before.png"></li>
-                    <li><button>1</button></li>
-                    <li><button>2</button></li>
-                    <li><button>3</button></li>
-                    <li><button>4</button></li>
-                    <li><button>5</button></li>
-                    <li><button>6</button></li>
+                    <li><button id="btn_1" onclick="mudarPagina(this.textContent,-1)" >1</button></li>
+                    <li><button id="btn_2" onclick="mudarPagina(this.textContent,-1)" >2</button></li>
+                    <li><button id="btn_3" onclick="mudarPagina(this.textContent,0)" >3</button></li>
+                    <li><button id="btn_4" onclick="mudarPagina(this.textContent,1)" >4</button></li>
+                    <li><button id="btn_5" onclick="mudarPagina(this.textContent,1)" >5</button></li>
+                    <li><button id="btn_6" onclick="mudarPagina(this.textContent,1)" >6</button></li>
                     <li><input type="image" id="btn_pag_final" src="../IMAGES/ICONS/next.png"></li>
                 </ul>
             </div>

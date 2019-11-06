@@ -1,5 +1,6 @@
 let db_clientes;
 let db_estoque;
+let db_sessao;
 
 window.onload = () =>{
     console.log("carregada");
@@ -37,6 +38,16 @@ window.onload = () =>{
         objectStore.createIndex("categoria","categoria",{unique: false});
         objectStore.createIndex("departamento","departamento",{unique: false});
         loadEstoque = true;
+    }
+
+    let request3 = window.indexedDB.open("sessao",1);
+    request3.onsuccess = async (event)=>{
+        db_sessao = request3.result;
+    }
+    request3.onupgradeneeded = (event) =>{
+        db_sessao = event.target.result;
+        let objectStore = db_sessao.createObjectStore("sessao",{keyPath: "email"});
+        objectStore.createIndex("email","email",{unique: true});
     }
 }
 

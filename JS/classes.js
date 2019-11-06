@@ -87,7 +87,12 @@ class Produto{
     }
 
     toProdutoHtml(){
-        let txt = '<div id="'+this.codigo+'" class="produto" onclick=navegar'+'Compra("'+this.codigo+'")>';
+        let txt;
+        if(this.codigo !== "null"){
+            txt = '<div id="'+this.codigo+'" class="produto" onclick=navegar'+'Compra("'+this.codigo+'")>';
+        }else{
+            txt = '<div id="'+this.codigo+'" class="produto">';
+        }
         txt +=  '<img src="'+this.imgPath+'"/>';
         txt +=  '<h3>'+this.nomeComercial+'</h3>';
         if(this.promocao === "true"){
@@ -112,7 +117,7 @@ class Produto{
         }else{
              txt+=  '<h2>Por apenas:</h2> <h1>R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
         }
-        txt+=   '<button id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        txt+=   '<button onclick="carrinho()" id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
         txt+=   '<h3>Consultar prazo e valor do frete</h3>';
         txt+=   '<div id="pesquisa_cep">';
         txt+=   '<input type="number" placeholder="999999-999" required>';
@@ -171,5 +176,16 @@ class Banner{
         this.higiene=[];
         this.acessorios=[];
         this.geral=[];
+        this.cachorrosPos = 0;
+        this.gatosPos = 0;
+        this.roedoresPos = 0;
+        this.passarosPos = 0;
+        this.peixesPos = 0;
+        this.brinquedosPos = 0;
+        this.saudePos = 0;
+        this.alimentosPos = 0;
+        this.higienePos = 0;
+        this.acessoriosPos = 0;
+        this.geralPos = 0;
     }
 }

@@ -4,7 +4,6 @@ async function navegarCompra(codigo){
             document.getElementById("Alterar").style.display = "block";
             document.getElementById("deletar").style.display = "block";
             document.getElementById("Cadastrar").style.display = "none";
-            console.log("teste2");
         });
     }else{
          AJAX_navegacao("../conteudos/compra.html",false,"",()=>{
@@ -13,13 +12,13 @@ async function navegarCompra(codigo){
                 let produto = jsonToProduto(request.result);
                 document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
                 document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
+                document.getElementById("nome_completo").innerHTML = produto.nomeCompleto;
             };
          });
     }
 }
 
-async function AJAX_navegacao(arquivo,id,pagina_atual,callback,){
-    
+async function AJAX_navegacao(arquivo,id,pagina_atual,callback){
     let xhttp = new XMLHttpRequest();
     let i=0;
     if(id !== undefined || id !== false){
@@ -37,7 +36,6 @@ async function AJAX_navegacao(arquivo,id,pagina_atual,callback,){
     }
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log("teste1")
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
             if(callback !== undefined){
                 callback();
@@ -45,20 +43,5 @@ async function AJAX_navegacao(arquivo,id,pagina_atual,callback,){
         }
     }
     xhttp.open("GET",arquivo);
-    xhttp.send();
-}
-
-async function AJAX_post_img(arquivo,callback){
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            console.log("teste1")
-            document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
-            if(callback !== undefined){
-                callback();
-            }
-        }
-    }
-    xhttp.open("POST",arquivo,true);
     xhttp.send();
 }
