@@ -23,12 +23,11 @@ function carregarProdutos(){
 
 function carregaBanners(){
     let promocoes = [];
-    let i = 0;
     let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
     objectStore.openCursor().onsuccess = function(event) {
         let cursor = event.target.result;
         if (cursor) {
-            if(cursor.value.promocao ==="true"){
+            if(cursor.value.promocao){
                 promocoes.push(jsonToProduto(cursor.value));
             }
             cursor.continue();
@@ -140,18 +139,11 @@ function carregaBotoes(){
 function qtdItens(){
     let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
     let i = 0;
-    objectStore.openCursor().onsuccess = (event)=>{
+    let index = objectStore.index(tipo);
+    index.openCursor(IDBKeyRange.only(nome)).onsuccess = (event)=>{
         let cursor = event.target.result;
         if(cursor){
-            if(tipo === "categoria"){
-                if(cursor.value.categoria === nome){
-                    i++;
-                }
-            }else if(tipo === "departamento"){
-                if(cursor.value.departamento === nome){
-                    i++;
-                }
-            }
+            i++;
             cursor.continue();  
         }else{
             if(i%16 === 0){
@@ -170,27 +162,15 @@ function carregaItens(pag){
     let i = 0;
     let cont = 0;
     let produtos = [];
-    objectStore.openCursor().onsuccess = (event)=>{
+    let index = objectStore.index(tipo);
+    index.openCursor(nome).onsuccess = (event)=>{
         let cursor = event.target.result;
         if(cursor){
-            if(tipo === "categoria"){
-                if(cursor.value.categoria === nome){
-                    if(cont >= (pag)*16){
-                       produtos.push(jsonToProduto(cursor.value));
-                       console.log(cont,i);
-                       i++;
-                    }
-                    cont++;
-                }
-            }else if(tipo === "departamento"){
-                if(cursor.value.departamento === nome){
-                    if(cont >= (pag)*16){
-                        produtos.push(jsonToProduto(cursor.value));
-                        i++;
-                    }
-                    cont++;
-                }
+            if(cont >= (pag)*16){
+                produtos.push(jsonToProduto(cursor.value));
+                i++;
             }
+            cont++;
             if(i < 16){
                 cursor.continue();  
             }else{

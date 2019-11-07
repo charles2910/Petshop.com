@@ -95,7 +95,7 @@ class Produto{
         }
         txt +=  '<img src="'+this.imgPath+'"/>';
         txt +=  '<h3>'+this.nomeComercial+'</h3>';
-        if(this.promocao === "true"){
+        if(this.promocao){
             txt +=  '<h5>De <del>'+this.preco+'</del> por: </h5>';
             txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h4>';
         }else{
@@ -111,7 +111,7 @@ class Produto{
         txt+=   '<img src="'+this.imgPath+'">'; 
         txt+=   '</div>';
         txt+=   '<div id="detalhes_compra">';
-        if(this.promocao === "true"){
+        if(this.promocao){
             txt+=   "<h4>De <del>R$ "+this.preco+"</del> ("+this.precoPromocional+"% de desconto)</h4>";
             txt+=   '<h2>por</h2> <h1>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h1><h2> à vista</h2><br/>';
         }else{
@@ -141,7 +141,7 @@ class Produto{
         txt+=                '<option value="5">1</option>';
         txt+=            '</select>';
         txt+=        '</td>';
-        if(this.promocao === "true"){
+        if(this.promocao){
             txt+=        '<td>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</td>';
         }else{
             txt+=        '<td>R$ '+this.preco+'</td>';
