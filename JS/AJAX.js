@@ -46,7 +46,7 @@ async function AJAX_navegacao(arquivo,id,pagina_atual,callback){
     xhttp.send();
 }
 
-async function AJAX_listas(nome,tipo,pagina,filtro,callback){
+async function AJAX_listas(nome,tipo,banner,pagina,filtro,filtroMarca,filtroPreco,filtroTipo){
     let xhttp = new XMLHttpRequest();
     if(pagina_atual !== undefined){
         document.getElementById("pagina_atual").innerHTML = nome;
@@ -55,21 +55,25 @@ async function AJAX_listas(nome,tipo,pagina,filtro,callback){
     xhttp.onreadystatechange = async function(){
         if(this.readyState == 4 && this.status == 200){
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
-            if(filtro === undefined){
-                filtro = () => {return true};
-            }
-            let result = await qtdPaginas(nome,tipo,filtro);
-            if(callback !== undefined){
-                callback();
+            if(banner !== undefined){
+                let result = await qtdPaginas(nome,tipo,filtro);
+                carregarLista(nome,
+                          tipo,
+                          banner,
+                          await carregaItens(nome,tipo,pagina,filtro),
+                          result[0],filtroMarca,filtroPreco,filtroTipo,
+                          result[1],
+                          pagina);
             }else{
+                filtro = () => {return true};
+                let result = await qtdPaginas(nome,tipo,filtro);
                 carregarLista(nome,
                           tipo,
                           escolheBanner(nome,tipo),
-                          await carregaItens(nome,tipo,pagina,filtro),
+                          await carregaItens(nome,tipo,0,filtro),
                           result[0],[],[],[],
                           result[1],
-                          pagina);
-            console.log("teste1");
+                          0);
             }
         }
     }
@@ -159,6 +163,7 @@ async function carregaItens(nome,tipo,pag,filtro){
                     resolve(produtos);
                 }
             }else{
+                
                 resolve(produtos);
             }
         }

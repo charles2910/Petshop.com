@@ -12,7 +12,7 @@
 <div class="listaProdutos">
     <aside>
         <h3>Filtros</h3><hr>
-        <p><i class="fa fa-trash"></i><a> Limpar filtros</a> </p>
+        <p><i class="fa fa-trash"></i><a href="#" onclick="limparFiltros()"> Limpar filtros</a> </p>
         <h3>Departamentos</h3><hr>
         <ul id="filtro_tipo">
         </ul>
@@ -21,14 +21,14 @@
         </ul>
         <h3>Faixa de preço</h3><hr>
             <ul id="filtro_preco">
-            <li onclick="aplicarFiltro(3,0,10)"><a href="#">R$00,00 - R$10,00</a></li>
-            <li onclick="aplicarFiltro(3,10,30)"><a href="#">R$10,00 - R$30,00</a></li>
-            <li onclick="aplicarFiltro(3,30,50)"><a href="#">R$30,00 - R$50,00</a></li>
-            <li onclick="aplicarFiltro(3,50,80)"><a href="#">R$50,00 - R$80,00</a></li>
-            <li onclick="aplicarFiltro(3,80,100)"><a href="#">R$80,00 - R$100,00</a></li>
-            <li onclick="aplicarFiltro(3,100,150)"><a href="#">R$100,00 - R$150,00</a></li>
-            <li onclick="aplicarFiltro(3,150,200)"><a href="#">R$150,00 - R$200,00</a></li>
-            <li onclick="aplicarFiltro(3,200,99999999)"><a href="#">R$200,00 - ...</a></li>
+            <li onclick="aplicaFiltro(3,0,10)"><a href="#">R$00,00 - R$10,00</a></li>
+            <li onclick="aplicaFiltro(3,10,30)"><a href="#">R$10,00 - R$30,00</a></li>
+            <li onclick="aplicaFiltro(3,30,50)"><a href="#">R$30,00 - R$50,00</a></li>
+            <li onclick="aplicaFiltro(3,50,80)"><a href="#">R$50,00 - R$80,00</a></li>
+            <li onclick="aplicaFiltro(3,80,100)"><a href="#">R$80,00 - R$100,00</a></li>
+            <li onclick="aplicaFiltro(3,100,150)"><a href="#">R$100,00 - R$150,00</a></li>
+            <li onclick="aplicaFiltro(3,150,200)"><a href="#">R$150,00 - R$200,00</a></li>
+            <li onclick="aplicaFiltro(3,200,99999999)"><a href="#">R$200,00 - ...</a></li>
         </ul>
     </aside>
     <div class="gridProdutos">
@@ -67,14 +67,14 @@
         <div id="selecionar_pagina">
             <div class="janela">
                 <ul>
-                    <li><input type="image" id="btn_pag_inicial" src="../IMAGES/ICONS/before.png"></li>
-                    <li><button id="btn_1" onclick="mudarPagina(this.textContent,-1)" >1</button></li>
-                    <li><button id="btn_2" onclick="mudarPagina(this.textContent,-1)" >2</button></li>
-                    <li><button id="btn_3" onclick="mudarPagina(this.textContent,0)" >3</button></li>
-                    <li><button id="btn_4" onclick="mudarPagina(this.textContent,1)" >4</button></li>
-                    <li><button id="btn_5" onclick="mudarPagina(this.textContent,1)" >5</button></li>
-                    <li><button id="btn_6" onclick="mudarPagina(this.textContent,1)" >6</button></li>
-                    <li><input type="image" id="btn_pag_final" src="../IMAGES/ICONS/next.png"></li>
+                    <li><input onclick="irProInicio()" type="image" id="btn_pag_inicial" src="../IMAGES/ICONS/before.png"></li>
+                    <li><button id="btn_1" onclick="mudarPagina(this.textContent)" >1</button></li>
+                    <li><button id="btn_2" onclick="mudarPagina(this.textContent)" >2</button></li>
+                    <li><button id="btn_3" onclick="mudarPagina(this.textContent)" >3</button></li>
+                    <li><button id="btn_4" onclick="mudarPagina(this.textContent)" >4</button></li>
+                    <li><button id="btn_5" onclick="mudarPagina(this.textContent)" >5</button></li>
+                    <li><button id="btn_6" onclick="mudarPagina(this.textContent)" >6</button></li>
+                    <li><input onclick="irProFinal()" type="image" id="btn_pag_final" src="../IMAGES/ICONS/next.png"></li>
                 </ul>
             </div>
         </div>
