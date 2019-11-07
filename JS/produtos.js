@@ -1,91 +1,68 @@
 class Lista{
-    constructor(){
-    this.qtdTotalPaginas;
-    this.tipo;
-    this.nome;
-    this.bannerPos;
-    this.filtroMarca = [];
-    this.filtroPreco = [];
-    this.filtroTipo = [];
-    this.marcas = [];
+    constructor(nome,tipo,banner,itens,qtdTotalPaginas,filtroMarca,filtroPreco,filtroTipo,marcas,pag){
+    this.qtdTotalPaginas = qtdTotalPaginas;
+    this.tipo = tipo;
+    this.nome = nome;
+    this.banner = banner;
+    this.itens = itens;
+    this.bannerPos = 0;
+    this.filtroMarca = filtroMarca;
+    this.filtroPreco = filtroPreco;
+    this.filtroTipo = filtroTipo;
+    this.marcas = marcas;
+    this.pag = pag;
     }
+}
+
+let lista = new Lista();
+
+function carregarLista(nome,tipo,banner,qtdTotalPaginas,filtroMarca,filtroPreco,filtroTipo,marcas,pag){
+    lista = new Lista(nome,tipo,banner,qtdTotalPaginas,filtroMarca,filtroPreco,filtroTipo,marcas,pag);
+    console.log("teste2");
+    document.getElementById("anterior").disabled = true;
+    addProdutoLinha();
+    addProdutoBanner();
+    configBotoes();
+}
+
+function addProdutoLinha(){
+    for(let i =0; i <16;i++){
+        if(lista.itens[i] === undefined){
+            lista.itens.push(new Produto("null","null","null","null","null","null","null","null","null","null","null","null","null","../IMAGES/PRODUTOS/produto.png"));
+        }
+    }
+    document.getElementById("linha1").innerHTML = bannerHtml(lista.itens.slice(0,4));
+    document.getElementById("linha2").innerHTML = bannerHtml(lista.itens.slice(4,8));
+    document.getElementById("linha3").innerHTML = bannerHtml(lista.itens.slice(8,12));
+    document.getElementById("linha4").innerHTML = bannerHtml(lista.itens.slice(12));
+}
+
+function addProdutoBanner(){
+    document.getElementById("banner_lista").innerHTML = bannerHtml(lista.banner.slice(lista.bannerPos,lista.bannerPos+4));
+}
+
+function bannerHtml(produtos){
+    let txt = "";
+    for(let i=0;i< produtos.length;i++){
+        txt+= produtos[i].toProdutoHtml();
+    }
+    return txt;
 }
 
 function moverBanner(direcao){
-    if(direcao>0){
-        escolheBanner(1);
-    }else{
-        escolheBanner(-1);
-    }
-    efeitoBotoes();
-}
-
-function efeitoBotoes(){
-    if(bannerPos === 0){
-        document.getElementById("anterior").disabled = true;
-    }else if(bannerPos === 7){
-        document.getElementById("proximo").disabled = true;
-    }else{
+    if(lista.bannerPos > 0){
         document.getElementById("anterior").disabled = false;
-        document.getElementById("proximo").disabled = false;
+    }
+    if((direcao<0 && lista.bannerPos > 0) || (lista.bannerPos <8 && direcao>0)){
+        lista.bannerPos += direcao;
+        addProdutoBanner();
     }
 }
 
-function carregarLista(tipo1,nome1,pag){
-    tipo = tipo1;
-    nome = nome1;
-    bannerPos = 0;
-    filtroMarca = [];
-    filtroPreco = [];
-    filtroTipo = [];
-    escolheBanner(0);
-    carregaItens(pag);
-    carregaBotoes();
-    efeitoBotoes();
+function configBotoes(){
+    document.getElementById("btn_pag_inicial").setAttribute("onclick","AJAX_listas('"+lista.nome+"','"+lista.tipo+"',"+0+","+filtroLista+")");
+    document.getElementById("btn_pag_final").setAttribute("onclick","AJAX_listas('"+lista.nome+"','"+lista.tipo+"',"+lista.qtdTotalPaginas+","+filtroLista+")");
 }
-
-function carregaBotoes(){
-    document.getElementById("btn_pag_inicial").setAttribute("onclick","carregaItens(0)");
-    qtdItens(tipo,nome);
-}
-
-function qtdItens(){
-    let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
-    let i = 0;
-    let index = objectStore.index(tipo);
-    index.openCursor(IDBKeyRange.only(nome)).onsuccess = (event)=>{
-        let cursor = event.target.result;
-        if(cursor){
-            if(filtro(cursor.value)){
-                i++;
-            }
-            if(!marcas.includes(cursor.value.marca)){
-                marcas.push(cursor.value.marca);
-            }
-            cursor.continue();  
-        }else{
-            if(i%16 === 0){
-                qtdTotalPaginas = i/16;
-            }else{
-                qtdTotalPaginas = ((i-(i%16))/16)+1;
-            }
-            console.log(qtdTotalPaginas);
-            if(qtdTotalPaginas < 6){
-                for(let j = qtdTotalPaginas +1 ; j<7; j++){
-                    document.getElementById("btn_"+j).disabled = true;
-                    document.getElementById("btn_"+j).style.opacity = "0.3";
-                    document.getElementById("btn_"+j).style.backgroundColor = "white";
-                    document.getElementById("btn_"+j).style.cursor = "default";
-                }
-            }
-            carregaFiltros();
-            qtdTotalPaginas--;
-            
-            document.getElementById("btn_pag_final").setAttribute("onclick","carregaItens("+qtdTotalPaginas+")")
-        }
-    }
-}
-
 
 function carregaFiltros(){
     for(let i=0;i<marcas.length;i++){
@@ -124,49 +101,7 @@ function aplicaFiltro(id,funcao,filtro1,filtro2){
         filtroPreco.push(filtro1);
         filtroPreco.push(filtro2);
     }
-    AJAX_navegacao("../conteudos/listas.html",false,"Acessórios",()=>{bannerPos = 0;escolheBanner(0);carregaItens(0);carregaBotoes();efeitoBotoes();});
-}
-
-function carregaItens(pag){
-    let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
-    let i = 0;
-    let cont = 0;
-    let produtos = [];
-    let index = objectStore.index(tipo);
-    index.openCursor(nome).onsuccess = (event)=>{
-        let cursor = event.target.result;
-        if(cursor){
-            if(filtro(cursor.value)){
-                if(cont >= (pag)*16){
-                    produtos.push(jsonToProduto(cursor.value));
-                    i++;
-                }
-                cont++;
-            }
-            if(i < 16){
-                cursor.continue();  
-            }else{
-                console.log(produtos);
-                addProdutoLinha(produtos);
-            }
-        }else{
-            addProdutoLinha(produtos);
-            console.log(produtos);
-        }
-    }
-}
-
-function addProdutoLinha(produtos){
-    for(let i =0; i <16;i++){
-        if(produtos[i] === undefined){
-            produtos.push(new Produto("null","null","null","null","null","null","null","null","null","null","null","null","null","../IMAGES/PRODUTOS/produto.png"));
-        }
-    }
-    
-    document.getElementById("linha1").innerHTML = bannerHtml(produtos.slice(0,4));
-    document.getElementById("linha2").innerHTML = bannerHtml(produtos.slice(4,8));
-    document.getElementById("linha3").innerHTML = bannerHtml(produtos.slice(8,12));
-    document.getElementById("linha4").innerHTML = bannerHtml(produtos.slice(12));
+    AJAX_listas('"+lista.nome+"','"+lista.tipo+"',"+lista.qtdTotalPaginas+","+filtroLista+");
 }
 
 function mudarPagina(pagina,max){
@@ -195,48 +130,22 @@ function mudarPagina(pagina,max){
             btn6.textContent = parseInt(btn6.textContent) + max;
         }
     }
-    carregaItens(pagina-1);
+    lista.pag = pagina -1;
+    AJAX_listas(lista.nome,lista.tipo,lista.pag,filtroLista)
 }
 
-function bannerHtml(produtos){
-    let txt = "";
-    for(let i=0;i< produtos.length;i++){
-        txt+= produtos[i].toProdutoHtml();
-    }
-    return txt;
-}
-
-function jsonToProduto(json){
-    let temp = new Produto(json.nomeComercial,
-                                            json.marca,
-                                            json.categoria,
-                                            json.departamento,
-                                            json.preco,
-                                            json.precoPromocional,
-                                            json.nomeCompleto,
-                                            json.codigo,
-                                            json.qtdEstoque,
-                                            json.lote,
-                                            json.validade,
-                                            json.descricao,
-                                            json.promocao,
-                                            json.imgPath,
-                                            );
-    return temp;
-}
-
-function filtro(produto){
-    if(filtroMarca.length !== 0){
-        if(!filtroMarca.includes(produto.marca)){
+function filtroLista(produto){
+    if(lista.filtroMarca.length !== 0){
+        if(!lista.filtroMarca.includes(produto.marca)){
             return false;
         }
     }
-    if(filtroPreco.length !== 0){
+    if(lista.filtroPreco.length !== 0){
         if(produto.preco < filtroPreco[0] && produto.preco > filtroPreco[1]){
             return false;
         }
     }
-    if(filtroTipo.length !== 0){
+    if(lista.filtroTipo.length !== 0){
         if(tipo === "categoria"){
             if(!filtroMarca.includes(produto.categoria)){
                 return false;
