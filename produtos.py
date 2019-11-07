@@ -27,7 +27,7 @@ for i in range(0,5):
                 nome = produto + " " + str(z) + " " + departamentos[j] + " " + categorias[x] + " " + marca + str(random.randint(100,5000))+codigo
                 arquivo.write('    {\n')
                 arquivo.write('        "nomeComercial" :  "{}",\n'.format(produto + " " + str(z)))
-                arquivo.write('        "marca" :  "{}",\n'.format(marca))
+                arquivo.write('        "marca" :  "Marca {}",\n'.format(marca))
                 arquivo.write('        "categoria":  "{}",\n'.format(categorias[x]))
                 arquivo.write('        "departamento" :  "{}",\n'.format(departamentos[j]))
                 arquivo.write('        "preco" :  {},\n'.format(random.randint(2000,15000)/100.0))

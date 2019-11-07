@@ -45,3 +45,34 @@ async function AJAX_navegacao(arquivo,id,pagina_atual,callback){
     xhttp.open("GET",arquivo);
     xhttp.send();
 }
+
+function escolheBanner(mover){
+    bannerPos+= mover;
+    if(tipo === "categoria"){
+        if(nome === "cachorros"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.cachorros.slice(bannerPos,bannerPos+4));
+        }else if( nome === "gatos"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.gatos.slice(bannerPos,bannerPos+4));
+        }else if( nome === "roedores"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.roedores.slice(bannerPos,bannerPos+4));
+        }else if( nome === "passáros"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.passaros.slice(bannerPos,bannerPos+4));
+        }else if( nome === "peixes"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.peixes.slice(bannerPos,bannerPos+4));
+        }
+    }else if(tipo ==="departamento"){
+        if(nome === "brinquedos"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.brinquedos.slice(bannerPos,bannerPos+4));
+        }else if( nome === "saúde"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.saude.slice(bannerPos,bannerPos+4));
+        }else if( nome === "alimentos"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.alimentos.slice(bannerPos,bannerPos+4));
+        }else if( nome === "higiene"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.higiene.slice(bannerPos,bannerPos+4));
+        }else if( nome === "acessórios"){
+            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.acessorios.slice(bannerPos,bannerPos+4));
+        }
+    }else{
+        document.getElementById("banner_lista").innerHTML = bannerHtml(banners.geral.slice(bannerPos,bannerPos+4));
+    }
+}

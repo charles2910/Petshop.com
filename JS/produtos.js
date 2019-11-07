@@ -1,98 +1,13 @@
-let banners = new Banner();
-let qtdTotalPaginas;
-let tipo;
-let nome;
-let bannerPos;
-
-function carregarProdutos(){
-    let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
-    for(let i = 0; i<5;i++){
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
-                let temp = JSON.parse(this.responseText);
-                for(let j=0; j<temp.length;j++){
-                    writeDbProduto(temp[j]); 
-                }
-            }
-        }
-        xhttp.open("GET","../produtos/"+departamento[i]+".json");
-        xhttp.send();
-    }
-}
-
-function carregaBanners(){
-    let promocoes = [];
-    let objectStore = db_estoque.transaction("estoque").objectStore("estoque");
-    objectStore.openCursor().onsuccess = function(event) {
-        let cursor = event.target.result;
-        if (cursor) {
-            if(cursor.value.promocao){
-                promocoes.push(jsonToProduto(cursor.value));
-            }
-            cursor.continue();
-        }else{
-            promocoes.sort(compare);
-            for(let i = 0; i < promocoes.length; i++){
-                if(promocoes[i].departamento =="alimentos" &&  banners.alimentos.length <12){
-                    banners.alimentos.push(promocoes[i]);
-                }else if(promocoes[i].departamento =="higiene" &&  banners.higiene.length <12){
-                    banners.higiene.push(promocoes[i]);
-                }else if(promocoes[i].departamento =="acessórios" &&  banners.acessorios.length <12){
-                    banners.acessorios.push(promocoes[i]);
-                }else if(promocoes[i].departamento =="brinquedos" &&  banners.brinquedos.length <12){
-                    banners.brinquedos.push(promocoes[i]);
-                }else if(promocoes[i].departamento =="saúde" &&  banners.saude.length <12){
-                    banners.saude.push(promocoes[i]);
-                }
-                if(promocoes[i].categoria =="cachorros" &&  banners.cachorros.length <12){
-                    banners.cachorros.push(promocoes[i]);
-                }else if(promocoes[i].categoria =="gatos" &&  banners.gatos.length <12){
-                    banners.gatos.push(promocoes[i]);
-                }else if(promocoes[i].categoria =="passáros" &&  banners.passaros.length <12){
-                    banners.passaros.push(promocoes[i]);
-                }else if(promocoes[i].categoria =="peixes" &&  banners.peixes.length <12){
-                    banners.peixes.push(promocoes[i]);
-                }else if(promocoes[i].categoria =="roedores" &&  banners.roedores.length <12){
-                    banners.roedores.push(promocoes[i]);
-                }
-                if(banners.geral.length <15){
-                    banners.geral.push(promocoes[i]);
-                }
-            }
-            console.log(banners);
-        }
-    };
-}
-
-function escolheBanner(mover){
-    bannerPos+= mover;
-    if(tipo === "categoria"){
-        if(nome === "cachorros"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.cachorros.slice(bannerPos,bannerPos+4));
-        }else if( nome === "gatos"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.gatos.slice(bannerPos,bannerPos+4));
-        }else if( nome === "roedores"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.roedores.slice(bannerPos,bannerPos+4));
-        }else if( nome === "passáros"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.passaros.slice(bannerPos,bannerPos+4));
-        }else if( nome === "peixes"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.peixes.slice(bannerPos,bannerPos+4));
-        }
-    }else if(tipo ==="departamento"){
-        if(nome === "brinquedos"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.brinquedos.slice(bannerPos,bannerPos+4));
-        }else if( nome === "saúde"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.saude.slice(bannerPos,bannerPos+4));
-        }else if( nome === "alimentos"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.alimentos.slice(bannerPos,bannerPos+4));
-        }else if( nome === "higiene"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.higiene.slice(bannerPos,bannerPos+4));
-        }else if( nome === "acessórios"){
-            document.getElementById("banner_lista").innerHTML = bannerHtml(banners.acessorios.slice(bannerPos,bannerPos+4));
-        }
-    }else{
-        document.getElementById("banner_lista").innerHTML = bannerHtml(banners.geral.slice(bannerPos,bannerPos+4));
+class Lista{
+    constructor(){
+    this.qtdTotalPaginas;
+    this.tipo;
+    this.nome;
+    this.bannerPos;
+    this.filtroMarca = [];
+    this.filtroPreco = [];
+    this.filtroTipo = [];
+    this.marcas = [];
     }
 }
 
@@ -111,20 +26,18 @@ function efeitoBotoes(){
     }else if(bannerPos === 7){
         document.getElementById("proximo").disabled = true;
     }else{
-        console.log(bannerPos);
         document.getElementById("anterior").disabled = false;
         document.getElementById("proximo").disabled = false;
     }
-}
-
-function compare(a,b){
-    return b.precoPromocional-a.precoPromocional;
 }
 
 function carregarLista(tipo1,nome1,pag){
     tipo = tipo1;
     nome = nome1;
     bannerPos = 0;
+    filtroMarca = [];
+    filtroPreco = [];
+    filtroTipo = [];
     escolheBanner(0);
     carregaItens(pag);
     carregaBotoes();
@@ -143,7 +56,12 @@ function qtdItens(){
     index.openCursor(IDBKeyRange.only(nome)).onsuccess = (event)=>{
         let cursor = event.target.result;
         if(cursor){
-            i++;
+            if(filtro(cursor.value)){
+                i++;
+            }
+            if(!marcas.includes(cursor.value.marca)){
+                marcas.push(cursor.value.marca);
+            }
             cursor.continue();  
         }else{
             if(i%16 === 0){
@@ -151,10 +69,62 @@ function qtdItens(){
             }else{
                 qtdTotalPaginas = ((i-(i%16))/16)+1;
             }
+            console.log(qtdTotalPaginas);
+            if(qtdTotalPaginas < 6){
+                for(let j = qtdTotalPaginas +1 ; j<7; j++){
+                    document.getElementById("btn_"+j).disabled = true;
+                    document.getElementById("btn_"+j).style.opacity = "0.3";
+                    document.getElementById("btn_"+j).style.backgroundColor = "white";
+                    document.getElementById("btn_"+j).style.cursor = "default";
+                }
+            }
+            carregaFiltros();
             qtdTotalPaginas--;
+            
             document.getElementById("btn_pag_final").setAttribute("onclick","carregaItens("+qtdTotalPaginas+")")
         }
     }
+}
+
+
+function carregaFiltros(){
+    for(let i=0;i<marcas.length;i++){
+        let newMarca = document.createElement("li");
+        let marcaLink = document.createElement("a");
+        newMarca.setAttribute("id",marcas[i]);
+        marcaLink.appendChild(document.createTextNode(marcas[i]));
+        marcaLink.setAttribute("href","#");
+        marcaLink.setAttribute("onclick","aplicaFiltro('"+marcas[i]+"',1,'"+marcas[i]+"')");
+        newMarca.appendChild(marcaLink);
+        document.getElementById("filtro_marca").appendChild(newMarca);
+    }
+    let txt;
+    if(tipo === "categoria"){
+        txt = '<li onclick="aplicarFiltro(cat_1,2,"brinquedos") ><a id="cat_1" href="#">Brinquedos</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_2,2,"higiene")" ><a id="cat_2" href="#">Higiene</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_3,2,"saúde")" ><a id="cat_3" href="#">Saúde</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_4,2,"alimentos")" ><a id="cat_4" href="#">Alimentos</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_5,2,"acessórios")" ><a id="cat_5" href="#">Acessórios</a></li>';
+    }else{
+        txt = '<li onclick="aplicarFiltro(cat_1,2,"gatos")" ><a id="cat_1" href="#">Gatos</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_2,2,"cachorros")" ><a id="cat_2" href="#">Cachorros</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_3,2,"roedores")" ><a id="cat_3" href="#">Roedores</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_4,2,"passáros")" ><a id="cat_4" href="#">Passáros</a></li>';
+        txt+= '<li onclick="aplicarFiltro(cat_5,2,"peixes")" ><a id="cat_5" href="#">Peixes</a></li>';
+    }
+    document.getElementById("filtro_tipo").innerHTML = txt;
+}
+
+function aplicaFiltro(id,funcao,filtro1,filtro2){
+    if(funcao === 1){
+        filtroMarca.push(filtro1);
+    }else if(funcao ===2){
+        filtroTipo.push(filtro1);
+    }else{
+        filtroPreco.push(filtro1);
+        filtroPreco.push(filtro2);
+    }
+    AJAX_navegacao("../conteudos/listas.html",false,"Acessórios",()=>{bannerPos = 0;escolheBanner(0);carregaItens(0);carregaBotoes();efeitoBotoes();});
 }
 
 function carregaItens(pag){
@@ -166,18 +136,22 @@ function carregaItens(pag){
     index.openCursor(nome).onsuccess = (event)=>{
         let cursor = event.target.result;
         if(cursor){
-            if(cont >= (pag)*16){
-                produtos.push(jsonToProduto(cursor.value));
-                i++;
+            if(filtro(cursor.value)){
+                if(cont >= (pag)*16){
+                    produtos.push(jsonToProduto(cursor.value));
+                    i++;
+                }
+                cont++;
             }
-            cont++;
             if(i < 16){
                 cursor.continue();  
             }else{
-                addProdutoLinha(produtos)
+                console.log(produtos);
+                addProdutoLinha(produtos);
             }
         }else{
-            addProdutoLinha(produtos)
+            addProdutoLinha(produtos);
+            console.log(produtos);
         }
     }
 }
@@ -221,7 +195,6 @@ function mudarPagina(pagina,max){
             btn6.textContent = parseInt(btn6.textContent) + max;
         }
     }
-    console.log(pagina)
     carregaItens(pagina-1);
 }
 
@@ -252,8 +225,27 @@ function jsonToProduto(json){
     return temp;
 }
 
-function carrinho(){
-    if(logged === false){
-        alert("Você precisa estar logado para adicionar um item no carrinho");
+function filtro(produto){
+    if(filtroMarca.length !== 0){
+        if(!filtroMarca.includes(produto.marca)){
+            return false;
+        }
     }
+    if(filtroPreco.length !== 0){
+        if(produto.preco < filtroPreco[0] && produto.preco > filtroPreco[1]){
+            return false;
+        }
+    }
+    if(filtroTipo.length !== 0){
+        if(tipo === "categoria"){
+            if(!filtroMarca.includes(produto.categoria)){
+                return false;
+            }
+        }else{
+            if(!filtroMarca.includes(produto.departamento)){
+                return false;
+            }
+        }
+    }
+    return true;
 }
