@@ -99,7 +99,7 @@ function irProInicio(){
     AJAX_listas(lista.nome,lista.tipo,lista.banner,0,filtroLista,lista.filtroMarca,lista.filtroPreco,lista.filtroTipo);
 }
 
-function carregaFiltros(){
+async function carregaFiltros(){
     for(let i=0;i<lista.marcas.length;i++){
         let newMarca = document.createElement("li");
         let marcaLink = document.createElement("a");
@@ -112,19 +112,32 @@ function carregaFiltros(){
     }
     let txt;
     if(lista.tipo === "categoria"){
-        txt = '<li onclick="aplicaFiltro(2,\'brinquedos\')" ><a id="cat_1" href="#">Brinquedos</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'higiene\')" ><a id="cat_2" href="#">Higiene</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'saúde\')" ><a id="cat_3" href="#">Saúde</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'alimentos\')" ><a id="cat_4" href="#">Alimentos</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'acessórios\')" ><a id="cat_5" href="#">Acessórios</a></li>';
+        txt = '<li id="brinquedos" onclick="aplicaFiltro(2,\'brinquedos\')" ><a href="#">Brinquedos</a></li>';
+        txt+= '<li id="higiene" onclick="aplicaFiltro(2,\'higiene\')" ><a  href="#">Higiene</a></li>';
+        txt+= '<li id="saúde" onclick="aplicaFiltro(2,\'saúde\')" ><a href="#">Saúde</a></li>';
+        txt+= '<li id="alimentos" onclick="aplicaFiltro(2,\'alimentos\')" ><a href="#">Alimentos</a></li>';
+        txt+= '<li id="acessórios" onclick="aplicaFiltro(2,\'acessórios\')" ><a href="#">Acessórios</a></li>';
     }else{
-        txt = '<li onclick="aplicaFiltro(2,\'gatos\')" ><a id="cat_1" href="#">Gatos</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'cachorros\')" ><a id="cat_2" href="#">Cachorros</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'roedores\')" ><a id="cat_3" href="#">Roedores</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'passáros\')" ><a id="cat_4" href="#">Passáros</a></li>';
-        txt+= '<li onclick="aplicaFiltro(2,\'peixes\')" ><a id="cat_5" href="#">Peixes</a></li>';
+        txt = '<li id="gatos" onclick="aplicaFiltro(2,\'gatos\')" ><a href="#">Gatos</a></li>';
+        txt+= '<li id="cachorros" onclick="aplicaFiltro(2,\'cachorros\')" ><a href="#">Cachorros</a></li>';
+        txt+= '<li id="roedores" onclick="aplicaFiltro(2,\'roedores\')" ><a href="#">Roedores</a></li>';
+        txt+= '<li id="passáros" onclick="aplicaFiltro(2,\'passáros\')" ><a href="#">Passáros</a></li>';
+        txt+= '<li id="peixes" onclick="aplicaFiltro(2,\'peixes\')" ><a href="#">Peixes</a></li>';
     }
     document.getElementById("filtro_tipo").innerHTML = txt;
+    for(let i = 0; i < lista.filtroMarca.length; i++){
+        document.getElementById(lista.filtroMarca[i]).style.fontWeight = "bold";
+        document.getElementById(lista.filtroMarca[i]).style.color = "black";
+    }
+    for(let i = 0; i < lista.filtroTipo.length; i++){
+        document.getElementById(lista.filtroTipo[i]).style.fontWeight = "bold";
+        document.getElementById(lista.filtroTipo[i]).style.color = "black";
+    }
+    for(let i = 0; i < lista.filtroPreco.length; i+=2){
+        document.getElementById("f"+lista.filtroPreco[i]).style.fontWeight = "bold";
+        document.getElementById("f"+lista.filtroPreco[i]).style.color = "black";
+    }
+    
 }
 
 function aplicaFiltro(funcao,filtro1,filtro2){
