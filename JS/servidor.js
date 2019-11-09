@@ -103,6 +103,24 @@ async function writeDbProduto(produto){
     });
 }
 
+async function attDbProduto(produto){
+    return new Promise( (resolve,reject) => {
+        let transaction = db_estoque.transaction(["estoque"],"readwrite");
+        let objectStore = transaction.objectStore("estoque");
+        let request = objectStore.put(produto);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve();
+            return true;
+        }
+        request.onerror = (event) =>{
+            window.alert("Código já cadastrado");
+            reject();
+            return false;
+        }
+    });
+}
+
 function carregarProdutos(){
     let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
     for(let i = 0; i<5;i++){

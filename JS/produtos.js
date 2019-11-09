@@ -197,3 +197,11 @@ function limparFiltros(){
     lista.filtroPreco = [];
     AJAX_listas(lista.nome,lista.tipo);
 }
+
+function deletaProduto(){
+    let codigo = document.getElementById("codigo").value;
+    let request = db_estoque.transaction(["estoque"], "readwrite").objectStore("estoque").delete(codigo);
+    request.onsuccess = function(event) {
+        alert("Produto removido do estoque");
+    };
+}

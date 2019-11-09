@@ -92,7 +92,7 @@
     <div id = "janela_de_conteudo">  
     </div>
     <div id="janela_popup_senha">
-    <form id="esqueci_senha">
+    <form id="esqueci_senha" onsubmit="popupSenha(false)">
         <div class="popup_senha">
             <input type="image" id="fechar_senha_popup" src="../IMAGES/ICONS/fechar.png" onclick="popupSenha(false)">
             <h1>Recuperar Senha</h1>
@@ -103,7 +103,7 @@
             <label><b>Email</b></label>
             <input type="email" placeholder="email@email.com" required>
             <button class="cancelar" onclick="popupSenha(false)">Cancelar</button>
-            <button class="confirmar" onclick="">Confirmar</button>
+            <button type="submit" class="confirmar" >Confirmar</button>
         </div>
     </form>
     </div>

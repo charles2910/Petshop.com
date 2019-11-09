@@ -152,13 +152,7 @@ div#janela_cadastro_produto div#cadastro_botoes button{
 
 div#janela_cadastro_produto div#cadastro_botoes button#deletar{
     background-color: #f44336;
-    display: none;
 }
-
-div#janela_cadastro_produto div#cadastro_botoes button#Alterar{
-    display: none;
-}
-
 div#janela_cadastro_produto div#cadastro_botoes button:hover {
     opacity:1;
 }

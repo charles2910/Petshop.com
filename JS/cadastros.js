@@ -46,7 +46,7 @@ function cadastrarUsuario(admin,att){
     }
 }
 
-function cadastrarProduto(){
+function cadastrarProduto(att){
     let produto = new Produto(
         document.getElementById("nome").value,
         document.getElementById("marca").value,
@@ -63,5 +63,9 @@ function cadastrarProduto(){
         document.getElementById("promo_ativ").value,
         "../IMAGES/PRODUTOS/produto.png"
     );
-    writeDbProduto(produto);
+    if(!att){
+        writeDbProduto(produto);
+    }else{
+        attDbProduto(produto);
+    }
 }

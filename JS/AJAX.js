@@ -1,9 +1,6 @@
 async function navegarCompra(codigo){
-    if(logged.admin){
-        await AJAX_navegacao("../conteudos/cadastro_produto.html","Cadastro de produto",()=>{
-            document.getElementById("Alterar").style.display = "block";
-            document.getElementById("deletar").style.display = "block";
-            document.getElementById("Cadastrar").style.display = "none";
+    if(logged !== undefined && logged.admin){
+        await AJAX_navegacao("../conteudos/att_produto.html","Cadastro de produto",()=>{
             let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
              request.onsuccess = function(event) {
                 let produto = jsonToProduto(request.result);
