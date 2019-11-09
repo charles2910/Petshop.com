@@ -143,7 +143,7 @@ async function carregaFiltros(){
 function aplicaFiltro(funcao,filtro1,filtro2){
     if(funcao === 1){
         lista.filtroMarca.push(filtro1);
-    }else if(funcao ===2){
+    }else if(funcao === 2){
         lista.filtroTipo.push(filtro1);
         
     }else{

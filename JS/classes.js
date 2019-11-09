@@ -10,8 +10,8 @@ class Cliente{
         this.senha = senha;
         this.endereco = endereco;
         this.cartao = cartao;
-        this.pets;
-        this.pedidos;
+        this.pets = [];
+        this.pedidos = [];
     }
     addPet(pet){
         this.pets.append(pet);
@@ -171,16 +171,5 @@ class Banner{
         this.higiene=[];
         this.acessorios=[];
         this.geral=[];
-        this.cachorrosPos = 0;
-        this.gatosPos = 0;
-        this.roedoresPos = 0;
-        this.passarosPos = 0;
-        this.peixesPos = 0;
-        this.brinquedosPos = 0;
-        this.saudePos = 0;
-        this.alimentosPos = 0;
-        this.higienePos = 0;
-        this.acessoriosPos = 0;
-        this.geralPos = 0;
     }
 }

@@ -1,12 +1,30 @@
 async function navegarCompra(codigo){
     if(logged.admin){
-        await AJAX_navegacao("../conteudos/cadastro_produto.html",false,"Cadastro de produto",()=>{
+        await AJAX_navegacao("../conteudos/cadastro_produto.html","Cadastro de produto",()=>{
             document.getElementById("Alterar").style.display = "block";
             document.getElementById("deletar").style.display = "block";
             document.getElementById("Cadastrar").style.display = "none";
+            let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
+             request.onsuccess = function(event) {
+                let produto = jsonToProduto(request.result);
+                document.getElementById("nome").value = produto.nomeComercial;
+                document.getElementById("marca").value = produto.marca;
+                document.getElementById("categoria").value = produto.categoria;
+                document.getElementById("departamento").value = produto.categoria;
+                document.getElementById("preco").value = produto.preco;
+                document.getElementById("preco_promo").value = produto.precoPromocional;
+                document.getElementById("nome_comp").value = produto.nomeCompleto;
+                document.getElementById("codigo").value = produto.codigo;
+                document.getElementById("codigo").readOnly = true;
+                document.getElementById("qtd").value = produto.qtdEstoque;
+                document.getElementById("lote").value = produto.lote;
+                document.getElementById("validade").value = produto.validade;
+                document.getElementById("desc").value = produto.descricao;
+
+            };
         });
     }else{
-         AJAX_navegacao("../conteudos/compra.html",false,"",()=>{
+         AJAX_navegacao("../conteudos/compra.html","",()=>{
              let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
              request.onsuccess = function(event) {
                 let produto = jsonToProduto(request.result);
@@ -18,19 +36,8 @@ async function navegarCompra(codigo){
     }
 }
 
-async function AJAX_navegacao(arquivo,id,pagina_atual,callback){
+async function AJAX_navegacao(arquivo,pagina_atual,callback){
     let xhttp = new XMLHttpRequest();
-    let i=0;
-    if(id !== undefined || id !== false){
-        while(document.getElementById("li" + i )!== null){
-            if("li" + i !== id){
-                document.getElementById("li" + i ).style.backgroundColor = "yellow";
-            }else{
-                document.getElementById("li" + i).style.backgroundColor = "white";
-            }
-            i++
-        }
-    }
     if(pagina_atual !== undefined){
         document.getElementById("pagina_atual").innerHTML = pagina_atual;
     }
@@ -79,6 +86,29 @@ async function AJAX_listas(nome,tipo,banner,pagina,filtro,filtroMarca,filtroPrec
     }
     xhttp.open("GET","../conteudos/listas.html");
     xhttp.send();
+}
+
+function navaegacaoInterativa(id){
+    let i=0;
+    if(id !== undefined || id !== false){
+        while(document.getElementById("li" + i )!== null){
+            if("li" + i !== id){
+                document.getElementById("li" + i ).setAttribute("onmouseover",
+                    'document.getElementById("li" + '+i+' ).style.backgroundColor = "white"'
+                );
+                document.getElementById("li" + i ).setAttribute("onmouseout",
+                    'document.getElementById("li" + '+i+' ).style.backgroundColor = "yellow"'
+                );
+                document.getElementById("li" + i ).style.backgroundColor = "yellow";
+            }else{
+                document.getElementById("li" + i).style.backgroundColor = "white";
+                document.getElementById("li" + i ).setAttribute("onmouseout",
+                    'document.getElementById("li" + '+i+' ).style.backgroundColor = "white"'
+                );
+            }
+            i++
+        }
+    }
 }
 
 function escolheBanner(nome,tipo){
