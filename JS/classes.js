@@ -170,6 +170,8 @@ class Banner{
         this.alimentos=[];
         this.higiene=[];
         this.acessorios=[];
-        this.geral=[];
+        this.geral1=[];
+        this.geral2=[];
+        this.geral3=[];
     }
 }

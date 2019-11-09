@@ -28,10 +28,12 @@ window.onload = () =>{
     request2.onsuccess = async (event)=>{
         db_estoque = request2.result;
         if(loadEstoque){
-            carregarProdutos();
+            await carregarProdutos();
         }
         await carregaBanners();
-        AJAX_navegacao("../conteudos/principal.html","");
+        AJAX_navegacao("../conteudos/principal.html","",()=>{
+            carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3);
+        });
     }
     request2.onupgradeneeded = (event) =>{
         db_estoque = event.target.result;
@@ -121,21 +123,27 @@ async function attDbProduto(produto){
     });
 }
 
-function carregarProdutos(){
+async function carregarProdutos(){
     let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
-    for(let i = 0; i<5;i++){
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = async function(){
-            if(this.readyState == 4 && this.status == 200){
-                let temp = JSON.parse(this.responseText);
-                for(let j=0; j<temp.length;j++){
-                    await writeDbProduto(temp[j]); 
+        return new Promise( async (resolve) =>{
+        for(let i = 0; i<5;i++){
+            let xhttp = new XMLHttpRequest();
+            await new Promise((resolve) =>{
+                xhttp.onreadystatechange = async function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        let temp = JSON.parse(this.responseText);
+                        for(let j=0; j<temp.length;j++){
+                            await writeDbProduto(temp[j]); 
+                        }
+                        resolve(true);
+                    }
                 }
-            }
+                xhttp.open("GET","../produtos/"+departamento[i]+".json");
+                xhttp.send();
+            });
         }
-        xhttp.open("GET","../produtos/"+departamento[i]+".json");
-        xhttp.send();
-    }
+        resolve(true);
+        });
 }
 
 async function carregaBanners(){
@@ -174,17 +182,29 @@ async function carregaBanners(){
                     }else if(promocoes[i].categoria =="roedores" &&  banners.roedores.length <12){
                         banners.roedores.push(promocoes[i]);
                     }
-                    if(banners.geral.length <15){
-                        banners.geral.push(promocoes[i]);
+                    if(banners.geral1.length <10){
+                        banners.geral1.push(promocoes[i]);
                     }
                 }
+                promocoes.sort(compare1);
+                banners.geral2 = promocoes.slice(0,10);
+                promocoes.sort(compare2);
+                banners.geral3 = promocoes.slice(0,10);
+                
                 resolve();
             }
         }
     });    
 }
 
-function compare(a,b){
+function compare(a,b){//Ordena pela % do precao
     return b.precoPromocional-a.precoPromocional;
 }
 
+function compare1(a,b){//ordena pelo desconto real
+    return   ((b.preco) - (b.preco) *((100-b.precoPromocional)/100)) - (a.preco - (a.preco)*((100-a.precoPromocional)/100));
+}
+
+function compare2(a,b){//Ordena pela quantidade em estoque
+    return a.qtdEstoque - b.qtdEstoque;
+}

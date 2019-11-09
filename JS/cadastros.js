@@ -68,4 +68,5 @@ function cadastrarProduto(att){
     }else{
         attDbProduto(produto);
     }
+    carregaBanners();
 }

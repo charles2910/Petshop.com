@@ -7,14 +7,15 @@
     <script language="JavaScript" src="../JS/classes.js"></script>
     <script language="JavaScript" src="../JS/produtos.js"></script>
     <script language="JavaScript" src="../JS/AJAX.js"></script>
+    <script language="JavaScript" src="../JS/paginaInicial.js"></script>
     <script language="JavaScript" src="../JS/servidor.js"></script>
     <script language="JavaScript" src="../JS/popup.js"></script>
     <script language="JavaScript" src="../JS/login.js"></script>
     <script language="JavaScript" src="../JS/cadastros.js"></script>
-    <link rel ="stylesheet" type="text/css" href="../CSS/index4.css"/>
-    <link rel ="stylesheet" type="text/css" href="../CSS/chatPopup.css"/>
-    <link rel ="stylesheet" type="text/css" href="../CSS/cabecalho.css"/>
-    <link rel ="stylesheet" type="text/css" href="../CSS/rodape.css"/>
+    <link rel="stylesheet" type="text/css" href="../CSS/index4.css"/>
+    <link rel="stylesheet" type="text/css" href="../CSS/chatPopup.css"/>
+    <link rel="stylesheet" type="text/css" href="../CSS/cabecalho.css"/>
+    <link rel="stylesheet" type="text/css" href="../CSS/rodape.css"/>
     <link rel="stylesheet"  type="text/css" href="../CSS/popupSenha.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/popupLogin.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/perfil.css" />
@@ -25,7 +26,7 @@
     <link rel="stylesheet"  type="text/css" href="../CSS/carrinho.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/compras.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/servicos.css" />
-    <link rel ="stylesheet" type="text/css" href="../CSS/cadastro.css"/>
+    <link rel="stylesheet"  type="text/css" href="../CSS/cadastro.css"/>
     <link rel="stylesheet"  type="text/css" href="../CSS/pets.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/cadastro_produto.css" />
     <link rel="stylesheet"  type="text/css" href="../CSS/popupCadastro.css" />
@@ -35,7 +36,7 @@
     <header>
         <div id="cab_fixo">
             <div id = "logo">
-                <img src="../IMAGES/logo.png" onclick="AJAX_navegacao('../conteudos/principal.html','')">
+                <img src="../IMAGES/logo.png">
             </div>
             <div  class="barra_pesquisa">
                 <img src="../IMAGES/ICONS/lupa.png"/ alt="buscador">
@@ -77,7 +78,7 @@
                             <a href="#" onclick='AJAX_listas("Acessórios","departamento")'><p>Acessórios<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                         </div>
                     </li>
-                    <li id="li0" onclick='AJAX_navegacao("../conteudos/principal.html",""); navaegacaoInterativa("li0")'><a href="#">Promoções</a></li>
+                    <li id="li0" ><a href="#">Promoções</a></li>
                     <li id="li1" onclick='AJAX_listas("Cachorros","categoria"); navaegacaoInterativa("li1")'><a href="#">Cachorros</a></li>
                     <li id="li2" onclick='AJAX_listas("Gatos","categoria"); navaegacaoInterativa("li2")'><a href="#">Gatos</a></li>
                     <li id="li3" onclick='AJAX_listas("Roedores","categoria"); navaegacaoInterativa("li3")'><a href="#">Roedores</a></li>
