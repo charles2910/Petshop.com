@@ -36,7 +36,7 @@ for i in range(0,5):
                 arquivo.write('        "codigo" :  "{}",\n'.format(codigo))
                 arquivo.write('        "qtdEstoque" :  {},\n'.format(random.randint(1,50)))
                 arquivo.write('        "lote" :  {},\n'.format(random.randint(100,5000)))
-                arquivo.write('        "validade" :  "{}-{}-{}",\n'.format(random.randint(1,28),random.randint(1,12),random.randint(2020,2023)))
+                arquivo.write('        "validade" :  "{}-{}-{}",\n'.format(random.randint(2020,2023),random.randint(1,12),random.randint(1,28)))
                 arquivo.write('        "descricao" :  "{}",\n'.format(txt))
                 arquivo.write('        "promocao" :  {},\n'.format(promo))
                 arquivo.write('        "imgPath" :  "../IMAGES/PRODUTOS/produto.png"\n')

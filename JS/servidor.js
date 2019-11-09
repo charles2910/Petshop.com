@@ -10,8 +10,8 @@ window.onload = () =>{
     request.onsuccess = (event)=>{
         db_clientes = request.result;
         if(loadUsuario){
-            let admin = new Cliente("admin","admin@admin.com","99999999999","99999999999","1-1-2000","99999999999","admin","","",true);
-            let user = new Cliente("user","user@user.com","99999999999","99999999999","1-1-2000","99999999999","user","","",false);
+            let admin = new Cliente("admin","admin@admin.com","99999999999","99999999999","2000-01-01","99999999999","admin","","",true);
+            let user = new Cliente("user","user@user.com","99999999999","99999999999","2000-01-01","99999999999","user","","",false);
             writeDbCliente(admin);
             writeDbCliente(user);
         }
@@ -30,8 +30,8 @@ window.onload = () =>{
         if(loadEstoque){
             carregarProdutos();
         }
-        await carregaBanners()
-        AJAX_navegacao("../conteudos/principal.html",false,"");
+        await carregaBanners();
+        AJAX_navegacao("../conteudos/principal.html","");
     }
     request2.onupgradeneeded = (event) =>{
         db_estoque = event.target.result;
@@ -53,18 +53,36 @@ window.onload = () =>{
     }
 }
 
-function writeDbCliente(cliente){
-    let transaction = db_clientes.transaction(["clientes"],"readwrite");
-    let objectStore = transaction.objectStore("clientes");
-    let request = objectStore.add(cliente);
-    request.onsuccess = (event) =>{
-        console.log("sucesso")
-        return true;
-    }
-    request.onerror = (event) =>{
-        window.alert("Email já cadastrado");
-        return false;
-    }
+async function writeDbCliente(cliente){
+    return await new Promise( (resolve) => {
+        let transaction = db_clientes.transaction(["clientes"],"readwrite");
+        let objectStore = transaction.objectStore("clientes");
+        let request = objectStore.add(cliente);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve(true);
+        }
+        request.onerror = (event) =>{
+            window.alert("Email já cadastrado");
+            return false;
+        }
+    });
+}
+
+async function attDbCliente(cliente){
+    return await new Promise( (resolve,reject) => {
+        let transaction = db_clientes.transaction(["clientes"],"readwrite");
+        let objectStore = transaction.objectStore("clientes");
+        let request = objectStore.put(cliente);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve(true);
+        }
+        request.onerror = (event) =>{
+            window.alert("Email já cadastrado");
+            reject(false);
+        }
+    });
 }
 
 async function writeDbProduto(produto){
