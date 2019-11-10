@@ -45,6 +45,7 @@ window.onload = () =>{
         objectStore.createIndex("codigo","codigo",{unique: true});
         objectStore.createIndex("categoria","categoria",{unique: false});
         objectStore.createIndex("departamento","departamento",{unique: false});
+        objectStore.createIndex("nomeCompleto","nomeCompleto",{unique: false});
         loadEstoque = true;
     }
 

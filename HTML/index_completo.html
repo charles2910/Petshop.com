@@ -90,7 +90,7 @@
             </nav>
         </div>
     </header>
-    <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('../conteudos/principal.html','',()=>{carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3)})">Principal</a> > <a id="pagina_atual"></a> </h4>
+    <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('../conteudos/principal.html','',()=>{carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3)});navaegacaoInterativa('li0')">Principal</a> > <a id="pagina_atual"></a> </h4>
     <div id = "janela_de_conteudo">  
     </div>
     <div id="janela_popup_senha">
@@ -164,7 +164,7 @@
             </div>
             <div id="rodape_login">
                 <button type="submit">Cadastrar</button>
-                <button class="cancelar_login" onclick="popupCadastro(false)">Cancelar</button>
+                <button type="button" class="cancelar_login" onclick="popupCadastro(false)">Cancelar</button>
             </div>
         </form>
     </div>

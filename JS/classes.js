@@ -133,21 +133,36 @@ class Produto{
 
     toProdutoHtml(){
         let txt;
-        if(this.codigo !== "null"){
-            txt = '<div id="'+this.codigo+'" class="produto" onclick=navegar'+'Compra("'+this.codigo+'")>';
+        if(this.qtdEstoque !== 0){
+            if(this.codigo !== "null"){
+                txt = '<div id="'+this.codigo+'" class="produto" onclick=navegar'+'Compra("'+this.codigo+'")>';
+            }else{
+                txt = '<div id="'+this.codigo+'" class="produto">';
+            }
+            txt +=  '<img src="'+this.imgPath+'"/>';
+            txt +=  '<h3>'+this.nomeComercial+'</h3>';
+            if(this.promocao){
+                txt +=  '<h5>De <del>'+this.preco+'</del> por: </h5>';
+                txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h4>';
+            }else{
+                txt +=  '<h5>Por apenas:</h5>';
+                txt +=  '<h4>R$ '+this.preco+'</h4>';
+            }
+            txt +=  '</div>';
         }else{
-            txt = '<div id="'+this.codigo+'" class="produto">';
+            txt = '<div id="'+this.codigo+'" class="produto esgotado" onclick=navegar'+'Compra("'+this.codigo+'")>';
+            txt +=  '<img src="'+this.imgPath+'"/>';
+            txt +=  '<h3>'+this.nomeComercial+'</h3>';
+            if(this.promocao){
+                txt +=  '<h5> ESGOTADO </h5>';
+                txt +=  '<h4><del>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</del></h4>';
+            }else{
+                txt +=  '<h5> ESGOTADO </h5>';
+                txt +=  '<h4><del>R$ '+this.preco+'</del></h4>';
+            }
+            txt +=  '</div>';
         }
-        txt +=  '<img src="'+this.imgPath+'"/>';
-        txt +=  '<h3>'+this.nomeComercial+'</h3>';
-        if(this.promocao){
-            txt +=  '<h5>De <del>'+this.preco+'</del> por: </h5>';
-            txt +=  '<h4>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h4>';
-        }else{
-            txt +=  '<h5>Por apenas:</h5>';
-            txt +=  '<h4>R$ '+this.preco+'</h4>';
-        }
-        txt +=  '</div>';
+        
         return txt;
     }
 
@@ -162,7 +177,7 @@ class Produto{
         }else{
              txt+=  '<h2>Por apenas:</h2> <h1>R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
         }
-        txt+=   '<button onclick="carrinho()" id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        txt+=   '<button id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
         txt+=   '</div>';
         return txt;
     }

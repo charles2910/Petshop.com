@@ -61,6 +61,10 @@ function configOnclick(){
         }); 
         navaegacaoInterativa("li0");
     }
+
+    document.getElementById("btn_buscador").onclick = () =>{
+        AJAX_listas("Busca","nomeCompleto",banners.geral1,0,pesquisar,[],[],[],[])
+    }
 }
 
 function addProdutoBannerGeral(id,banner,pos){
@@ -73,4 +77,18 @@ function moverBannerGeral(direcao,id,banner,pos){
         addProdutoBannerGeral(id,banner,pos);
         return true;
     }
+}
+
+function pesquisar(produto){
+    let txt = document.getElementById("buscador").value;
+    txt = txt.toLowerCase();
+    txt = txt.split(" ");
+    let compare = produto.nomeCompleto.toLowerCase();
+    console.log(txt)
+    for(let i=0; i< txt.length;i++){
+        if(compare.includes(txt[i])){
+            return true;
+        }
+    }
+    return false;
 }

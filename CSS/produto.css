@@ -7,7 +7,11 @@ div .produto{
     transition: 0.3s;
     width:  20%;
     max-width: 150px;
-    min-width: 100px;
+    min-width: 100px;  
+}
+
+div .esgotado{
+    opacity: 0.5;
 }
 
 div.produto img{

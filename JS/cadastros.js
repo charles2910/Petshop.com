@@ -67,6 +67,7 @@ function cadastrarProduto(att){
         writeDbProduto(produto);
     }else{
         attDbProduto(produto);
+        alert("Dados alterados com sucesso!");
     }
     carregaBanners();
 }

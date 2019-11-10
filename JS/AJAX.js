@@ -28,6 +28,12 @@ async function navegarCompra(codigo){
                 document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
                 document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
                 document.getElementById("nome_completo").innerHTML = produto.nomeCompleto;
+                document.getElementById("espec").innerHTML = produto.descricao;
+                if(produto.qtdEstoque === 0){
+                    document.getElementById("btn_carrinho_add").disable = true;
+                    document.getElementById("btn_carrinho_add").style.opacity = "0.5";
+                    document.getElementById("btn_carrinho_add").style.cursor = "default";
+                }
             };
          });
     }
@@ -144,7 +150,12 @@ async function qtdPaginas(nome,tipo,filtro){
         let i = 0;
         let index = objectStore.index(tipo);
         let marcas = [];
-        index.openCursor(IDBKeyRange.only(nome)).onsuccess = (event)=>{
+        if(nome !== "busca"){
+            range = IDBKeyRange.only(nome);
+        }else{
+            range = null;
+        }
+        index.openCursor(range).onsuccess = (event)=>{
             let cursor = event.target.result;
             if(cursor){
                 if(filtro(cursor.value)){
@@ -174,7 +185,13 @@ async function carregaItens(nome,tipo,pag,filtro){
         let cont = 0;
         let produtos = [];
         let index = objectStore.index(tipo);
-        index.openCursor(nome).onsuccess = (event)=>{
+        let range;
+        if(nome !== "busca"){
+            range = IDBKeyRange.only(nome);
+        }else{
+            range = null;
+        }
+        index.openCursor(range).onsuccess = (event)=>{
             let cursor = event.target.result;
             if(cursor){
                 if(filtro(cursor.value)){
@@ -199,19 +216,19 @@ async function carregaItens(nome,tipo,pag,filtro){
 
 function jsonToProduto(json){
     let temp = new Produto(json.nomeComercial,
-                                            json.marca,
-                                            json.categoria,
-                                            json.departamento,
-                                            json.preco,
-                                            json.precoPromocional,
-                                            json.nomeCompleto,
-                                            json.codigo,
-                                            json.qtdEstoque,
-                                            json.lote,
-                                            json.validade,
-                                            json.descricao,
-                                            json.promocao,
-                                            json.imgPath,
-                                            );
+                            json.marca,
+                            json.categoria,
+                            json.departamento,
+                            json.preco,
+                            json.precoPromocional,
+                            json.nomeCompleto,
+                            json.codigo,
+                            json.qtdEstoque,
+                            json.lote,
+                            json.validade,
+                            json.descricao,
+                            json.promocao,
+                            json.imgPath,
+                            );
     return temp;
 }
