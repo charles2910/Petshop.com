@@ -3,7 +3,6 @@
     <aside>
         <div class="nav_menu"><h3><a href="#" onclick="AJAX_navegacao('../conteudos/perfil.html','Meu Perfil',carregaPerfil)">Meus dados</a></h3></div>
         <div class="nav_menu"><h3><a href="#" onclick="AJAX_navegacao('../conteudos/perfil_pedidos.html')">Pedidos</a></h3></div>
-        <div class="nav_menu"><h3><a href="#" onclick="AJAX_navegacao('../conteudos/perfil_servicos.html')">Serviços</a></h3></div>
         <div class="nav_menu"><h3><a href="#">Pets</a></h3></div>
     </aside>
     <div class="conteudo_pets">
@@ -12,140 +11,142 @@
                 <h2>Cadastrar novo Pet</h2>
                 <input type="image" src="../IMAGES/ICONS/add.png" onclick="popupCadastro(true)" >
             </div>
-            <div class="pets_listado" >
-                <h2>Nome do pet</h2><hr>
-                <div class="dados_pet">
-                    <p>Tipo: Tipo de pet</p>
-                    <p>Raça: Raça do pet</p>
-                    <p>Sexo: Sexo do pet</p>
-                    <p>Idade: Idade do pet</p>
-                    <p>Peso: Sexo do pet</p>
-                    <button>Editar</button>
-                    <button onclick='servicoPet(true,"pet01");'>Serviços</button>
-                </div>
-                <div class = "servicos_desc" id="pet01">
-                    <div class="titulo_serv">
-                        <h2>Serviços</h2>
-                        <input onclick='servicoPet(false,"pet01");' type="image" src="../IMAGES/ICONS/fechar.png">
+            <div id = "pets_cliente">
+                <div class="pets_listado" >
+                    <h2>Nome do pet</h2><hr>
+                    <div class="dados_pet">
+                        <p>Tipo: Tipo de pet</p>
+                        <p>Raça: Raça do pet</p>
+                        <p>Sexo: Sexo do pet</p>
+                        <p>Idade: Idade do pet</p>
+                        <p>Peso: Sexo do pet</p>
+                        <button>Editar</button>
+                        <button onclick='servicoPet(true,"pet01");'>Serviços</button>
                     </div>
-                    <hr>
-                    <div class="servicos_pet" id="pet01">
-                        <h3>Serviço 99999</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ -</p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Agendado</p>
+                    <div class = "servicos_desc" id="pet01">
+                        <div class="titulo_serv">
+                            <h2>Serviços</h2>
+                            <input onclick='servicoPet(false,"pet01");' type="image" src="../IMAGES/ICONS/fechar.png">
                         </div>
-                    </div>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99998</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ -</p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Agendado</p>
+                        <hr>
+                        <div class="servicos_pet" id="pet01">
+                            <h3>Serviço 99999</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ -</p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Agendado</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99998</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ 999,99 </p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Concluído</p>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99998</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ -</p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Agendado</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pets_listado" >
-                <h2>Nome do pet</h2><hr>
-                <div class="dados_pet">
-                    <p>Tipo: Tipo de pet</p>
-                    <p>Raça: Raça do pet</p>
-                    <p>Sexo: Sexo do pet</p>
-                    <p>Idade: Idade do pet</p>
-                    <p>Peso: Sexo do pet</p>
-                    <button>Editar</button>
-                    <button onclick='servicoPet(true,"pet02");'>Serviços</button>
-                </div>
-                <div class = "servicos_desc" id="pet02">
-                    <div class="titulo_serv">
-                        <h2>Serviços</h2>
-                        <input onclick='servicoPet(false,"pet02");' type="image" src="../IMAGES/ICONS/fechar.png">
-                    </div>
-                    <hr>
-                    <div class="servicos_pet" id="pet01">
-                        <h3>Serviço 99999</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ -</p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Agendado</p>
-                        </div>
-                    </div>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99998</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ -</p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Agendado</p>
-                        </div>
-                    </div>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99998</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ 999,99 </p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Concluído</p>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99998</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ 999,99 </p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Concluído</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="pets_listado" >
-                <h2>Nome do pet</h2><hr>
-                <div class="dados_pet">
-                    <p>Tipo: Tipo de pet</p>
-                    <p>Raça: Raça do pet</p>
-                    <p>Sexo: Sexo do pet</p>
-                    <p>Idade: Idade do pet</p>
-                    <p>Peso: Sexo do pet</p>
-                    <button>Editar</button>
-                    <button onclick='servicoPet(true,"pet03");'>Serviços</button>
+                <div class="pets_listado" >
+                    <h2>Nome do pet</h2><hr>
+                    <div class="dados_pet">
+                        <p>Tipo: Tipo de pet</p>
+                        <p>Raça: Raça do pet</p>
+                        <p>Sexo: Sexo do pet</p>
+                        <p>Idade: Idade do pet</p>
+                        <p>Peso: Sexo do pet</p>
+                        <button>Editar</button>
+                        <button onclick='servicoPet(true,"pet02");'>Serviços</button>
+                    </div>
+                    <div class = "servicos_desc" id="pet02">
+                        <div class="titulo_serv">
+                            <h2>Serviços</h2>
+                            <input onclick='servicoPet(false,"pet02");' type="image" src="../IMAGES/ICONS/fechar.png">
+                        </div>
+                        <hr>
+                        <div class="servicos_pet" id="pet01">
+                            <h3>Serviço 99999</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ -</p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Agendado</p>
+                            </div>
+                        </div>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99998</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ -</p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Agendado</p>
+                            </div>
+                        </div>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99998</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ 999,99 </p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Concluído</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class = "servicos_desc" id="pet03">
-                    <div class="titulo_serv">
-                        <h2>Serviços</h2>
-                        <input onclick='servicoPet(false,"pet03");' type="image" src="../IMAGES/ICONS/fechar.png">
+                <div class="pets_listado" >
+                    <h2>Nome do pet</h2><hr>
+                    <div class="dados_pet">
+                        <p>Tipo: Tipo de pet</p>
+                        <p>Raça: Raça do pet</p>
+                        <p>Sexo: Sexo do pet</p>
+                        <p>Idade: Idade do pet</p>
+                        <p>Peso: Sexo do pet</p>
+                        <button>Editar</button>
+                        <button onclick='servicoPet(true,"pet03");'>Serviços</button>
                     </div>
-                    <hr>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99999</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ -</p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Agendado</p>
+                    <div class = "servicos_desc" id="pet03">
+                        <div class="titulo_serv">
+                            <h2>Serviços</h2>
+                            <input onclick='servicoPet(false,"pet03");' type="image" src="../IMAGES/ICONS/fechar.png">
                         </div>
-                    </div>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99998</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ -</p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Agendado</p>
+                        <hr>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99999</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ -</p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Agendado</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="servicos_pet">
-                        <h3>Serviço 99998</h3><hr>
-                        <div class="desc_servico">
-                            <p>Nome: Tipo de Serviço</p>
-                            <p>Preço: R$ 999,99 </p>
-                            <p>Data: 31/12/2019</p>
-                            <p>Status: Concluído</p>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99998</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ -</p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Agendado</p>
+                            </div>
+                        </div>
+                        <div class="servicos_pet">
+                            <h3>Serviço 99998</h3><hr>
+                            <div class="desc_servico">
+                                <p>Nome: Tipo de Serviço</p>
+                                <p>Preço: R$ 999,99 </p>
+                                <p>Data: 31/12/2019</p>
+                                <p>Status: Concluído</p>
+                            </div>
                         </div>
                     </div>
                 </div>

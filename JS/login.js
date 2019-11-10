@@ -22,18 +22,20 @@ function login(email1, senha1){
             let user = request.result;
             if(user.senha === senha){
                 if(user.admin === true){
-                    logged = user;
+                    logged = jsonToUser(user);
                     document.getElementById("btn_login").innerText = "Admin";
                     addOpcoesAdmin();
                     popupLogin(false);
                     console.log(user);
+                    writeDbSessao();
                     return true;
                 }else{
-                    logged = user;
+                    logged = jsonToUser(user);
                     console.log(user);
                     document.getElementById("btn_login").innerText = "Perfil";
                     document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");
                     popupLogin(false);
+                    writeDbSessao();
                     return true;
                 }
             }else{
@@ -105,4 +107,22 @@ function validaUndefined(valor){
     else{
         return "";
     }
+}
+
+function jsonToUser(json){
+    return new Cliente(
+        json.nome,
+        json.email,
+        json.celular,
+        json.telefone,
+        json.nascimento,
+        json.cpf,
+        json.senha,
+        json.endereco,
+        json.cartao,
+        json.admin,
+        (json.pets !== undefined) ? json.pets : [],
+        (json.pedidos !== undefined) ? json.pedidos : [],
+        (json.carrinho !== undefined) ? json.carrinho : []
+    );
 }

@@ -1,5 +1,5 @@
 class Cliente{
-    constructor(nome, email, celular,telefone,nascimento,cpf,senha,endereco,cartao,admin){
+    constructor(nome, email, celular,telefone,nascimento,cpf,senha,endereco,cartao,admin,pets,pedidos,carrinho){
         this.nome = nome;
         this.email = email;
         this.celular = celular;
@@ -10,14 +10,23 @@ class Cliente{
         this.senha = senha;
         this.endereco = endereco;
         this.cartao = cartao;
-        this.pets = [];
-        this.pedidos = [];
+        this.pets = pets;
+        this.pedidos = pedidos;
+        this.carrinho = carrinho;
     }
     addPet(pet){
-        this.pets.append(pet);
+        this.pets.push(pet);
+        logged = this;
+        attDbCliente(this);
+        attDbSessao(this);
     }
     addPedido(pedido){
-        this.pedidos.append(pedido);
+        logged = this;
+        this.pedidos.push(pedido);
+    }
+    addCarrinho(produto){
+        logged = this;
+        this.carrinho.push(produto);
     }
 }
 
@@ -42,29 +51,65 @@ class Pagamento{
     }
 }
 
-class pet{
-    constructor(nome,tipo,raca,idade,peso,sexo){
+class Pet{
+    constructor(nome,tipo,raca,idade,peso,sexo,servicos){
         this.nome = nome;
         this.tipo = tipo
         this.raca = raca;
         this.idade = idade;
         this.peso = peso;
         this.sexo = sexo;
-        this.servicos;
+        this.servicos= servicos;
     }
     addServicos(servico){
-        this.servicos.append(servico);
+        this.servicos.push(servico);
+    }
+    petToHtml(){
+        let txt =    "<h2>"+this.nome+"</h2><hr>";
+            txt +=   '<div class="dados_pet">';
+            txt +=       "<p>Tipo: "+this.tipo+"</p>";
+            txt +=       "<p>Raça: "+this.raca+"</p>";
+            txt +=       "<p>Sexo: "+this.sexo+"</p>";
+            txt +=       "<p>Idade: "+this.idade+"</p>";
+            txt +=       "<p>Peso: "+this.peso+"</p>";
+            txt +=       "<button>Editar</button>";
+            txt +=       "<button onclick=\"servicoPet(true,"+"\'id_"+this.nome+"\');\">Serviços</button>";
+            txt +=   "</div>";
+            txt +=   "<div class = 'servicos_desc' id="+"id_"+this.nome+">";
+            txt +=   '<div class="titulo_serv">';
+            txt +=      "<h2>Serviços</h2>";
+            txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="../IMAGES/ICONS/fechar.png">';
+            txt +=      "</div><hr>";
+        for(let i =0; i <this.servicos.length;i++){
+            txt += servico[i].toHtmlCliente();
+        }
+            txt +=   "</div>";
+        return txt;
     }
 }
 
 class servico{
-    constructor(tipoAnimal,nomeAnimal,tipo,data,detalhes,preco){
+    constructor(id,tipoAnimal,nomeAnimal,tipo,data,detalhes,preco,status){
+        this.id = id;
         this.tipoAnimal = tipoAnimal;
         this.nomeAnimal = nomeAnimal;
         this.tipo = tipo;
         this.data = data;
         this.detalhes = detalhes;
         this.preco = preco;
+        this.status = status;
+    }
+
+    toHtmlCliente(){
+        let txt = '<div class="servicos_pet">';
+            txt+= '<h3>Serviço '+this.id+'</h3><hr>';
+            txt+= '<div class="desc_servico">';
+            txt+= ' <p>Nome: '+this.tipo+'</p>';
+            txt+=        '<p>Preço: R$ '+this.preco+'</p>';
+            txt+=        '<p>Data: '+this.data+'</p>';
+            txt+=        '<p>Status: '+this.status+'</p>';
+            txt+=    '</div>';
+            txt+= '</div>';
     }
 }
 

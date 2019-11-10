@@ -70,3 +70,29 @@ function cadastrarProduto(att){
     }
     carregaBanners();
 }
+
+function cadastrarPet(){
+    let pet = new Pet(
+        document.getElementById("nome_pet").value,
+        document.getElementById("tipo_pet").value,
+        document.getElementById("raca_pet").value,
+        parseInt(document.getElementById("idade_pet").value),
+        parseFloat(document.getElementById("peso_pet").value),
+        document.getElementById("sexo_pet").value
+    );
+    console.log(logged);
+    let existe = false;
+    for(let i =0; i < logged.pets.length;i++){
+        if(logged.pets[i].nome === pet.nome){
+            existe = true;
+            break;
+        }
+    }
+    if(!existe){
+        logged.addPet(pet);
+        popupCadastro(false);
+        AJAX_navegacao('../conteudos/pets.html','Meu Perfil',carregaPets);
+    }else{
+        alert("Esse pet já esta cadastrado!");
+    }
+}

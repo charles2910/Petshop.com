@@ -3,6 +3,10 @@ let db_estoque;
 let db_sessao;
 let banners = new Banner();
 
+window.onbeforeunload = () =>{
+    indexedDB.deleteDatabase("sessao");
+}
+
 window.onload = () =>{
     console.log("carregada");
     let loadUsuario = false;
@@ -112,13 +116,35 @@ async function attDbProduto(produto){
         let request = objectStore.put(produto);
         request.onsuccess = (event) =>{
             console.log("sucesso")
-            resolve();
-            return true;
+            resolve(true);
         }
         request.onerror = (event) =>{
             window.alert("Código já cadastrado");
-            reject();
-            return false;
+            reject(false);
+        }
+    });
+}
+
+async function writeDbSessao(){
+    return new Promise( (resolve) => {
+        let transaction = db_sessao.transaction(["sessao"],"readwrite");
+        let objectStore = transaction.objectStore("sessao");
+        let request = objectStore.add(logged);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve(true);
+        }
+    });
+}
+
+async function attDbSessao(){
+    return new Promise( (resolve) => {
+        let transaction = db_sessao.transaction(["sessao"],"readwrite");
+        let objectStore = transaction.objectStore("sessao");
+        let request = objectStore.put(logged);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve(true);
         }
     });
 }

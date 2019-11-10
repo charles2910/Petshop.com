@@ -10,6 +10,7 @@
     <script language="JavaScript" src="../JS/paginaInicial.js"></script>
     <script language="JavaScript" src="../JS/servidor.js"></script>
     <script language="JavaScript" src="../JS/popup.js"></script>
+    <script language="JavaScript" src="../JS/perfil.js"></script>
     <script language="JavaScript" src="../JS/login.js"></script>
     <script language="JavaScript" src="../JS/cadastros.js"></script>
     <link rel="stylesheet" type="text/css" href="../CSS/index4.css"/>
@@ -89,7 +90,7 @@
             </nav>
         </div>
     </header>
-    <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('../conteudos/principal.html','')">Principal</a> > <a id="pagina_atual"></a> </h4>
+    <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('../conteudos/principal.html','',()=>{carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3)})">Principal</a> > <a id="pagina_atual"></a> </h4>
     <div id = "janela_de_conteudo">  
     </div>
     <div id="janela_popup_senha">
@@ -137,26 +138,26 @@
         </form>
     </div>
     <div class="cadastro_form_popup" id="cadastro_form_popup">
-        <form>
+        <form onsubmit="cadastrarPet();return false">
             <div id="janela_login_popup">
                 <label><b>Nome</b></label>
-                <input type="text" placeholder="Nome" required>
+                <input id="nome_pet" type="text" placeholder="Nome" required>
                 <label><b>Tipo</b></label><br>
-                <select>
+                <select id="tipo_pet" required>
                     <option>Cachorro</option>
                     <option>Gato</option>
                     <option>Roedor</option>
                     <option>Passáro</option>
                     <option>Peixe</option>
                 </select><br>
-                <label><b>Raça</b></label>
-                <input type="text"required>
-                <label><b>Idade</b></label><br>
-                <input type="number"required><br>
+                <label><b>Raça</b></label required>
+                <input id="raca_pet" type="text"required>
+                <label><b>Idade</b></label required><br>
+                <input id="idade_pet" type="number" required><br>
                 <label><b>Peso</b></label><br>
-                <input type="number"required><br>
+                <input id="peso_pet" type="number" required><br>
                 <label><b>Sexo</b></label><br>
-                <select>
+                <select id="sexo_pet">
                     <option>Macho</option>
                     <option>Fêmea</option>
                 </select>
