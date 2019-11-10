@@ -18,7 +18,7 @@ function attCarrinho() {
 function addCarrinho() {
     console.log("Entrou novo produto");
     let novoProduto = new Produto(null,null,null,null,null,null,null,null,null,null,null,null,null, null);
-    novoProduto.nomeCompleto = document.getElementById("nome_produto_compra").innerHTML;
+    novoProduto.nomeComercial = document.getElementById("nome_produto_compra").innerHTML;
     novoProduto.preco = document.getElementById("preco_produto").innerHTML.replace("R$", "").replace(",", ".");
     novoProduto.preco = Number(novoProduto.preco);
     carrinho.produtos[carrinho.numProd] = novoProduto;
