@@ -173,11 +173,11 @@ class Produto{
         txt+=   '<div id="detalhes_compra">';
         if(this.promocao){
             txt+=   "<h4>De <del>R$ "+this.preco+"</del> ("+this.precoPromocional+"% de desconto)</h4>";
-            txt+=   '<h2>por</h2> <h1>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h1><h2> à vista</h2><br/>';
+            txt+=   '<h2>por</h2> <h1 id="preco_produto">R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h1><h2> à vista</h2><br/>';
         }else{
-             txt+=  '<h2>Por apenas:</h2> <h1>R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
+             txt+=  '<h2>Por apenas:</h2> <h1 id="preco_produto">R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
         }
-        txt+=   '<button id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        txt+=   '<button id="btn_carrinho_add" onclick="addCarrinho()"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
         txt+=   '</div>';
         return txt;
     }
@@ -233,5 +233,13 @@ class Banner{
         this.geral1=[];
         this.geral2=[];
         this.geral3=[];
+    }
+}
+
+class Carrinho{
+    constructor() {
+        this.produtos = [];
+        this.valorTotal = 0.00;
+        this.numProd = this.produtos.length;
     }
 }
