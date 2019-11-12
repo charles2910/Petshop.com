@@ -27,7 +27,6 @@ function login(email1, senha1){
                     addOpcoesAdmin();
                     popupLogin(false);
                     console.log(user);
-                    writeDbSessao();
                     return true;
                 }else{
                     logged = jsonToUser(user);
@@ -35,7 +34,6 @@ function login(email1, senha1){
                     document.getElementById("btn_login").innerText = "Perfil";
                     document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");
                     popupLogin(false);
-                    writeDbSessao();
                     return true;
                 }
             }else{

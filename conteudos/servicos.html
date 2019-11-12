@@ -2,39 +2,25 @@
         <h1>Seleção de serviços</h1><hr>
         <div id="janela_servicos">
             <form id="form_servico">
-            <h3>Selecione o seu pet</h3>
-            <select>
-                <option>Cachorro</option>
-                <option>Gato</option>
-                <option>Roedor</option>
-                <option>Passáros</option>
-            </select>
-            <h3>Selecione o tipo de serviço</h3>
-            <select>
-                <option>Veterinário</option>
-                <option>Higiene</option>
-            </select>
-            <div>
-                <h3>Agende um dia e horário</h3>
-                <div id="data_hora">
-                    <input id="data" type="date" required>
-                    <select id="hora" required>
-                        <option>8:00</option>
-                        <option>9:00</option>
-                        <option>10:00</option>
-                        <option>11:00</option>
-                        <option>12:00</option>
-                        <option>13:00</option>
-                        <option>14:00</option>
-                        <option>15:00</option>
-                        <option>16:00</option>
-                        <option>17:00</option>
+                <h3>Selecione o seu pet</h3>
+                <select id="select_pet">
                 </select>
+                <h3>Selecione o tipo de serviço</h3>
+                <select id="tipo_servico">
+                    <option>Veterinário</option>
+                    <option>Higiene</option>
+                </select>
+                <div>
+                    <h3>Agende um dia e horário</h3>
+                    <div id="data_hora">
+                        <input id="data" type="date" required>
+                        <select id="hora" required>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <h3>Detalhes sobre seu animal ou sobre o serviço</h3>
-            <textarea id="descricao_servico" placeholder="Ex: Banho e tosa" required></textarea>
-            <button><i class="fa fa-calendar-check-o"></i> Agendar</button>
+                <h3>Detalhes sobre seu animal ou sobre o serviço</h3>
+                <textarea id="descricao_servico" placeholder="Ex: Banho e tosa" required></textarea>
+                <button id="agendar" type="button" ><i class="fa fa-calendar-check-o"></i> Agendar</button>
             </form>
         </div>
         <h2>Especificações dos preços e serviços</h2><hr>

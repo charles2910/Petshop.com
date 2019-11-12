@@ -88,13 +88,13 @@ class Pet{
     }
 }
 
-class servico{
-    constructor(id,tipoAnimal,nomeAnimal,tipo,data,detalhes,preco,status){
+class Servico{
+    constructor(id,tipo,data,hora,detalhes,preco,status){
         this.id = id;
-        this.tipoAnimal = tipoAnimal;
-        this.nomeAnimal = nomeAnimal;
+        this.pet = pet;
         this.tipo = tipo;
         this.data = data;
+        this.hora = hora;
         this.detalhes = detalhes;
         this.preco = preco;
         this.status = status;
@@ -240,5 +240,16 @@ class Carrinho{
         this.produtos = [];
         this.valorTotal = 0.00;
         this.numProd = this.produtos.length;
+    }
+}
+
+class DiasDisponiveis{
+    constructor(data){
+        this.data = data;
+        this.horarios= ["8:00","9:00","10:00","11:00","12:00",
+                        "13:00","14:00","15:00","16:00","17:00"]
+    }
+    ocupaHorario(horario){
+        this.horarios.splice(this.horarios.indexOf(horario),1);
     }
 }
