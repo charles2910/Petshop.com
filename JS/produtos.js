@@ -74,15 +74,13 @@ function configBotoes(){
     let btn4 = document.getElementById("btn_4");
     let btn5 = document.getElementById("btn_5");
     let btn6 = document.getElementById("btn_6");
-    for(let i=1 ; i<7;i++){
-        if(lista.pag > 2 && parseInt(btn6.textContent)<lista.qtdTotalPaginas+1){
-            btn1.textContent = parseInt(btn1.textContent) + 1;
-            btn2.textContent = parseInt(btn2.textContent) + 1;
-            btn3.textContent = parseInt(btn3.textContent) + 1;
-            btn4.textContent = parseInt(btn4.textContent) + 1;
-            btn5.textContent = parseInt(btn5.textContent) + 1;
-            btn6.textContent = parseInt(btn6.textContent) + 1;
-        }
+    while(parseInt(btn6.textContent) <= lista.qtdTotalPaginas && parseInt(btn3.textContent) <= lista.pag){
+        btn1.textContent = parseInt(btn1.textContent) + 1;
+        btn2.textContent = parseInt(btn2.textContent) + 1;
+        btn3.textContent = parseInt(btn3.textContent) + 1;
+        btn4.textContent = parseInt(btn4.textContent) + 1;
+        btn5.textContent = parseInt(btn5.textContent) + 1;
+        btn6.textContent = parseInt(btn6.textContent) + 1;
     }
     for(let i=1 ; i<7;i++){
         if(parseInt(document.getElementById("btn_"+i).textContent) === lista.pag+1){
