@@ -8,11 +8,11 @@ function attCarrinho() {
         return "Carrinho vazio";
     }
     carrinho.valorTotal = 0.00;
+    carrinho.numProd  = 0;
     carrinho.produtos.forEach(element => {
         carrinho.valorTotal += element.preco * element.qtdCarrinho;
+        carrinho.numProd += element.qtdCarrinho;
     });
-
-    carrinho.numProd = carrinho.produtos.length;
 };
 
 function addCarrinho() {
@@ -35,6 +35,19 @@ function addCarrinho() {
         carrinho.produtos[carrinho.numProd] = novoProduto;
     }
     attCarrinho();
+}
+
+function changeCarrinho(id, value) {
+    let prod = id.replace("carrinho_qtd", " ");
+    prod = prod.trim();
+    carrinho.produtos.forEach((produto) => {
+        if (produto.nomeComercial === prod) {
+            produto.qtdCarrinho = value;
+            console.log(produto.qtdCarrinho);
+        }        
+    });
+    attCarrinho();
+    carregarCarrinho();
 }
 
 function carregarCarrinho() {
@@ -61,7 +74,7 @@ function toCarrinhoHTML(produto){
     txt+=         '<td><img src="'+ produto.imgPath +'"></td>';
     txt+=         '<td><p>'+produto.nomeComercial+'</p></td>';
     txt+=         '<td>';
-    txt+=            '<select>';
+    txt+=            '<select id="carrinho_qtd' + produto.nomeComercial +'" onchange="changeCarrinho(id, value)">';
     for(i = 1; i <= 10 /*produto.qtdEstoque*/; i++) {
         txt +=                '<option value="' + i + '" '
         if (i === produto.qtdCarrinho)
@@ -71,7 +84,7 @@ function toCarrinhoHTML(produto){
     txt+=            '</select>';
     txt+=        '</td>';
     txt+=        '<td>R$ ' + produto.preco + '</td>';
-    txt+=        '<td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+    txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id" type="image" src="../IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
 }
