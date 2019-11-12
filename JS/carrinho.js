@@ -1,10 +1,8 @@
 let carrinho = new Carrinho();
-console.log("Abriu");
 
 function attCarrinho() {
     carrinho.numProd = carrinho.produtos.length;
     if (carrinho === undefined || carrinho === null || carrinho.numProd === 0) {
-        console.log("Carrinho vazio");
         return "Carrinho vazio";
     }
     carrinho.valorTotal = 0.00;
@@ -16,7 +14,6 @@ function attCarrinho() {
 };
 
 function addCarrinho() {
-    console.log("Entrou novo produto");
     let novoProduto = new Produto(null,null,null,null,null,null,null,null,null,null,null,null,null, null);
     novoProduto.nomeComercial = document.getElementById("nome_produto_compra").innerHTML;
     novoProduto.imgPath = document.getElementById("imagem_produto").getAttribute("src");
@@ -43,7 +40,6 @@ function changeCarrinho(id, value) {
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
             produto.qtdCarrinho = value;
-            console.log(produto.qtdCarrinho);
         }        
     });
     attCarrinho();
@@ -56,7 +52,6 @@ function removerProduto(id) {
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
             produto.qtdCarrinho = 0;
-            console.log(produto.qtdCarrinho);
         }        
     });
     carrinho.produtos = carrinho.produtos.filter((element) => {
@@ -79,7 +74,7 @@ function carregarCarrinho() {
    
     txt += '<tr class="item_carrinho"><td><h2>Total:</h2></td><td></td>';
     if (carrinho.numProd === 0) {
-        txt += '<td id="carrinho_num_itens">Carrinhos vazio</td>';
+        txt += '<td id="carrinho_num_itens">Carrinho vazio</td>';
     } else {
         txt += '<td id="carrinho_num_itens">' + carrinho.numProd + '</td>';
     }
