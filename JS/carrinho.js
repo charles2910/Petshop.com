@@ -8,11 +8,11 @@ function attCarrinho() {
         return "Carrinho vazio";
     }
     carrinho.valorTotal = 0.00;
+    carrinho.numProd  = 0;
     carrinho.produtos.forEach(element => {
-        carrinho.valorTotal += element.preco;
+        carrinho.valorTotal += element.preco * element.qtdCarrinho;
+        carrinho.numProd += element.qtdCarrinho;
     });
-
-    carrinho.numProd = carrinho.produtos.length;
 };
 
 function addCarrinho() {
@@ -22,8 +22,51 @@ function addCarrinho() {
     novoProduto.imgPath = document.getElementById("imagem_produto").getAttribute("src");
     novoProduto.preco = document.getElementById("preco_produto").innerHTML.replace("R$", "").replace(",", ".");
     novoProduto.preco = Number(novoProduto.preco);
-    carrinho.produtos[carrinho.numProd] = novoProduto;
+    let indice = -1;
+    carrinho.produtos.forEach((produto, index) => {
+        if (produto.nomeComercial === novoProduto.nomeComercial) {
+            indice = index;
+        }        
+    });
+    if (indice >= 0) {
+        carrinho.produtos[indice].qtdCarrinho += 1;
+    } else {
+        novoProduto.qtdCarrinho = 1;
+        carrinho.produtos[carrinho.numProd] = novoProduto;
+    }
     attCarrinho();
+}
+
+function changeCarrinho(id, value) {
+    let prod = id.replace("carrinho_qtd", " ");
+    prod = prod.trim();
+    carrinho.produtos.forEach((produto) => {
+        if (produto.nomeComercial === prod) {
+            produto.qtdCarrinho = value;
+            console.log(produto.qtdCarrinho);
+        }        
+    });
+    attCarrinho();
+    carregarCarrinho();
+}
+
+function removerProduto(id) {
+    let prod = id.replace("carrinho_remover", " ");
+    prod = prod.trim();
+    carrinho.produtos.forEach((produto) => {
+        if (produto.nomeComercial === prod) {
+            produto.qtdCarrinho = 0;
+            console.log(produto.qtdCarrinho);
+        }        
+    });
+    carrinho.produtos = carrinho.produtos.filter((element) => {
+        if (element.qtdCarrinho > 0)
+            return true;
+        else
+            return false;
+    })
+    attCarrinho();
+    carregarCarrinho();
 }
 
 function carregarCarrinho() {
@@ -50,16 +93,17 @@ function toCarrinhoHTML(produto){
     txt+=         '<td><img src="'+ produto.imgPath +'"></td>';
     txt+=         '<td><p>'+produto.nomeComercial+'</p></td>';
     txt+=         '<td>';
-    txt+=            '<select>';
-    txt+=                '<option value="1">1</option>';
-    txt+=                '<option value="2">2</option>';
-    txt+=                '<option value="3">3</option>';
-    txt+=                '<option value="4">4</option>';
-    txt+=                '<option value="5">5</option>';
+    txt+=            '<select id="carrinho_qtd' + produto.nomeComercial +'" onchange="changeCarrinho(id, value)">';
+    for(i = 1; i <= 10 /*produto.qtdEstoque*/; i++) {
+        txt +=                '<option value="' + i + '" '
+        if (i === produto.qtdCarrinho)
+            txt += ' selected ';
+        txt +=                '>' + i + '</option>';
+    }
     txt+=            '</select>';
     txt+=        '</td>';
-    txt+=        '<td>R$ '+produto.preco+'</td>';
-    txt+=        '<td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+    txt+=        '<td>R$ ' + produto.preco + '</td>';
+    txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="../IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
 }
