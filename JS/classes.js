@@ -168,7 +168,7 @@ class Produto{
 
     toCompraHtml(){
         let txt = '<div id = "img_compra" class="img_produto_compra">';
-        txt+=   '<img src="'+this.imgPath+'">'; 
+        txt+=   '<img id="imagem_produto" src="'+this.imgPath+'">'; 
         txt+=   '</div>';
         txt+=   '<div id="detalhes_compra">';
         if(this.promocao){
@@ -205,7 +205,6 @@ class Produto{
         txt+=    '</tr>'
         return txt;
     }
-
 }
 
 class Pedido{
