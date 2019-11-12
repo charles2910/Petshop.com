@@ -1,6 +1,6 @@
 let db_clientes;
 let db_estoque;
-let db_datas;
+let db_agendamentos;
 let db_servicos;
 let banners = new Banner();
 
@@ -50,17 +50,17 @@ window.onload = () =>{
         loadEstoque = true;
     }
 
-    let request3 = window.indexedDB.open("datas",1);
+    let request3 = window.indexedDB.open("agendamentos",1);
     request3.onsuccess = (event)=>{
-        db_datas = request3.result;
+        db_agendamentos = request3.result;
     }
     request3.onupgradeneeded = (event) =>{
-        db_datas = event.target.result;
-        let objectStore = db_datas.createObjectStore("datas",{keyPath: "data"});
+        db_agendamentos = event.target.result;
+        let objectStore = db_agendamentos.createObjectStore("agendamentos",{keyPath: "data"});
         objectStore.createIndex("data","data",{unique: true});
     }
 
-    let request4 = window.indexedDB.open("datas",1);
+    let request4 = window.indexedDB.open("servicos",1);
     request4.onsuccess = (event)=>{
         db_servicos = request4.result;
     }
@@ -100,10 +100,22 @@ async function attDbCliente(cliente){
 }
 
 async function writeDbServico(servico){
-    return await new Promise( (resolve,reject) => {
+    return await new Promise( (resolve) => {
         let transaction = db_servicos.transaction(["servicos"],"readwrite");
         let objectStore = transaction.objectStore("servicos");
-        let request = objectStore.put(cliente);
+        let request = objectStore.put(servico);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve(true);
+        }
+    });
+}
+
+async function writeDbData(data){
+    return await new Promise( (resolve) => {
+        let transaction = db_agendamentos.transaction(["agendamentos"],"readwrite");
+        let objectStore = transaction.objectStore("agendamentos");
+        let request = objectStore.put(data);
         request.onsuccess = (event) =>{
             console.log("sucesso")
             resolve(true);

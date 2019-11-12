@@ -89,7 +89,7 @@ class Pet{
 }
 
 class Servico{
-    constructor(id,tipo,data,hora,detalhes,preco,status){
+    constructor(id,tipo,pet,data,hora,detalhes,preco,status){
         this.id = id;
         this.pet = pet;
         this.tipo = tipo;
@@ -243,7 +243,7 @@ class Carrinho{
     }
 }
 
-class DiasDisponiveis{
+class Agendamento{
     constructor(data){
         this.data = data;
         this.horarios= ["8:00","9:00","10:00","11:00","12:00",

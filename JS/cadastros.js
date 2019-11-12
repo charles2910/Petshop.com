@@ -81,7 +81,6 @@ function cadastrarPet(){
         parseFloat(document.getElementById("peso_pet").value),
         document.getElementById("sexo_pet").value
     );
-    console.log(logged);
     let existe = false;
     for(let i =0; i < logged.pets.length;i++){
         if(logged.pets[i].nome === pet.nome){
