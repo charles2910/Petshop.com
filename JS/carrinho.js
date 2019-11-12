@@ -50,6 +50,25 @@ function changeCarrinho(id, value) {
     carregarCarrinho();
 }
 
+function removerProduto(id) {
+    let prod = id.replace("carrinho_remover", " ");
+    prod = prod.trim();
+    carrinho.produtos.forEach((produto) => {
+        if (produto.nomeComercial === prod) {
+            produto.qtdCarrinho = 0;
+            console.log(produto.qtdCarrinho);
+        }        
+    });
+    carrinho.produtos = carrinho.produtos.filter((element) => {
+        if (element.qtdCarrinho > 0)
+            return true;
+        else
+            return false;
+    })
+    attCarrinho();
+    carregarCarrinho();
+}
+
 function carregarCarrinho() {
     let txt = '<div id="conteudo_carrinho"><h1>Meu carrinho</h1><hr><table>  <tr><th>Produto</th><th>Nome</th><th>Quantidade</th><th>Preço</th><th>Remover</th></tr>';
 
@@ -84,7 +103,7 @@ function toCarrinhoHTML(produto){
     txt+=            '</select>';
     txt+=        '</td>';
     txt+=        '<td>R$ ' + produto.preco + '</td>';
-    txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id" type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+    txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="../IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
 }
