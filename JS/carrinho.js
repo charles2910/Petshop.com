@@ -9,7 +9,7 @@ function attCarrinho() {
     }
     carrinho.valorTotal = 0.00;
     carrinho.produtos.forEach(element => {
-        carrinho.valorTotal += element.preco;
+        carrinho.valorTotal += element.preco * element.qtdCarrinho;
     });
 
     carrinho.numProd = carrinho.produtos.length;
@@ -22,7 +22,18 @@ function addCarrinho() {
     novoProduto.imgPath = document.getElementById("imagem_produto").getAttribute("src");
     novoProduto.preco = document.getElementById("preco_produto").innerHTML.replace("R$", "").replace(",", ".");
     novoProduto.preco = Number(novoProduto.preco);
-    carrinho.produtos[carrinho.numProd] = novoProduto;
+    let indice = -1;
+    carrinho.produtos.forEach((produto, index) => {
+        if (produto.nomeComercial === novoProduto.nomeComercial) {
+            indice = index;
+        }        
+    });
+    if (indice >= 0) {
+        carrinho.produtos[indice].qtdCarrinho += 1;
+    } else {
+        novoProduto.qtdCarrinho = 1;
+        carrinho.produtos[carrinho.numProd] = novoProduto;
+    }
     attCarrinho();
 }
 
@@ -51,14 +62,15 @@ function toCarrinhoHTML(produto){
     txt+=         '<td><p>'+produto.nomeComercial+'</p></td>';
     txt+=         '<td>';
     txt+=            '<select>';
-    txt+=                '<option value="1">1</option>';
-    txt+=                '<option value="2">2</option>';
-    txt+=                '<option value="3">3</option>';
-    txt+=                '<option value="4">4</option>';
-    txt+=                '<option value="5">5</option>';
+    for(i = 1; i <= 10 /*produto.qtdEstoque*/; i++) {
+        txt +=                '<option value="' + i + '" '
+        if (i === produto.qtdCarrinho)
+            txt += ' selected ';
+        txt +=                '>' + i + '</option>';
+    }
     txt+=            '</select>';
     txt+=        '</td>';
-    txt+=        '<td>R$ '+produto.preco+'</td>';
+    txt+=        '<td>R$ ' + produto.preco + '</td>';
     txt+=        '<td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
