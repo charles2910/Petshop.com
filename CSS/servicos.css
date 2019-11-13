@@ -17,21 +17,25 @@ div#conteudo_servicos{
     margin-right: 15%;
 }
 
+div#conteudo_servicos h3{
+    border-bottom: 2px solid lightgray;
+}
+
 div#conteudo_servicos div#janela_servicos form{
     background-color: #f2f2f2;
     border: 1px solid #ccc;
     padding: 15px;
     display: flex;
+    margin-right: 20%;
+    margin-left: 20%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: right;
     min-width: 250px;
-    align-items: center;
-    margin-right: 25%;
-    margin-left: 25%
+    align-items: right;
 }
 
 div#conteudo_servicos textarea{
-    width: 40%;
+    width: 95%;
     height: 20px;
     margin-bottom: 20px;
     padding: 12px;
@@ -40,7 +44,6 @@ div#conteudo_servicos textarea{
 }
 
 div#conteudo_servicos textarea#descricao_servico{
-    width: 80%;
     min-width: 200px;
     height: 200px;
 }
@@ -49,7 +52,8 @@ div#conteudo_servicos button{
     height: 60px;
     background-color: yellow;
     color: black;
-    margin: 20px;
+    margin-right: 10%;
+    margin-left: 10%;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -58,7 +62,33 @@ div#conteudo_servicos button{
     opacity: 0.8;
 }
 
+div#data_hora{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    min-width: 250px;
+    align-items: right;
+    align-content: center;
+}
 
 div#conteudo_servicos button:hover{
     opacity: 1;
+}
+
+div#janela_servicos select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+div#janela_servicos input{
+    height: 40px;
+}
+
+div#janela_servicos select#hora{
+    margin-top: 0px;
+    margin-left: 20px;
+    width: 30%;
 }

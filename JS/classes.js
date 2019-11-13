@@ -88,13 +88,13 @@ class Pet{
     }
 }
 
-class servico{
-    constructor(id,tipoAnimal,nomeAnimal,tipo,data,detalhes,preco,status){
+class Servico{
+    constructor(id,tipo,data,hora,detalhes,preco,status){
         this.id = id;
-        this.tipoAnimal = tipoAnimal;
-        this.nomeAnimal = nomeAnimal;
+        this.pet = pet;
         this.tipo = tipo;
         this.data = data;
+        this.hora = hora;
         this.detalhes = detalhes;
         this.preco = preco;
         this.status = status;
@@ -168,16 +168,16 @@ class Produto{
 
     toCompraHtml(){
         let txt = '<div id = "img_compra" class="img_produto_compra">';
-        txt+=   '<img src="'+this.imgPath+'">'; 
+        txt+=   '<img id="imagem_produto" src="'+this.imgPath+'">'; 
         txt+=   '</div>';
         txt+=   '<div id="detalhes_compra">';
         if(this.promocao){
             txt+=   "<h4>De <del>R$ "+this.preco+"</del> ("+this.precoPromocional+"% de desconto)</h4>";
-            txt+=   '<h2>por</h2> <h1>R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h1><h2> à vista</h2><br/>';
+            txt+=   '<h2>por</h2> <h1 id="preco_produto">R$ '+(this.preco*((100-this.precoPromocional)/100)).toFixed(2)+'</h1><h2> à vista</h2><br/>';
         }else{
-             txt+=  '<h2>Por apenas:</h2> <h1>R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
+             txt+=  '<h2>Por apenas:</h2> <h1 id="preco_produto">R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
         }
-        txt+=   '<button id="btn_carrinho_add"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        txt+=   '<button id="btn_carrinho_add" onclick="addCarrinho()"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
         txt+=   '</div>';
         return txt;
     }
@@ -205,7 +205,6 @@ class Produto{
         txt+=    '</tr>'
         return txt;
     }
-
 }
 
 class Pedido{
@@ -233,5 +232,24 @@ class Banner{
         this.geral1=[];
         this.geral2=[];
         this.geral3=[];
+    }
+}
+
+class Carrinho{
+    constructor() {
+        this.produtos = [];
+        this.valorTotal = 0.00;
+        this.numProd = this.produtos.length;
+    }
+}
+
+class DiasDisponiveis{
+    constructor(data){
+        this.data = data;
+        this.horarios= ["8:00","9:00","10:00","11:00","12:00",
+                        "13:00","14:00","15:00","16:00","17:00"]
+    }
+    ocupaHorario(horario){
+        this.horarios.splice(this.horarios.indexOf(horario),1);
     }
 }

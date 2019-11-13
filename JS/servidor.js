@@ -1,6 +1,7 @@
 let db_clientes;
 let db_estoque;
-let db_sessao;
+let db_datas;
+let db_servicos;
 let banners = new Banner();
 
 window.onbeforeunload = () =>{
@@ -49,14 +50,24 @@ window.onload = () =>{
         loadEstoque = true;
     }
 
-    let request3 = window.indexedDB.open("sessao",1);
+    let request3 = window.indexedDB.open("datas",1);
     request3.onsuccess = (event)=>{
-        db_sessao = request3.result;
+        db_datas = request3.result;
     }
     request3.onupgradeneeded = (event) =>{
-        db_sessao = event.target.result;
-        let objectStore = db_sessao.createObjectStore("sessao",{keyPath: "email"});
-        objectStore.createIndex("email","email",{unique: true});
+        db_datas = event.target.result;
+        let objectStore = db_datas.createObjectStore("datas",{keyPath: "data"});
+        objectStore.createIndex("data","data",{unique: true});
+    }
+
+    let request4 = window.indexedDB.open("datas",1);
+    request4.onsuccess = (event)=>{
+        db_servicos = request4.result;
+    }
+    request4.onupgradeneeded = (event) =>{
+        db_servicos = event.target.result;
+        let objectStore = db_servicos.createObjectStore("servicos",{keyPath: "id"});
+        objectStore.createIndex("id","id",{unique: true});
     }
 }
 
@@ -85,9 +96,17 @@ async function attDbCliente(cliente){
             console.log("sucesso")
             resolve(true);
         }
-        request.onerror = (event) =>{
-            window.alert("Email já cadastrado");
-            reject(false);
+    });
+}
+
+async function writeDbServico(servico){
+    return await new Promise( (resolve,reject) => {
+        let transaction = db_servicos.transaction(["servicos"],"readwrite");
+        let objectStore = transaction.objectStore("servicos");
+        let request = objectStore.put(cliente);
+        request.onsuccess = (event) =>{
+            console.log("sucesso")
+            resolve(true);
         }
     });
 }
@@ -115,34 +134,6 @@ async function attDbProduto(produto){
         let transaction = db_estoque.transaction(["estoque"],"readwrite");
         let objectStore = transaction.objectStore("estoque");
         let request = objectStore.put(produto);
-        request.onsuccess = (event) =>{
-            console.log("sucesso")
-            resolve(true);
-        }
-        request.onerror = (event) =>{
-            window.alert("Código já cadastrado");
-            reject(false);
-        }
-    });
-}
-
-async function writeDbSessao(){
-    return new Promise( (resolve) => {
-        let transaction = db_sessao.transaction(["sessao"],"readwrite");
-        let objectStore = transaction.objectStore("sessao");
-        let request = objectStore.add(logged);
-        request.onsuccess = (event) =>{
-            console.log("sucesso")
-            resolve(true);
-        }
-    });
-}
-
-async function attDbSessao(){
-    return new Promise( (resolve) => {
-        let transaction = db_sessao.transaction(["sessao"],"readwrite");
-        let objectStore = transaction.objectStore("sessao");
-        let request = objectStore.put(logged);
         request.onsuccess = (event) =>{
             console.log("sucesso")
             resolve(true);

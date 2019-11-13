@@ -13,6 +13,8 @@
     <script language="JavaScript" src="../JS/perfil.js"></script>
     <script language="JavaScript" src="../JS/login.js"></script>
     <script language="JavaScript" src="../JS/cadastros.js"></script>
+    <script language="JavaScript" src="../JS/carrinho.js"></script>
+    <script language="JavaScript" src="../JS/servicos.js"></script>
     <link rel="stylesheet" type="text/css" href="../CSS/index4.css"/>
     <link rel="stylesheet" type="text/css" href="../CSS/chatPopup.css"/>
     <link rel="stylesheet" type="text/css" href="../CSS/cabecalho.css"/>
@@ -50,7 +52,7 @@
             </div>
             <div class="btn_padrao">
                 <img src="../IMAGES/ICONS/carrinho.png"/>
-                <button id="btn_carrinho" onclick="AJAX_navegacao('../conteudos/carrinho.html','Carrinho')">Meu carrinho</button>
+                <button id="btn_carrinho" onclick="carregarCarrinho()">Meu carrinho</button>
             </div>
             <div id = "botoes_superior">
                 <nav id= "btns_superiores">
@@ -74,7 +76,7 @@
                             <a href="#" onclick='AJAX_listas("Brinquedos","departamento")'><p>Brinquedos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                             <a href="#" onclick='AJAX_listas("Saúde","departamento")'><p>Saúde<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                             <a href="#" onclick='AJAX_listas("Alimentos","departamento")'><p>Alimentos<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
-                            <a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html","Serviços")'><p>Serviços<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
+                            <a href="#" onclick='AJAX_navegacao("../conteudos/servicos.html","Serviços",carregarServicos)'><p>Serviços<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                             <a href="#" onclick='AJAX_listas("Higiene","departamento")'><p>Higiene<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                             <a href="#" onclick='AJAX_listas("Acessórios","departamento")'><p>Acessórios<img src="../IMAGES/ICONS/right_arrow.png"/></p></a>
                         </div>
@@ -85,7 +87,7 @@
                     <li id="li3" onclick='AJAX_listas("Roedores","categoria"); navaegacaoInterativa("li3")'><a href="#">Roedores</a></li>
                     <li id="li4" onclick='AJAX_listas("Passáros","categoria"); navaegacaoInterativa("li4")'><a href="#">Passáros</a></li>
                     <li id="li5" onclick='AJAX_listas("Peixes","categoria"); navaegacaoInterativa("li5")'><a href="#">Peixes</a></li>
-                    <li id="li6" onclick='AJAX_navegacao("../conteudos/servicos.html","Serviços"); navaegacaoInterativa("li6")'><a href="#">Serviços</a></li>
+                    <li id="li6" onclick='AJAX_navegacao("../conteudos/servicos.html","Serviços",carregarServicos); navaegacaoInterativa("li6")'><a href="#">Serviços</a></li>
                 </ul>
             </nav>
         </div>
