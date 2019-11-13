@@ -189,7 +189,12 @@ class Produto{
         }else{
              txt+=  '<h2>Por apenas:</h2> <h1 id="preco_produto">R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
         }
-        txt+=   '<button id="btn_carrinho_add" onclick="addCarrinho()"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        if(this.qtdEstoque !== 0){
+            txt+=   '<button id=\"btn_carrinho_add\" onclick=\"addCarrinho(\''+this.codigo+'\')\"><i class=\"fa fa-cart-plus\"></i> Adicionar ao carrinho</button>';
+        }else{
+            txt+=   '<button id=\"btn_carrinho_add\" onclick=\"alert(\'Produto esgotado!\')\"><i class=\"fa fa-cart-plus\"></i> Adicionar ao carrinho</button>';
+
+        }
         txt+=   '</div>';
         return txt;
     }
@@ -220,12 +225,11 @@ class Produto{
 }
 
 class Pedido{
-    constructor(imagem,nome,qtd,preco,entrega){
-        this.imagem = imagem;
-        this.nome = nome;
-        this.qtd = qtd;
-        this.preco = preco;
+    constructor(produtos,entrega,precoTotal,qtdItens){
+        this.produtos = produtos;
         this.entrega = entrega;
+        this.precoTotal = precoTotal;
+        this.qtdItens = qtdItens;
     }
 }
 

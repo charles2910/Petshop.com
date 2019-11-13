@@ -12,27 +12,29 @@ function attCarrinho() {
         console.log(carrinho.numProd + "+=" + element.qtdCarrinho);
         carrinho.numProd += element.qtdCarrinho;
     });
+    if(carrinho.numProd <1){
+
+    }
 };
 
-function addCarrinho() {
-    let novoProduto = new Produto(null,null,null,null,null,null,null,null,null,null,null,null,null, null);
-    novoProduto.nomeComercial = document.getElementById("nome_produto_compra").innerHTML;
-    novoProduto.imgPath = document.getElementById("imagem_produto").getAttribute("src");
-    novoProduto.preco = document.getElementById("preco_produto").innerHTML.replace("R$", "").replace(",", ".");
-    novoProduto.preco = Number(novoProduto.preco);
-    let indice = -1;
-    carrinho.produtos.forEach((produto, index) => {
-        if (produto.nomeComercial === novoProduto.nomeComercial) {
-            indice = index;
-        }        
-    });
-    if (indice >= 0) {
-        carrinho.produtos[indice].qtdCarrinho += 1;
-    } else {
-        novoProduto.qtdCarrinho = 1;
-        carrinho.produtos[carrinho.produtos.length] = novoProduto;
+function addCarrinho(codigo) {
+    let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
+    request.onsuccess = function(event) {
+        novoProduto = jsonToProduto(request.result);
+        let indice = -1;
+        carrinho.produtos.forEach((produto, index) => {
+            if (produto.nomeComercial === novoProduto.nomeComercial) {
+                indice = index;
+            }        
+        });
+        if (indice >= 0) {
+            carrinho.produtos[indice].qtdCarrinho += 1;
+        } else {
+            novoProduto.qtdCarrinho = 1;
+            carrinho.produtos[carrinho.produtos.length] = novoProduto;
+        }
+        attCarrinho();
     }
-    attCarrinho();
 }
 
 function changeCarrinho(id, value) {
@@ -76,11 +78,12 @@ function carregarCarrinho() {
     txt += '<tr class="item_carrinho"><td><h2>Total:</h2></td><td></td>';
     if (carrinho.numProd === 0) {
         txt += '<td id="carrinho_num_itens">Carrinho vazio</td>';
+        txt += '<td  id="carrinho_valor_total">R$ ' + "00.00" + '</td>'
     } else {
         txt += '<td id="carrinho_num_itens">' + carrinho.numProd + '</td>';
+        txt += '<td  id="carrinho_valor_total">R$ ' + carrinho.valorTotal.toFixed(2) + '</td>'
     }
-    txt += '<td  id="carrinho_valor_total">R$ ' + carrinho.valorTotal.toFixed(2) + '</td>'
-    txt += '<td></td></tr></table><button id="carrinho_finalizar_compra">Finalizar compra</button></div>';
+    txt += '<td></td></tr></table><button onclick="finalizarCompra()" id="carrinho_finalizar_compra">Finalizar compra</button></div>';
     document.getElementById("janela_de_conteudo").innerHTML = txt;
 }
 
@@ -102,4 +105,19 @@ function toCarrinhoHTML(produto){
     txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="../IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
+}
+
+function finalizarCompra(){
+    if(logged === undefined){
+        alert("Você precisa estar logado para finalizar a compra");
+    }else if(carrinho.numProd <1){
+        alert("Adicione algo no carrinho");
+    }else{
+        logged.pedidos.push(new Pedido(carrinho.produtos,"Pendente",carrinho.valorTotal,carrinho.numProd));
+        attDbCliente(logged);
+        carrinho.produtos = [];
+        attCarrinho();
+        carregarCarrinho();
+        alert("Compra concluída com sucesso!");
+    }
 }
