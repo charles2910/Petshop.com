@@ -214,21 +214,3 @@ async function carregaItens(nome,tipo,pag,filtro){
     });
 }
 
-function jsonToProduto(json){
-    let temp = new Produto(json.nomeComercial,
-                            json.marca,
-                            json.categoria,
-                            json.departamento,
-                            json.preco,
-                            json.precoPromocional,
-                            json.nomeCompleto,
-                            json.codigo,
-                            json.qtdEstoque,
-                            json.lote,
-                            json.validade,
-                            json.descricao,
-                            json.promocao,
-                            json.imgPath,
-                            );
-    return temp;
-}

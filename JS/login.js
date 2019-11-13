@@ -106,21 +106,3 @@ function validaUndefined(valor){
         return "";
     }
 }
-
-function jsonToUser(json){
-    return new Cliente(
-        json.nome,
-        json.email,
-        json.celular,
-        json.telefone,
-        json.nascimento,
-        json.cpf,
-        json.senha,
-        json.endereco,
-        json.cartao,
-        json.admin,
-        (json.pets !== undefined) ? json.pets : [],
-        (json.pedidos !== undefined) ? json.pedidos : [],
-        (json.carrinho !== undefined) ? json.carrinho : []
-    );
-}

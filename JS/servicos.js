@@ -38,6 +38,7 @@ function carregarServicos(){
                     break;
                 }
             }
+            pet_cliente = jsonToPet(pet_cliente);
             let servico = new Servico(
                 id,
                 document.getElementById("tipo_servico").value,
@@ -48,11 +49,21 @@ function carregarServicos(){
                 "-",
                 "Agendado"
             )
+            pet_cliente.addServicos(servico);
+            logged.attPet(pet_cliente);
+            attDbCliente(logged);
             await writeDbServico(servico);
             let agendamento = new Agendamento(data);
             agendamento.horarios = horarios; 
             agendamento.ocupaHorario(hora);
             await writeDbData(agendamento);
+            carregarServicos();
+            alert("Serviço agendado com sucesso!");
+            banners.geral1,banners.geral2
+            AJAX_navegacao("../conteudos/principal.html","",()=>{
+                carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3);
+            }); 
+            navaegacaoInterativa("li0");
             return false;
         }   
        

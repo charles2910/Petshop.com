@@ -18,7 +18,6 @@ class Cliente{
         this.pets.push(pet);
         logged = this;
         attDbCliente(this);
-        attDbSessao(this);
     }
     addPedido(pedido){
         logged = this;
@@ -27,6 +26,18 @@ class Cliente{
     addCarrinho(produto){
         logged = this;
         this.carrinho.push(produto);
+    }
+
+    attPet(pet){
+        console.log(pet);
+        for(let i=0; i< this.pets.length;i++){
+            if(this.pets[i].nome === pet.nome){
+                this.pets.splice(i,1);
+                this.pets.push(pet);
+                break;
+            }
+        }
+        console.log(this);
     }
 }
 
@@ -81,7 +92,9 @@ class Pet{
             txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="../IMAGES/ICONS/fechar.png">';
             txt +=      "</div><hr>";
         for(let i =0; i <this.servicos.length;i++){
-            txt += servico[i].toHtmlCliente();
+            console.log(jsonToServico(this.servicos[i]).toHtmlCliente());
+            console.log(jsonToServico(this.servicos[i]));
+            txt += jsonToServico(this.servicos[i]).toHtmlCliente();
         }
             txt +=   "</div>";
         return txt;
@@ -101,6 +114,7 @@ class Servico{
     }
 
     toHtmlCliente(){
+        console.log(this.id);
         let txt = '<div class="servicos_pet">';
             txt+= '<h3>Serviço '+this.id+'</h3><hr>';
             txt+= '<div class="desc_servico">';
@@ -110,6 +124,7 @@ class Servico{
             txt+=        '<p>Status: '+this.status+'</p>';
             txt+=    '</div>';
             txt+= '</div>';
+            return txt;
     }
 }
 
@@ -252,4 +267,66 @@ class Agendamento{
     ocupaHorario(horario){
         this.horarios.splice(this.horarios.indexOf(horario),1);
     }
+}
+
+function jsonToServico(json){
+    return new Servico(
+    json.id,
+    json.tipo,
+    json.pet,
+    json.data,
+    json.hora,
+    json.detalhes,
+    json.preco,
+    json.status
+    );
+}
+
+function jsonToUser(json){
+    return new Cliente(
+        json.nome,
+        json.email,
+        json.celular,
+        json.telefone,
+        json.nascimento,
+        json.cpf,
+        json.senha,
+        json.endereco,
+        json.cartao,
+        json.admin,
+        (json.pets !== undefined) ? json.pets : [],
+        (json.pedidos !== undefined) ? json.pedidos : [],
+        (json.carrinho !== undefined) ? json.carrinho : []
+    );
+}
+
+function jsonToProduto(json){
+    let temp = new Produto(json.nomeComercial,
+                            json.marca,
+                            json.categoria,
+                            json.departamento,
+                            json.preco,
+                            json.precoPromocional,
+                            json.nomeCompleto,
+                            json.codigo,
+                            json.qtdEstoque,
+                            json.lote,
+                            json.validade,
+                            json.descricao,
+                            json.promocao,
+                            json.imgPath,
+                            );
+    return temp;
+}
+
+function jsonToPet(json){
+    let pet = new Pet(json.nome,
+                      json.tipo,
+                      json.raca,
+                      json.idade,
+                      json.peso,
+                      json.sexo,
+                      (json.servicos !== undefined) ? json.servicos : []
+    );
+    return pet;
 }

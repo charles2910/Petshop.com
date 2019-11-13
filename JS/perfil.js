@@ -11,16 +11,3 @@ function carregaPets(){
         document.getElementById("pets_cliente").innerHTML = txt;
     }
 }
-
-function jsonToPet(json){
-    let pet = new Pet(json.nome,
-                      json.tipo,
-                      json.raca,
-                      json.idade,
-                      json.peso,
-                      json.sexo,
-                      (json.servicos !== undefined) ? json.servicos : []
-    );
-    console.log(pet);
-    return pet;
-}
