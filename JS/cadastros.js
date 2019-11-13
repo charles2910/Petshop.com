@@ -60,7 +60,7 @@ function cadastrarProduto(att){
         document.getElementById("lote").value,
         document.getElementById("validade").value,
         document.getElementById("desc").value,
-        document.getElementById("promo_ativ").value,
+        (document.getElementById("promo_ativ").value === "on") ? true : false,
         "../IMAGES/PRODUTOS/produto.png"
     );
     if(!att){

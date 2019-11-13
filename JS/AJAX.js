@@ -6,8 +6,6 @@ async function navegarCompra(codigo){
                 let produto = jsonToProduto(request.result);
                 document.getElementById("nome").value = produto.nomeComercial;
                 document.getElementById("marca").value = produto.marca;
-                document.getElementById("categoria").value = produto.categoria;
-                document.getElementById("departamento").value = produto.categoria;
                 document.getElementById("preco").value = produto.preco;
                 document.getElementById("preco_promo").value = produto.precoPromocional;
                 document.getElementById("nome_comp").value = produto.nomeCompleto;
@@ -17,6 +15,18 @@ async function navegarCompra(codigo){
                 document.getElementById("lote").value = produto.lote;
                 document.getElementById("validade").value = produto.validade;
                 document.getElementById("desc").value = produto.descricao;
+                let menu = document.getElementById("categoria");
+                for(let i=0; i< menu.length;i++){
+                    if(menu.options[i].value.toLowerCase() === produto.categoria){
+                        menu.options[i].setAttribute("selected","selected");
+                    }
+                }
+                menu = document.getElementById("departamento");
+                for(let i=0; i< menu.length;i++){
+                    if(menu.options[i].value.toLowerCase() === produto.departamento){
+                        menu.options[i].setAttribute("selected","selected");
+                    }
+                }
 
             };
         });

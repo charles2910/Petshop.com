@@ -4,7 +4,6 @@ import random
 produtos = [];
 categorias = ["cachorros","gatos","roedores","passáros","peixes"]
 departamentos = ["brinquedos","saúde","alimentos","higiene","acessórios"]
-arquivo = open("produtos.json","w")
 marca = "a"
 z = 0;
 produto = "Produto";
@@ -29,7 +28,7 @@ for i in range(0,5):
                 arquivo.write('        "marca" :  "Marca {}",\n'.format(marca))
                 arquivo.write('        "categoria":  "{}",\n'.format(categorias[x]))
                 arquivo.write('        "departamento" :  "{}",\n'.format(departamentos[j]))
-                arquivo.write('        "preco" :  {},\n'.format(random.randint(2000,15000)/100.0))
+                arquivo.write('        "preco" :  {},\n'.format(random.randint(100,15000)/100.0))
                 arquivo.write('        "precoPromocional" :  {},\n'.format((random.randint(10,150))/2.0))
                 arquivo.write('        "nomeCompleto" :  "{}",\n'.format(nome))
                 arquivo.write('        "codigo" :  "{}",\n'.format(codigo))
