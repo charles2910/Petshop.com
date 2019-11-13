@@ -37,7 +37,6 @@ class Cliente{
                 break;
             }
         }
-        console.log(this);
     }
 }
 
@@ -83,7 +82,6 @@ class Pet{
             txt +=       "<p>Sexo: "+this.sexo+"</p>";
             txt +=       "<p>Idade: "+this.idade+"</p>";
             txt +=       "<p>Peso: "+this.peso+"</p>";
-            txt +=       "<button>Editar</button>";
             txt +=       "<button onclick=\"servicoPet(true,"+"\'id_"+this.nome+"\');\">Serviços</button>";
             txt +=   "</div>";
             txt +=   "<div class = 'servicos_desc' id="+"id_"+this.nome+">";
@@ -92,8 +90,6 @@ class Pet{
             txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="../IMAGES/ICONS/fechar.png">';
             txt +=      "</div><hr>";
         for(let i =0; i <this.servicos.length;i++){
-            console.log(jsonToServico(this.servicos[i]).toHtmlCliente());
-            console.log(jsonToServico(this.servicos[i]));
             txt += jsonToServico(this.servicos[i]).toHtmlCliente();
         }
             txt +=   "</div>";
@@ -102,8 +98,9 @@ class Pet{
 }
 
 class Servico{
-    constructor(id,tipo,pet,data,hora,detalhes,preco,status){
+    constructor(id,dono,tipo,pet,data,hora,detalhes,preco,status){
         this.id = id;
+        this.dono = dono;
         this.pet = pet;
         this.tipo = tipo;
         this.data = data;
@@ -120,7 +117,7 @@ class Servico{
             txt+= '<div class="desc_servico">';
             txt+= ' <p>Nome: '+this.tipo+'</p>';
             txt+=        '<p>Preço: R$ '+this.preco+'</p>';
-            txt+=        '<p>Data: '+this.data+'</p>';
+            txt+=        '<p>Data: '+dateToNormalDate(this.data)+", "+this.hora+""+'</p>';
             txt+=        '<p>Status: '+this.status+'</p>';
             txt+=    '</div>';
             txt+= '</div>';
@@ -272,6 +269,7 @@ class Agendamento{
 function jsonToServico(json){
     return new Servico(
     json.id,
+    json.dono,
     json.tipo,
     json.pet,
     json.data,
@@ -329,4 +327,9 @@ function jsonToPet(json){
                       (json.servicos !== undefined) ? json.servicos : []
     );
     return pet;
+}
+
+function dateToNormalDate(data){
+    data = data.split("-");
+    return data[2]+"/"+data[1]+"/"+data[0];
 }

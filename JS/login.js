@@ -48,7 +48,7 @@ function login(email1, senha1){
 }
 
 function addOpcoesAdmin(){
-    
+    document.getElementById("carrinho_div").style.display = "none";
     let newLiProduto = document.createElement("li");
     let newLiAdm = document.createElement("li");
     let produtoLink = document.createElement("a");
@@ -56,7 +56,7 @@ function addOpcoesAdmin(){
     newLiAdm.setAttribute("id","li8");
     newLiProduto.setAttribute("id","li7");
     document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil_admin.html','Perfil Adiministrador',carregaPerfil);navaegacaoInterativa(id)");
-    document.getElementById("li6").setAttribute('onclick',"AJAX_navegacao('../conteudos/admin_servicos.html','Serviços');navaegacaoInterativa(id)");
+    document.getElementById("li6").setAttribute('onclick',"AJAX_navegacao('../conteudos/admin_servicos.html','Serviços',carregarServicosAdmin);navaegacaoInterativa(id)");
     produtoLink.appendChild(document.createTextNode("Cadastrar produto"));
     admLink.appendChild(document.createTextNode("Cadastrar admin"));
     produtoLink.setAttribute("href","#");

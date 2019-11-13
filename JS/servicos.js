@@ -41,6 +41,7 @@ function carregarServicos(){
             pet_cliente = jsonToPet(pet_cliente);
             let servico = new Servico(
                 id,
+                logged,
                 document.getElementById("tipo_servico").value,
                 pet_cliente,
                 data,
@@ -88,4 +89,84 @@ function carregarServicos(){
             }
         }
     } 
+}
+
+function carregarServicosAdmin(){
+    let concluidos = "";
+    let agendados = "";
+    return new Promise((resolve) => {
+        let objectStore = db_servicos.transaction("servicos").objectStore("servicos");
+        objectStore.openCursor().onsuccess = (event)=>{
+            let cursor = event.target.result;
+            if(cursor){
+                console.log(jsonToHtmlAdminServico(cursor.value));
+                if(cursor.value.status === "Agendado"){
+                    agendados+= jsonToHtmlAdminServico(cursor.value);
+                }else{
+                    concluidos+= jsonToHtmlAdminServico(cursor.value);
+                }
+                cursor.continue();
+            }else{
+                document.getElementById("prox_servicos").innerHTML = agendados;
+                document.getElementById("ant_servicos").innerHTML = concluidos;
+            }
+        }
+    });
+}
+
+function statusServico(id,status){
+    let request = db_servicos.transaction("servicos").objectStore("servicos").get(id);
+    request.onsuccess = function(event) {
+        request.result.status = status;
+        writeDbServico(request.result);
+        carregarServicosAdmin();
+    }
+    
+}
+
+function jsonToHtmlAdminServico(json){
+    let txt=    '<div class="servicos_admin">'
+        txt+=        '<div class="dados_cliente">'
+        txt+=        '<h3>Cliente</h3>'
+        txt+=            '<p>Nome: '+json.dono.nome+'</p>'
+        txt+=            '<p>Email: '+json.dono.email+'</p>'
+        txt+=            '<p>Celular: '+json.dono.celular+'</p>'
+        txt+=        '</div>'
+        txt+=        '<div class="endereco_cliente">'
+        txt+=            '<h3>Endereço</h3>'
+        txt+=            '<p>Cidade: '+json.dono.endereco.cidade+','+json.dono.endereco.estado+'</p>'
+        txt+=            '<p>Bairro: '+json.dono.endereco.bairro+'</p>'
+        txt+=            '<p>Rua: '+json.dono.endereco.rua+'</p>'
+        txt+=            '<p>Número: '+json.dono.endereco.numero+'</p>'
+        txt+=        '</div>'
+        txt+=        '<div class="dados_animal">'
+        txt+=            '<h3>Animal</h3>'
+        txt+=            '<p>Nome: '+json.pet.nome+'</p>'
+        txt+=            '<p>Especie: '+json.pet.tipo+','+json.pet.raca+'</p>'
+        txt+=            '<p>Especificacões: <br>'+json.detalhes+'</p>'
+        txt+=        '</div>'
+        txt+=        '<div class="dados_servico">'
+        txt+=            '<h3>Serviço</h3>'
+        txt+=            '<p>Serviço: '+json.tipo+'</p>'
+        txt+=            '<p>Dia: '+dateToNormalDate(json.data)+'</p>'
+        txt+=            '<p>Horas: '+json.hora+'</p>'
+        txt+=        '</div>'
+        if(json.status === "Agendado"){
+            txt+=        '<div class="botoes_servico">'
+            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="../IMAGES/ICONS/fechar.png">'
+            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Concluído\')" type="image" src="../IMAGES/ICONS/check.png">'
+            txt+=        '</div>'
+        }else{
+            txt+=        '<div class="servico_status">'
+            txt+=            '<h3>Status</h3>'
+            txt+=            '<p>Serviço: '+json.status+'</p>'
+            if(json.tstus === 'Cancelado'){
+                txt+=            '<p>Pagamento: - </p>'
+            }else{
+                txt+=            '<p>Pagamento: Recebido </p>'
+            }
+            txt+=        '</div>'
+        }
+        txt+=   '</div>'
+        return txt;
 }

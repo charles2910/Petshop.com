@@ -219,7 +219,13 @@ async function carregaBanners(){
                 promocoes.sort(compare1);
                 banners.geral2 = promocoes.slice(0,10);
                 promocoes.sort(compare2);
-                banners.geral3 = promocoes.slice(0,10);
+                let i=0;
+                while(banners.geral3.length < 10){
+                    if(promocoes[i].qtdEstoque !==0 && i<= promocoes.length){
+                        banners.geral3.push(promocoes[i]);
+                    }
+                    i++;
+                }
                 
                 resolve();
             }
