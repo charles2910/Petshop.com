@@ -3,7 +3,6 @@ function carregaPets(){
     request.onsuccess = function(event) {
         let txt = "";
         let user = jsonToUser(request.result);
-        console.log(user);
         for(let i=0;i<user.pets.length;i++){
             let pet = jsonToPet(request.result.pets[i]);
             txt += pet.petToHtml();

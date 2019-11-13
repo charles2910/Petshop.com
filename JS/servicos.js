@@ -99,7 +99,6 @@ function carregarServicosAdmin(){
         objectStore.openCursor().onsuccess = (event)=>{
             let cursor = event.target.result;
             if(cursor){
-                console.log(jsonToHtmlAdminServico(cursor.value));
                 if(cursor.value.status === "Agendado"){
                     agendados+= jsonToHtmlAdminServico(cursor.value);
                 }else{

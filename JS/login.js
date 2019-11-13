@@ -25,24 +25,22 @@ function login(email1, senha1){
                     logged = jsonToUser(user);
                     document.getElementById("btn_login").innerText = "Admin";
                     addOpcoesAdmin();
-                    popupLogin(false);
-                    console.log(user);
-                    return true;
                 }else{
                     logged = jsonToUser(user);
-                    console.log(user);
                     document.getElementById("btn_login").innerText = "Perfil";
-                    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");
-                    popupLogin(false);
-                    return true;
+                    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('../conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");  
                 }
+                popupLogin(false);
+                AJAX_navegacao("../conteudos/principal.html","",()=>{
+                    carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3);
+                });
+                return true;
             }else{
+                console.log(user);
                 window.alert("Email ou senha incorretos");
-                return false;
             }
         }else{
             window.alert("Email ou senha incorretos");
-            return false;
         }
     }
 }

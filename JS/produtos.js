@@ -60,7 +60,6 @@ function moverBanner(direcao){
 }
 
 function configBotoes(){
-    console.log(lista.qtdTotalPaginas);
     if(lista.qtdTotalPaginas < 6){
         for(let i = qtdTotalPaginas+2; i<7; i++){
             document.getElementById("btn_"+i).disabled = true;
@@ -147,7 +146,6 @@ function aplicaFiltro(funcao,filtro1,filtro2){
     }else{
         lista.filtroPreco.push(filtro1);
         lista.filtroPreco.push(filtro2);
-        console.log(lista.filtroPreco);
     }
     AJAX_listas(lista.nome,lista.tipo,lista.banner,0,filtroLista,lista.filtroMarca,lista.filtroPreco,lista.filtroTipo);
 }

@@ -84,7 +84,6 @@ function pesquisar(produto){
     txt = txt.toLowerCase();
     txt = txt.split(" ");
     let compare = produto.nomeCompleto.toLowerCase();
-    console.log(txt)
     for(let i=0; i< txt.length;i++){
         if(compare.includes(txt[i])){
             return true;

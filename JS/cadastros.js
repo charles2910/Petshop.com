@@ -33,11 +33,9 @@ function cadastrarUsuario(admin,att){
             admin
         );
         if(!att){
-            if(writeDb(cliente)){
-                login(cliente.email, cliente.senha);
-            }
+            writeDbCliente(cliente);
         }else{
-            if(attDbCliente(cliente)){
+            if(awaitattDbCliente(cliente)){
                 alert("Dados alterados com sucesso!");
             }
         }

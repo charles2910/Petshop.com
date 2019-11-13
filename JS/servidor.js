@@ -9,7 +9,6 @@ window.onbeforeunload = () =>{
 }
 
 window.onload = () =>{
-    console.log("carregada");
     let loadUsuario = false;
     let request = window.indexedDB.open("clientes",1);
     request.onsuccess = (event)=>{
@@ -77,7 +76,6 @@ async function writeDbCliente(cliente){
         let objectStore = transaction.objectStore("clientes");
         let request = objectStore.add(cliente);
         request.onsuccess = (event) =>{
-            console.log("sucesso")
             resolve(true);
         }
         request.onerror = (event) =>{
@@ -88,36 +86,33 @@ async function writeDbCliente(cliente){
 }
 
 async function attDbCliente(cliente){
-    return await new Promise( (resolve,reject) => {
+    return new Promise( (resolve,reject) => {
         let transaction = db_clientes.transaction(["clientes"],"readwrite");
         let objectStore = transaction.objectStore("clientes");
         let request = objectStore.put(cliente);
         request.onsuccess = (event) =>{
-            console.log("sucesso")
             resolve(true);
         }
     });
 }
 
 async function writeDbServico(servico){
-    return await new Promise( (resolve) => {
+    return new Promise( (resolve) => {
         let transaction = db_servicos.transaction(["servicos"],"readwrite");
         let objectStore = transaction.objectStore("servicos");
         let request = objectStore.put(servico);
         request.onsuccess = (event) =>{
-            console.log("sucesso")
             resolve(true);
         }
     });
 }
 
 async function writeDbData(data){
-    return await new Promise( (resolve) => {
+    return new Promise( (resolve) => {
         let transaction = db_agendamentos.transaction(["agendamentos"],"readwrite");
         let objectStore = transaction.objectStore("agendamentos");
         let request = objectStore.put(data);
         request.onsuccess = (event) =>{
-            console.log("sucesso")
             resolve(true);
         }
     });
@@ -129,7 +124,6 @@ async function writeDbProduto(produto){
         let objectStore = transaction.objectStore("estoque");
         let request = objectStore.add(produto);
         request.onsuccess = (event) =>{
-            console.log("sucesso")
             resolve();
             return true;
         }
@@ -147,7 +141,6 @@ async function attDbProduto(produto){
         let objectStore = transaction.objectStore("estoque");
         let request = objectStore.put(produto);
         request.onsuccess = (event) =>{
-            console.log("sucesso")
             resolve(true);
         }
     });
