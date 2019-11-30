@@ -1,6 +1,6 @@
 async function navegarCompra(codigo){
     if(logged !== undefined && logged.admin){
-        await AJAX_navegacao("trabWeb.ddns.net:8081/conteudos/att_produto.html","Cadastro de produto",()=>{
+        await AJAX_navegacao("http://trabWeb.ddns.net:8081/conteudos/att_produto.html","Cadastro de produto",()=>{
             let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
              request.onsuccess = function(event) {
                 let produto = jsonToProduto(request.result);
@@ -31,7 +31,7 @@ async function navegarCompra(codigo){
             };
         });
     }else{
-         AJAX_navegacao("trabWeb.ddns.net:8081/conteudos/compra.html","",()=>{
+         AJAX_navegacao("http://trabWeb.ddns.net:8081/conteudos/compra.html","",()=>{
              let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
              request.onsuccess = function(event) {
                 let produto = jsonToProduto(request.result);
@@ -97,7 +97,7 @@ async function AJAX_listas(nome,tipo,banner,pagina,filtro,filtroMarca,filtroPrec
             }
         }
     }
-    xhttp.open("GET","trabWeb.ddns.net:8081/conteudos/listas.html");
+    xhttp.open("GET","http://trabWeb.ddns.net:8081/conteudos/listas.html");
     xhttp.send();
 }
 
