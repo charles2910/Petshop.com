@@ -51,7 +51,7 @@ function configOnclick(){
         }
     }
     document.getElementById("logo").onclick = ()=> {
-        AJAX_navegacao('../conteudos/principal.html','',()=>{
+        AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/principal.html','',()=>{
             carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3)
         });
     }
