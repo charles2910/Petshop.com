@@ -87,7 +87,7 @@ class Pet{
             txt +=   "<div class = 'servicos_desc' id="+"id_"+this.nome+">";
             txt +=   '<div class="titulo_serv">';
             txt +=      "<h2>Serviços</h2>";
-            txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="../IMAGES/ICONS/fechar.png">';
+            txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="http://trabWeb.ddns.net:8081/IMAGES/ICONS/fechar.png">';
             txt +=      "</div><hr>";
         for(let i =0; i <this.servicos.length;i++){
             txt += jsonToServico(this.servicos[i]).toHtmlCliente();
@@ -213,7 +213,7 @@ class Produto{
         }else{
             txt+=        '<td>R$ '+this.preco+'</td>';
         }
-        txt+=        '<td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+        txt+=        '<td><input type="image" src="http://trabWeb.ddns.net:8081/IMAGES/ICONS/fechar.png"></td>';
         txt+=    '</tr>'
         return txt;
     }
