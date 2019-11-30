@@ -35,7 +35,7 @@ window.onload = () =>{
             await carregarProdutos();
         }
         await carregaBanners();
-        AJAX_navegacao("../conteudos/principal.html","",()=>{
+        AJAX_navegacao("http://trabWeb.ddns.net:8081/conteudos/principal.html","",()=>{
             carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3);
         });
     }
@@ -161,7 +161,7 @@ async function carregarProdutos(){
                         resolve(true);
                     }
                 }
-                xhttp.open("GET","../produtos/"+departamento[i]+".json");
+                xhttp.open("GET","http://trabWeb.ddns.net:8081/produtos/"+departamento[i]+".json");
                 xhttp.send();
             });
         }

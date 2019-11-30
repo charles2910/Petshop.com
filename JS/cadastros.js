@@ -59,7 +59,7 @@ function cadastrarProduto(att){
         document.getElementById("validade").value,
         document.getElementById("desc").value,
         (document.getElementById("promo_ativ").value === "on") ? true : false,
-        "../IMAGES/PRODUTOS/produto.png"
+        "http://trabWeb.ddns.net:8081/IMAGES/PRODUTOS/produto.png"
     );
     if(!att){
         writeDbProduto(produto);

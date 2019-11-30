@@ -31,7 +31,7 @@ function login(email1, senha1){
                     document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");  
                 }
                 popupLogin(false);
-                AJAX_navegacao("../conteudos/principal.html","",()=>{
+                AJAX_navegacao("http://trabWeb.ddns.net:8081/conteudos/principal.html","",()=>{
                     carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3);
                 });
                 return true;
