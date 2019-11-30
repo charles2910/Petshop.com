@@ -102,7 +102,7 @@ function toCarrinhoHTML(produto){
     txt+=            '</select>';
     txt+=        '</td>';
     txt+=        '<td>R$ ' + produto.preco + '</td>';
-    txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+    txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="http://trabWeb.ddns.net:8081/IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
 }
