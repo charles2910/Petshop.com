@@ -12,8 +12,9 @@ app.get('/index.html', function (req, res) {
 })
 
 app.get('/*', function (req, res) {
-   res.sendFile(__dirname + req.path);
-   console.log(`/${req.path} acessado`);
+   let path = decodeURI(req.path);
+   res.sendFile(__dirname + path);
+   console.log(`/${path} acessado`);
 })
 
 var server = app.listen(8081, '10.142.0.2', function () {
