@@ -156,7 +156,6 @@ function mudarPagina(pagina){
 }
 
 function filtroLista(produto){
-    
     if(lista.filtroMarca.length !== 0){
         if(!lista.filtroMarca.includes(produto.marca)){
             return false;
