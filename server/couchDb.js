@@ -121,9 +121,25 @@ async function findProduto(codigo){
     return produto;
 
 }
-
-async function findProdutos(inicio, qtd, filtro){
-
+// filtro 1 = departamento, 2 = categoria
+//tipo é ou o departamento ou categoria em especifico que se quer buscar
+async function findProdutos(inicio, qtd, filtro, tipo){
+    const estoque = nano.use("estoque");
+    const retorno = []
+    filtro+=2;
+    console.log(filtro);
+    body = await estoque.view('view', 'view', {
+        'key': [filtro,tipo]
+    })
+    for(let i=0;i<body.rows.length;i++){
+        if(i>=inicio){
+            retorno.push(body.rows[i].value);
+        }
+        if(retorno.length >= qtd){
+            break;
+        }
+    }
+    console.log(retorno);
 }
 
 async function addAgendamento(agendamento){
@@ -216,9 +232,11 @@ function compare1(a,b){//ordena pelo desconto real
 function compare2(a,b){//Ordena pela quantidade em estoque
     return a.qtdEstoque - b.qtdEstoque;
 }
+
 //Apenas para teste, parte a ser removida
     criarDb();
-    app.listen(3000,()=>{
+    app.listen(12355,()=>{
         console.log("Running...");
     })
 //---------------------------------------
+
