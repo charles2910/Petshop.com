@@ -59,15 +59,17 @@ async function addUser(user){
     });
 }
 
-async function findUser(user){
-    return await new Promise((resolve)=>{
-        const usuarios = nano.use("usuarios");
-        usuarios.get(user.email).then((headers)=>{
-            resolve(headers);
-        }).catch(()=>{
-            resolve(false);
-        });
+async function findUser(email){
+    const usuarios = nano.use("usuarios");
+    let usuario;
+    await usuarios.get(email).then((headers)=>{
+        console.log("encontrou o usuario")
+        usuario = headers;
+    }).catch(()=>{
+        console.log("não encontrou o usuario")
+        usuario = (false);
     });
+    return usuario;
 }
 
 async function addProduto(produto){
@@ -80,19 +82,37 @@ async function addProduto(produto){
     });
 }
 
-async function findProduto(produto){
-    const produtos = nano.use("produtos");
-    produtos.get(produto.codigo).then((headers)=>{
-        return headers
+async function findProduto(codigo){
+    const produtos = nano.use("estoque");
+    let produto;
+    await produtos.get(codigo).then((headers)=>{
+        console.log("achou o produto");
+        produto = headers;
     }).catch(()=>{
-        return false
+        console.log("nao achou o produto");
+        produto = false;
     });
+    return produto;
+
+}
+
+async function findProdutos(inicio, qtd, filtro){
+
 }
 
 async function addAgendamento(agendamento){
     const agendamentos = nano.use("agendamentos");
     await agendamentos.insert(agendamento,agendamento.data);
     return true
+}
+
+async function findAgendamento(data){
+    const agendamentos = nano.use("agendamentos");
+    agendamentos.get(data).then((headers)=>{
+        return headers
+    }).catch(()=>{
+        return false
+    });
 }
 
 async function addServico(servico){
@@ -105,6 +125,17 @@ async function addServico(servico){
     });
 }
 
+async function getServicos(){
+    let produto = await findProduto("a0cb");
+    console.log(produto);
+    const servicos = nano.use("estoque");
+    servicos.list().then((body) => {
+        body.rows.forEach((doc) => {
+            //console.log(doc.doc);
+        });
+    });
+}
+
 criarDb();
 
 app.get('/',(req,res)=>{
@@ -114,6 +145,5 @@ app.get('/',(req,res)=>{
 app.listen(3000,()=>{
     console.log("Running...");
 })
-let usuario = {
-    email: "admin@admin.com"
-}
+
+getServicos();

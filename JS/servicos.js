@@ -61,7 +61,7 @@ function carregarServicos(){
             carregarServicos();
             alert("Serviço agendado com sucesso!");
             banners.geral1,banners.geral2
-            AJAX_navegacao("http://trabWeb.ddns.net:8081/conteudos/principal.html","",()=>{
+            AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/principal.html","",()=>{
                 carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3);
             }); 
             navaegacaoInterativa("li0");
@@ -152,8 +152,8 @@ function jsonToHtmlAdminServico(json){
         txt+=        '</div>'
         if(json.status === "Agendado"){
             txt+=        '<div class="botoes_servico">'
-            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="http://trabWeb.ddns.net:8081/IMAGES/ICONS/fechar.png">'
-            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Concluído\')" type="image" src="http://trabWeb.ddns.net:8081/IMAGES/ICONS/check.png">'
+            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">'
+            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Concluído\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/check.png">'
             txt+=        '</div>'
         }else{
             txt+=        '<div class="servico_status">'

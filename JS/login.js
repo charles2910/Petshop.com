@@ -28,10 +28,10 @@ function login(email1, senha1){
                 }else{
                     logged = jsonToUser(user);
                     document.getElementById("btn_login").innerText = "Perfil";
-                    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");  
+                    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");  
                 }
                 popupLogin(false);
-                AJAX_navegacao("http://trabWeb.ddns.net:8081/conteudos/principal.html","",()=>{
+                AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/principal.html","",()=>{
                     carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3);
                 });
                 return true;
@@ -53,14 +53,14 @@ function addOpcoesAdmin(){
     let admLink = document.createElement("a");
     newLiAdm.setAttribute("id","li8");
     newLiProduto.setAttribute("id","li7");
-    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/perfil_admin.html','Perfil Adiministrador',carregaPerfil);navaegacaoInterativa(id)");
-    document.getElementById("li6").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/admin_servicos.html','Serviços',carregarServicosAdmin);navaegacaoInterativa(id)");
+    document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/perfil_admin.html','Perfil Adiministrador',carregaPerfil);navaegacaoInterativa(id)");
+    document.getElementById("li6").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/admin_servicos.html','Serviços',carregarServicosAdmin);navaegacaoInterativa(id)");
     produtoLink.appendChild(document.createTextNode("Cadastrar produto"));
     admLink.appendChild(document.createTextNode("Cadastrar admin"));
     produtoLink.setAttribute("href","#");
     admLink.setAttribute("href","#");
-    produtoLink.setAttribute("onclick","AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/cadastro_produto.html','Cadastro de produto');navaegacaoInterativa(id)");
-    admLink.setAttribute("onclick","AJAX_navegacao('http://trabWeb.ddns.net:8081/conteudos/cadastro_admin.html','Cadastro de adiministrador');navaegacaoInterativa(id)");
+    produtoLink.setAttribute("onclick","AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/cadastro_produto.html','Cadastro de produto');navaegacaoInterativa(id)");
+    admLink.setAttribute("onclick","AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/cadastro_admin.html','Cadastro de adiministrador');navaegacaoInterativa(id)");
     newLiProduto.appendChild(produtoLink);
     newLiAdm.appendChild(admLink);
     document.getElementById("ul_navegacao").appendChild(newLiProduto);

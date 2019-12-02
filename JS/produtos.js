@@ -28,7 +28,7 @@ function carregarLista(nome,tipo,banner,itens,qtdTotalPaginas,filtroMarca,filtro
 function addProdutoLinha(){
     for(let i =0; i <16;i++){
         if(lista.itens[i] === undefined){
-            lista.itens.push(new Produto("null","null","null","null","null","null","null","null","null","null","null","null","null","http://trabWeb.ddns.net:8081/IMAGES/PRODUTOS/produto.png"));
+            lista.itens.push(new Produto("null","null","null","null","null","null","null","null","null","null","null","null","null","http://trabWeb.ddns.net:8082/IMAGES/PRODUTOS/produto.png"));
         }
     }
     document.getElementById("linha1").innerHTML = bannerHtml(lista.itens.slice(0,4));
