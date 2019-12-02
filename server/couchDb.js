@@ -197,6 +197,14 @@ async function carregarBanners(){
     });
 }
 
+function getBanner(nome){
+    if(nome!== "geral"){
+        return banners[nome];
+    }else{
+        return [banners.geral1,banners.geral2,banners.geral3];
+    }
+}
+
 function compare(a,b){//Ordena pela % do precao
     return b.precoPromocional-a.precoPromocional;
 }
