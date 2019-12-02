@@ -126,20 +126,43 @@ async function findProduto(codigo){
 async function findProdutos(inicio, qtd, filtro, tipo){
     const estoque = nano.use("estoque");
     const retorno = []
-    filtro+=2;
-    console.log(filtro);
+    filtro++;
     body = await estoque.view('view', 'view', {
         'key': [filtro,tipo]
     })
     for(let i=0;i<body.rows.length;i++){
-        if(i>=inicio){
+        if(i>=inicio && retorno.length < qtd){
             retorno.push(body.rows[i].value);
         }
         if(retorno.length >= qtd){
             break;
         }
     }
-    console.log(retorno);
+    return retorno;
+}
+
+async function buscaProduto(txt){
+    if(txt!=undefined){
+        const estoque = nano.use("estoque");
+        body = await estoque.view('view', 'view');
+        const retorno = [];
+        txt = txt.toLowerCase();
+        txt = txt.split(" ");
+        body.rows.forEach((produto)=>{
+            txt.forEach((palavra)=>{
+                let txtProduto = produto.value.nomeCompleto + " "
+                                 produto.value.preco +" "
+                                 produto.value.precoPromocional +" "
+                                 produto.value.marca +" "
+                                 produto.descricao;
+                if(txtProduto.includes(palavra)){
+                    retorno.push(produto.value);
+                    return;
+                }
+            })
+        });
+        return retorno;
+    }
 }
 
 async function addAgendamento(agendamento){
