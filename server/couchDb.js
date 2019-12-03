@@ -23,6 +23,18 @@ class Banner{
     }
 }
 
+class Lista{
+    constructor(nome,tipo,banner,itens,qtdTotalPaginas,pag){
+    this.qtdTotalPaginas = qtdTotalPaginas;
+    this.tipo = tipo;
+    this.nome = nome;
+    this.banner = banner;
+    this.itens = itens;
+    this.bannerPos = 0;
+    this.pag = pag;
+    }
+}
+
 const banners = new Banner();
 
 export export async function criarDb() {
@@ -164,26 +176,35 @@ export async function findProduto(codigo){
 
 }
 // filtro 1 = departamento, 2 = categoria
-//tipo é ou o departamento ou categoria em especifico que se quer buscar
-export async function findProdutos(inicio, qtd, filtro, tipo){
+//nome é ou o departamento ou a categoria em especifico que se quer buscar
+//inicio é qual pagina será carregada
+export async function findProdutos(inicio, filtro, nome){
     const estoque = nano.use("estoque");
-    const retorno = []
+    const produtos = [];
+    let qtdTotalpaginas = 0;
     filtro++;
     body = await estoque.view('view', 'view', {
-        'key': [filtro,tipo]
+        'key': [filtro,nome]
     })
+    qtdTotalpaginas = body.rows.length;
     for(let i=0;i<body.rows.length;i++){
-        if(i>=inicio && retorno.length < qtd){
-            retorno.push(body.rows[i].value);
+        if(i>=(inicio*16) && produtos.length < 16){
+            produtos.push(body.rows[i].value);
         }
-        if(retorno.length >= qtd){
+        if(produtos.length >= 16){
             break;
         }
     }
-    return retorno;
+    let tipo;
+    if(filtro==1){ 
+        tipo = "departamento";
+    }else{
+        tipo = "categoria";
+    }
+    return Lista(nome,tipo,banners[nome],produtos,qtdTotalpaginas,inicio);
 }
 
-export async function buscaProduto(txt){
+export async function buscaProduto(inicio,txt){
     if(txt!=undefined){
         const estoque = nano.use("estoque");
         body = await estoque.view('view', 'view');
