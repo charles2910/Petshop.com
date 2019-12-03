@@ -34,8 +34,8 @@ async function criarDb() {
   if(db_list.indexOf("estoque")<0){
     await nano.db.create("estoque").catch();
     const estoque = nano.use("estoque");
-    await carregarBancoDeDados(estoque)
-  } 
+    await carregarBancoDeDados(estoque).catch()
+  }
   if(db_list.indexOf("usuarios")<0){
     await nano.db.create("usuarios").catch();
     const usuarios = nano.use("usuarios");
@@ -64,7 +64,7 @@ async function carregarBancoDeDados(estoque){
             let jsonData = fs.readFileSync("produtos/"+departamento[i]+".json");
             let temp = JSON.parse(jsonData);
             for(let j=0; j<temp.length;j++){
-                await estoque.insert(temp[j],temp[j].codigo);
+                await estoque.insert(temp[j],temp[j].codigo).catch();
             }
         }
         resolve(true);
