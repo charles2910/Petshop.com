@@ -1,3 +1,14 @@
+let db_clientes;
+let db_estoque;
+let db_agendamentos;
+let db_servicos;
+let banners = new Banner();
+
+window.onload = () =>{
+    AJAX_navegacao("http://trabWeb.ddns.net:8082/estoque/?pag=")
+}
+
+
 class PaginaInicial{
     constructor(banner1,banner2,banner3){
         this.banner1 = banner1;

@@ -64,6 +64,11 @@ app.get('/index.html', (req, res) => {
    console.log("/index.html acessado");
 })
 
+app.get('/api/bannersPrincipal',(req,res)=>{
+    res.send(db.getBanner("geral"));
+    console.log("banners principais enviados");
+})
+
 app.get('/api/estoque', (req, res) => {
 
 })
