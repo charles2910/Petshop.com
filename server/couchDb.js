@@ -222,7 +222,7 @@ export async function buscaProduto(inicio,txt){
                     retorno.push(produto.value);
                     return;
                 }
-            })
+            });
         });
         return retorno;
     }
