@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const db = require('server/couchDb.js');
+
 
 app.use(express.json());
 
