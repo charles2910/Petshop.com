@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
-const db = require ('couchDb');
+const db = require ('./couchDb');
+db.criardb();
 
 async function addUser (user, res) {
     await db.addUser(user);
     res.send(user);
 }
-
 async function getUserEmail (email, res) {
     const user = await db.findUser(email);
     res.send(user);
@@ -67,10 +67,6 @@ app.get('/index.html', (req, res) => {
 app.get('/api/bannersPrincipal',(req,res)=>{
     res.send(db.getBanner("geral"));
     console.log("banners principais enviados");
-})
-
-app.get('/api/estoque', (req, res) => {
-
 })
 
 app.get('/api/estoque/:id', (req, res) => {
@@ -163,9 +159,8 @@ app.get('/*', (req, res) => {
    console.log(`/${path} acessado`);
 })
 
-const server = app.listen(8082, '10.142.0.2', function () {
+const server = app.listen(8081,function () {
    const host = server.address().address
    const port = server.address().port
-
-   console.log("Example app listening at http://%s:%s", host, port)
+   console.log("Example app listening at http://:%s", port)
 })

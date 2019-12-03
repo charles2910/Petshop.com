@@ -1,8 +1,4 @@
-//necessário apenas para teste
-    const express = require('express');
-    const app = express();
-//------------------------------------
-const nano = require('nano')('http://admin:admin@localhost:5984');
+const nano = require('nano')('http://admin:admin@localhost:5984')
 const fs = require('fs')
 
 class Banner{
@@ -37,12 +33,12 @@ class Lista{
 
 const banners = new Banner();
 
-export export async function criarDb() {
+ async function criarDb() {
   const db_list = await nano.db.list();
   //await nano.db.destroy("estoque").catch();
   //await nano.db.destroy("usuarios").catch();
-  //await nano.db.destroy("estoque").catch();
-  //await nano.db.destroy("estoque").catch();
+  //await nano.db.destroy("servicos").catch();
+  //await nano.db.destroy("agendamentos").catch();
   if(db_list.indexOf("estoque")<0){
     await nano.db.create("estoque").catch();
     const estoque = nano.use("estoque");
@@ -69,7 +65,7 @@ export export async function criarDb() {
   await carregarBanners();
 }
 
-export export async function carregarBancoDeDados(estoque){
+ async function carregarBancoDeDados(estoque){
     return new Promise(async(resolve)=>{
         let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
         for(let i = 0; i<5;i++){
@@ -83,7 +79,7 @@ export export async function carregarBancoDeDados(estoque){
     });
 }
 
-export export async function addUser(user){
+ async function addUser(user){
     const usuarios = nano.use("usuarios");
     let retorno;
     await usuarios.get(user.email).then((headers)=>{
@@ -95,7 +91,7 @@ export export async function addUser(user){
     return retorno;
 }
 
-export async function updateUser(user){
+ async function updateUser(user){
     const usuarios = nano.use("usuarios");
     let retorno;
     await usuarios.get(user.email).then(async (headers)=>{
@@ -109,7 +105,7 @@ export async function updateUser(user){
     return retorno;
 }
 
-export async function findUser(email){
+ async function findUser(email){
     const usuarios = nano.use("usuarios");
     let usuario;
     await usuarios.get(email).then((headers)=>{
@@ -122,7 +118,7 @@ export async function findUser(email){
     return usuario;
 }
 
-export async function addProduto(produto){
+ async function addProduto(produto){
     const produtos = nano.use("estoque");
     let retorno;
     await produtos.get(produto.codigo).then((headers)=>{
@@ -134,7 +130,7 @@ export async function addProduto(produto){
     return retorno;
 }
 
-export async function updateProduto(produto){
+ async function updateProduto(produto){
     const estoque = nano.use("estoque");
     let retorno;
     await estoque.get(produto.codigo).then(async (headers)=>{
@@ -148,7 +144,7 @@ export async function updateProduto(produto){
     return retorno;
 }
 
-export async function removeProduto(produto){
+ async function removeProduto(produto){
     const produtos = nano.use("estoque");
     let retorno;
     await produtos.get(produto.codigo).then(async(headers)=>{
@@ -162,7 +158,7 @@ export async function removeProduto(produto){
     return retorno;
 }
 
-export async function findProduto(codigo){
+ async function findProduto(codigo){
     const produtos = nano.use("estoque");
     let produto;
     await produtos.get(codigo).then((headers)=>{
@@ -178,7 +174,7 @@ export async function findProduto(codigo){
 // filtro 1 = departamento, 2 = categoria
 //nome é ou o departamento ou a categoria em especifico que se quer buscar
 //inicio é qual pagina será carregada
-export async function findProdutos(inicio, filtro, nome){
+ async function findProdutos(inicio, filtro, nome){
     const estoque = nano.use("estoque");
     const produtos = [];
     let qtdTotalpaginas = 0;
@@ -204,7 +200,7 @@ export async function findProdutos(inicio, filtro, nome){
     return Lista(nome,tipo,banners[nome],produtos,qtdTotalpaginas,inicio);
 }
 
-export async function buscaProduto(inicio,txt){
+ async function buscaProduto(inicio,txt){
     if(txt!=undefined){
         const estoque = nano.use("estoque");
         body = await estoque.view('view', 'view');
@@ -228,13 +224,21 @@ export async function buscaProduto(inicio,txt){
     }
 }
 
-export async function addAgendamento(agendamento){
+ async function addAgendamento(agendamento){
     const agendamentos = nano.use("agendamentos");
     await agendamentos.insert(agendamento,agendamento.data);
     return true
 }
 
-export async function findAgendamento(data){
+ async function getBanner(nome){
+    if(nome!== "geral"){
+        return banners[nome];
+    }else{
+        return [banners.geral1,banners.geral2,banners.geral3];
+    }
+}
+
+ async function findAgendamento(data){
     const agendamentos = nano.use("agendamentos");
     let retorno;
     await agendamentos.get(data).then((headers)=>{
@@ -245,7 +249,7 @@ export async function findAgendamento(data){
     return retorno;
 }
 
-export async function addServico(servico){
+ async function addServico(servico){
     const servicos = nano.use("servicos");
     let retorno;
     await servicos.get(servico.id).then((headers)=>{
@@ -257,7 +261,7 @@ export async function addServico(servico){
     return retorno;
 }
 
-export async function updateServico(servico){
+ async function updateServico(servico){
     const servicos = nano.use("servicos");
     let retorno;
     await servicos.get(servico.id).then(async (headers)=>{
@@ -271,7 +275,7 @@ export async function updateServico(servico){
     return retorno;
 }
 
-export async function getServicos(){
+ async function getServicos(){
     const servicos = nano.use("servicos");
     let todosServicos = [];
     let body = await servicos.list();
@@ -282,7 +286,7 @@ export async function getServicos(){
     return todosServicos;
 }
 
-export async function carregarBanners(){
+ async function carregarBanners(){
     return new Promise( async(resolve)=> {
         const estoque = nano.use("estoque");
         const promocoes = []
@@ -299,6 +303,7 @@ export async function carregarBanners(){
             if(banners[departamento].length < 12) banners[departamento].push(produto);
             if(banners[categoria].length < 12) banners[categoria].push(produto);
         });
+        banners.geral1 = promocoes.slice(0,10);
         promocoes.sort(compare1);
         banners.geral2 = promocoes.slice(0,10);
         promocoes.sort(compare2);
@@ -313,20 +318,8 @@ export async function carregarBanners(){
     });
 }
 
-export async function validaLogin(email,senha){
-    let user = await findUser(email);
-    if(user !== undefined){
-        if(user.senha === senha){
-            return true;
-        }else{
-            return false;
-        }
-    }else{
-        return false;
-    }
-}
-
-export function getBanner(nome){
+ function getBanner(nome){
+     console.log(banners)
     if(nome!== "geral"){
         return banners[nome];
     }else{
@@ -346,9 +339,7 @@ function compare2(a,b){//Ordena pela quantidade em estoque
     return a.qtdEstoque - b.qtdEstoque;
 }
 
-//Apenas para teste, parte a ser removida
-    criarDb();
-    app.listen(12355,()=>{
-        console.log("Running...");
-    })
-//---------------------------------------
+module.exports = {
+    criardb: criarDb,
+    getBanner: getBanner
+}

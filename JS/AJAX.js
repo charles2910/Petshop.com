@@ -124,6 +124,22 @@ function navaegacaoInterativa(id){
     }
 }
 
+async function AJAX_geral(rota,callback){
+    return new Promise((resolve)=>{
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                resolve(this.responseText);
+                if(callback !== undefined){
+                    callback();
+                }
+            }
+        }
+        xhttp.open("GET",rota);
+        xhttp.send();
+    })
+}
+
 function escolheBanner(nome,tipo){
     if(tipo === "categoria"){
         if(nome === "cachorros"){
