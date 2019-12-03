@@ -71,7 +71,7 @@ async function carregarBancoDeDados(estoque){
     });
 }
 
-export async function addUser(user){
+async function addUser(user){
     const usuarios = nano.use("usuarios");
     let retorno;
     await usuarios.get(user.email).then((headers)=>{
@@ -83,7 +83,21 @@ export async function addUser(user){
     return retorno;
 }
 
-export async function findUser(email){
+async function updateUser(user){
+    const usuarios = nano.use("usuarios");
+    let retorno;
+    await usuarios.get(user.email).then(async (headers)=>{
+        console.log(headers._rev);
+        await usuarios.insert({user,_id: user.email, _rev: headers._rev});
+        retorno = true
+    }).catch(async ()=>{
+        console.log("usuario não existe");
+        retorno = false;
+    });
+    return retorno;
+}
+
+async function findUser(email){
     const usuarios = nano.use("usuarios");
     let usuario;
     await usuarios.get(email).then((headers)=>{
@@ -96,8 +110,8 @@ export async function findUser(email){
     return usuario;
 }
 
-export async function addProduto(produto){
-    const produtos = nano.use("produtos");
+async function addProduto(produto){
+    const produtos = nano.use("estoque");
     let retorno;
     await produtos.get(produto.codigo).then((headers)=>{
         retorno =  false
@@ -108,7 +122,35 @@ export async function addProduto(produto){
     return retorno;
 }
 
-export async function findProduto(codigo){
+async function updateProduto(produto){
+    const estoque = nano.use("estoque");
+    let retorno;
+    await estoque.get(produto.codigo).then(async (headers)=>{
+        console.log(headers._rev);
+        await estoque.insert({produto,_id: produto.codigo, _rev: headers._rev});
+        retorno = true
+    }).catch(async ()=>{
+        console.log("produto não existe");
+        retorno = false;
+    });
+    return retorno;
+}
+
+async function removeProduto(produto){
+    const produtos = nano.use("estoque");
+    let retorno;
+    await produtos.get(produto.codigo).then(async(headers)=>{
+        await produtos.destroy(produto.codigo,headers._rev);
+        console.log("produto removido");
+        retorno =  true
+    }).catch(async ()=>{
+        console.log("produto não existe");
+        retorno = false
+    });
+    return retorno;
+}
+
+async function findProduto(codigo){
     const produtos = nano.use("estoque");
     let produto;
     await produtos.get(codigo).then((headers)=>{
@@ -141,7 +183,7 @@ async function findProdutos(inicio, qtd, filtro, tipo){
     return retorno;
 }
 
-export async function buscaProduto(txt){
+async function buscaProduto(txt){
     if(txt!=undefined){
         const estoque = nano.use("estoque");
         body = await estoque.view('view', 'view');
@@ -165,13 +207,13 @@ export async function buscaProduto(txt){
     }
 }
 
-export async function addAgendamento(agendamento){
+async function addAgendamento(agendamento){
     const agendamentos = nano.use("agendamentos");
     await agendamentos.insert(agendamento,agendamento.data);
     return true
 }
 
-export async function findAgendamento(data){
+async function findAgendamento(data){
     const agendamentos = nano.use("agendamentos");
     let retorno;
     await agendamentos.get(data).then((headers)=>{
@@ -182,7 +224,7 @@ export async function findAgendamento(data){
     return retorno;
 }
 
-export async function addServico(servico){
+async function addServico(servico){
     const servicos = nano.use("servicos");
     let retorno;
     await servicos.get(servico.id).then((headers)=>{
@@ -194,7 +236,21 @@ export async function addServico(servico){
     return retorno;
 }
 
-export async function getServicos(){
+async function updateServico(servico){
+    const servicos = nano.use("servicos");
+    let retorno;
+    await servicos.get(servico.id).then(async (headers)=>{
+        console.log(headers._rev);
+        await servicos.insert({servico,_id: servico.id, _rev: headers._rev});
+        retorno = true
+    }).catch(async ()=>{
+        console.log("servico não existe");
+        retorno = false;
+    });
+    return retorno;
+}
+
+async function getServicos(){
     const servicos = nano.use("servicos");
     let todosServicos = [];
     let body = await servicos.list();
@@ -205,7 +261,7 @@ export async function getServicos(){
     return todosServicos;
 }
 
-export async function carregarBanners(){
+async function carregarBanners(){
     return new Promise( async(resolve)=> {
         const estoque = nano.use("estoque");
         const promocoes = []
@@ -256,13 +312,8 @@ function compare2(a,b){//Ordena pela quantidade em estoque
     return a.qtdEstoque - b.qtdEstoque;
 }
 
-async function teste(){
-    let b = await findProduto("e622pxa");
-    console.log(b);
-}
 //Apenas para teste, parte a ser removida
     criarDb();
-    teste();
     app.listen(12355,()=>{
         console.log("Running...");
     })
