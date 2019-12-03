@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
+<<<<<<< HEAD
 const db = require('couchDb');
+=======
+const db = require ('couchDb');
+>>>>>>> Consertando importação
 
 
 app.use(express.json());
