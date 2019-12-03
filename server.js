@@ -3,7 +3,7 @@ const app = express();
 const db = require ('couchDb');
 
 async function getUserEmail (email, res) {
-    const user = await findUser(email);
+    const user = await db.findUser(email);
     console.log(user);
     res.send(user);
 }
