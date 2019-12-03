@@ -256,8 +256,13 @@ function compare2(a,b){//Ordena pela quantidade em estoque
     return a.qtdEstoque - b.qtdEstoque;
 }
 
+async function teste(){
+    let b = await findProduto("e622pxa");
+    console.log(b);
+}
 //Apenas para teste, parte a ser removida
     criarDb();
+    teste();
     app.listen(12355,()=>{
         console.log("Running...");
     })

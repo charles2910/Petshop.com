@@ -4,10 +4,6 @@ let db_agendamentos;
 let db_servicos;
 let banners = new Banner();
 
-window.onbeforeunload = () =>{
-    indexedDB.deleteDatabase("sessao");
-}
-
 window.onload = () =>{
     let loadUsuario = false;
     let request = window.indexedDB.open("clientes",1);
