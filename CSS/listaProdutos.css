@@ -1,19 +1,6 @@
 @charset "UTF-8";
 
-:root{
-    --mostrar: block;
-    --margem_grid: 50px;
-}
-@media (max-width:1100px) {
-    :root{
-    --mostrar: none;
-    --margem_grid: 0px;
-    }
-
-}
-
 div.listaProdutos{
-    display: flex;
     margin-left: 10%;
     margin-right: 10%;
 }
@@ -21,7 +8,8 @@ div.listaProdutos{
 div.listaProdutos div.gridProdutos div.janela{
     border-top: none;
     border-bottom: solid lightgray 2px;
-    margin-left: var(--margem_grid);
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 
@@ -29,11 +17,6 @@ h4#navegacao_atual a{
     cursor: pointer;
     text-decoration: none;
     color:black;
-}
-
-div.listaProdutos aside{
-    display: var(--mostrar);
-    width: 200px;
 }
 
 div.listaProdutos ul{
@@ -67,28 +50,6 @@ div.listaProdutos div.gridProdutos div#selecionar_pagina input{
     top: 20px;
 }
 
-div.listaProdutos aside li{
-    padding: 5px;
-    font-size: 15px;  
-}
-
-div.listaProdutos aside li a{
-    text-decoration: none;
-    color:rgb(99, 99, 99);
-}
-
-div.listaProdutos aside a{
-    text-decoration: none;
-    color:rgb(99, 99, 99);
-}
-
-div.listaProdutos aside h3{
-    color: #3c73b1
-}
-
-div.listaProdutos aside hr{
-    margin-top: -15px;
-}
 
 div.listaProdutos a:hover{
     text-decoration: underline;
