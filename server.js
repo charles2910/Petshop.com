@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const db = require ('couchDb');
 
+async function getUserEmail (email, res) {
+    const user = await findUser(email);
+    console.log(user);
+    res.send(user);
+}
 
 app.use(express.json());
 
@@ -40,10 +45,11 @@ app.get('/api/usuarios', (req, res) => {
 })
 
 app.get('/api/usuarios/:id', (req, res) => {
-    const user = db.findUser(req.params.id)
-   // res.body(user);
-    console.log(user);
-    res.send(user);
+    getUserEmail(req.params.id, res);
+    //const user = db.findUser(req.params.id)
+    //res.body(user);
+    //console.log(user);
+    //res.send(user);
     return;
 })
 
