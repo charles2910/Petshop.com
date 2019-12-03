@@ -313,6 +313,19 @@ export async function carregarBanners(){
     });
 }
 
+export async function validaLogin(email,senha){
+    let user = await findUser(email);
+    if(user !== undefined){
+        if(user.senha === senha){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
+
 export function getBanner(nome){
     if(nome!== "geral"){
         return banners[nome];
