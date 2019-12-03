@@ -40,7 +40,7 @@ app.get('/api/usuarios', (req, res) => {
 })
 
 app.get('/api/usuarios/:id', (req, res) => {
-
+    res.send(db.findUser(req.params.id));
 })
 
 app.post('/api/usuarios/:id', (req, res) => {
