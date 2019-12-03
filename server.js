@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-import as db from 'server/couchDb.js';
+import 'server/couchDb.js';
 
 
 app.use(express.json());
