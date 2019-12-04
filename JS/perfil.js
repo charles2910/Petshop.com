@@ -22,8 +22,10 @@ async function carregaPedidos(){
             pedidoToHtml(logged.pedidos);
         } else {
             txt += "Você não possui Pedidos.";
+            document.getElementById("pedidos_concluidos").innerHTML = txt;
+            document.getElementById("pedidos_pendentes").innerHTML = txt;
+
         }
-        document.getElementById("pedidos_concluidos").innerHTML = txt;
     }
 }
 
