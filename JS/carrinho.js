@@ -129,6 +129,7 @@ async function finalizarCompra() {
         logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
         logged.pedidos.push(new Pedido(carrinho.produtos, "Pendente", parseFloat(carrinho.valorTotal), parseInt(carrinho.numProd)));
         logged.carrinho = new Carrinho();
+        carrinho = logged.carrinho;
         await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`, logged);
         attCarrinho();
         carregarCarrinho();
