@@ -61,6 +61,21 @@ app.get('/api/busca', async (req, res) => {
     let produtos = await db.buscaProduto(req.query.init,req.query.search);
     res.send(produtos);
 })
+
+app.get('/api/agendamentos', async (req, res) => {
+    let produtos = await db.findAgendamento(req.query.data);
+    res.send(produtos);
+})
+
+app.post('/api/servicos', async (req, res) => {
+    let produtos = await db.addServico(req.body);
+    res.send(produtos);
+})
+
+app.post('/api/agenda', async (req, res) => {
+    let produtos = await db.addAgendamento(req.body);
+    res.send(produtos);
+})
 //==========================================================================================
 
 app.get('/api/estoque/:id', (req, res) => {

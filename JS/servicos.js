@@ -8,6 +8,7 @@ function carregarServicos(){
     calendario.setAttribute("min",dataAtual.getFullYear()+"-"+(dataAtual.getMonth()+1)+"-"+(dataAtual.getDate()));
     dataAtual.setDate(dataAtual.getDate()+30);
     calendario.setAttribute("max",dataAtual.getFullYear()+"-"+(dataAtual.getMonth()+1)+"-"+(dataAtual.getDate()));
+    console.log(logged);
     if(logged === undefined){
         document.getElementById("select_pet").onclick = () =>{
             alert("É preciso estar logado para ver os seus Pets");
@@ -17,14 +18,10 @@ function carregarServicos(){
             return false;
         }
     }else{
-        let request = db_clientes.transaction("clientes").objectStore("clientes").get(logged.email);
-        request.onsuccess = function(event) {
-            let cliente = jsonToUser(request.result);
-            for(let i=0; i< cliente.pets.length;i++){
-                let elem = document.createElement('option')
-                elem.text  = cliente.pets[i].nome;
-                select_pet.add(elem, select_pet.options[i]);
-            }
+        for(let i=0; i< logged.pets.length;i++){
+            let elem = document.createElement('option')
+            elem.text  = logged.pets[i].nome;
+            select_pet.add(elem, select_pet.options[i]);
         }
         document.getElementById("form_servico").onsubmit = async () =>{
             let data = document.getElementById("data").value;
@@ -52,42 +49,31 @@ function carregarServicos(){
             pet_cliente.addServicos(servico);
             logged.attPet(pet_cliente);
             attDbCliente(logged);
-            await writeDbServico(servico);
+            await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",logged);
+            await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/servicos",servico);
             let agendamento = new Agendamento(data);
             agendamento.horarios = horarios; 
             agendamento.ocupaHorario(hora);
-            await writeDbData(agendamento);
+            await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/agenda",agendamento);
             carregarServicos();
             alert("Serviço agendado com sucesso!");
-            banners.geral1,banners.geral2
-            AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/principal.html","",()=>{
-                carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3);
-            }); 
-            navaegacaoInterativa("li0");
+            navegarPaginaInicial();
             return false;
-        }   
-       
+        }
     }
-
-    calendario.onchange= () =>{
+    calendario.onchange = async() =>{
+        console.log("teste");
         while(select_horarios.length !== 0){
             select_horarios.remove(0);
         }
-        let request = db_agendamentos.transaction("agendamentos").objectStore("agendamentos").get(calendario.value);
-        request.onsuccess = function(event) {
-            if(request.result !== undefined){
-                horarios = request.result.horarios;
-            }else{
-                let data = new Agendamento();
-                horarios = data.horarios;
-            }
-            for(let i=0; i< horarios.length;i++){
-                let elem = document.createElement('option')
-                elem.text  = horarios[i];
-                select_horarios.add(elem, select_horarios.options[i]);
-            }
+        let data = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/agendamentos?data=${calendario.value}`)
+        horarios = data.horarios;
+        for(let i=0; i< horarios.length;i++){
+            let elem = document.createElement('option')
+            elem.text  = horarios[i];
+            select_horarios.add(elem, select_horarios.options[i]);
         }
-    } 
+    }
 }
 
 function carregarServicosAdmin(){
