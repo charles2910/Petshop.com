@@ -18,7 +18,8 @@ function attCarrinho() {
 };
 
 function addCarrinho(codigo) {
-    let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
+    let request = AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
+    console.log(request);
     request.onsuccess = function(event) {
         novoProduto = jsonToProduto(request.result);
         let indice = -1;
