@@ -1,7 +1,7 @@
 async function navegarCompra(codigo){
     if(logged !== undefined && logged.admin){
         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",async ()=>{
-            let produto = await AJAX_geral(`http://localhost:8082/api/compra?id=${codigo}`);
+            let produto = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/compra?id=${codigo}`);
             produto = jsonToProduto(produto);
 
             document.getElementById("nome").value = produto.nomeComercial;
@@ -31,7 +31,7 @@ async function navegarCompra(codigo){
     }else{
          AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/compra.html","",async ()=>{
 
-            let produto = await AJAX_geral(`http://localhost:8082/api/compra?id=${codigo}`);
+            let produto = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/compra?id=${codigo}`);
             produto = jsonToProduto(produto);
 
             document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
@@ -74,7 +74,7 @@ async function AJAX_listas(nome,filtro,pagina){
         if(this.readyState == 4 && this.status == 200){
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
             if(pagina === undefined) pagina = 0;
-            let lista = await AJAX_geral(`http://localhost:8082/api/estoque?init=${pagina}&&filtro=${filtro}&&nome=${nome}`);
+            let lista = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/estoque?init=${pagina}&&filtro=${filtro}&&nome=${nome}`);
             carregarLista(lista); 
             /*if(banner !== undefined){
                 let result = await qtdPaginas(nome,tipo,filtro);

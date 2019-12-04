@@ -6,6 +6,7 @@ let banners = new Banner();
 
 window.onload = async () =>{
     let tempBanner = await AJAX_navegacao("http://trabWeb.ddns.net:8082/api/bannersPrincipal");
+    console.log(tempBanner);
     banners.geral1 = tempBanner[0];
     banners.geral2 = tempBanner[1];
     banners.geral3 = tempBanner[2];
