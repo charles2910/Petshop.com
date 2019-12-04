@@ -18,23 +18,22 @@ function attCarrinho() {
 };
 
 function addCarrinho(codigo) {
-    let request = AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`, () => {
-        console.log(request.result);
-        novoProduto = jsonToProduto(request.result);
-        let indice = -1;
-        carrinho.produtos.forEach((produto, index) => {
-            if (produto.nomeComercial === novoProduto.nomeComercial) {
-                indice = index;
-            }        
-        });
-        if (indice >= 0) {
-            carrinho.produtos[indice].qtdCarrinho += 1;
-        } else {
-            novoProduto.qtdCarrinho = 1;
-            carrinho.produtos[carrinho.produtos.length] = novoProduto;
-        }
-        attCarrinho();
+    let request = await AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
+    console.log(request.result);
+    novoProduto = jsonToProduto(request.result);
+    let indice = -1;
+    carrinho.produtos.forEach((produto, index) => {
+        if (produto.nomeComercial === novoProduto.nomeComercial) {
+            indice = index;
+        }        
     });
+    if (indice >= 0) {
+        carrinho.produtos[indice].qtdCarrinho += 1;
+    } else {
+        novoProduto.qtdCarrinho = 1;
+        carrinho.produtos[carrinho.produtos.length] = novoProduto;
+    }
+    attCarrinho();
 }
 
 function changeCarrinho(id, value) {
