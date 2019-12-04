@@ -18,9 +18,7 @@ function attCarrinho() {
 };
 
 function addCarrinho(codigo) {
-    let request = AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
-    console.log(request);
-    request.onsuccess = function(event) {
+    let request = AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`, () => {
         novoProduto = jsonToProduto(request.result);
         let indice = -1;
         carrinho.produtos.forEach((produto, index) => {
@@ -35,7 +33,7 @@ function addCarrinho(codigo) {
             carrinho.produtos[carrinho.produtos.length] = novoProduto;
         }
         attCarrinho();
-    }
+    });
 }
 
 function changeCarrinho(id, value) {
