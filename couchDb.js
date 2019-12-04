@@ -20,12 +20,13 @@ class Banner{
 }
 
 class Lista{
-    constructor(nome,tipo,banner,itens,qtdTotalPaginas,pag){
+    constructor(nome,tipo,filtro,banner,itens,qtdTotalPaginas,pag){
     this.qtdTotalPaginas = qtdTotalPaginas;
     this.tipo = tipo;
     this.nome = nome;
     this.banner = banner;
     this.itens = itens;
+    this.filtro = filtro;
     this.bannerPos = 0;
     this.pag = pag;
     }
@@ -201,7 +202,7 @@ const banners = new Banner();
     }else{
         tipo = "categoria";
     }
-    return new Lista(nome,tipo,banners[nome],produtos,qtdTotalpaginas,inicio);
+    return new Lista(nome,tipo,filtro-1,banners[nome],produtos,qtdTotalpaginas,inicio);
 }
 
  async function buscaProduto(inicio,txt){

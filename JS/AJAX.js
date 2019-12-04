@@ -61,7 +61,7 @@ async function AJAX_navegacao(arquivo,pagina_atual,callback){
     xhttp.send();
 }
 
-async function AJAX_listas(nome,tipo,banner,pagina,filtro,filtroMarca,filtroPreco,filtroTipo){
+async function AJAX_listas(nome,filtro,pagina){
     let xhttp = new XMLHttpRequest();
     if(pagina_atual !== undefined){
         document.getElementById("pagina_atual").innerHTML = nome;
@@ -70,6 +70,7 @@ async function AJAX_listas(nome,tipo,banner,pagina,filtro,filtroMarca,filtroPrec
     xhttp.onreadystatechange = async function(){
         if(this.readyState == 4 && this.status == 200){
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
+            if(pagina === undefined) pagina = 0;
             let lista = await AJAX_geral(`http://localhost:8081/api/estoque?init=${pagina}&&filtro=${filtro}&&nome=${nome}`);
             carregarLista(lista); 
             /*if(banner !== undefined){
