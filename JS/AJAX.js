@@ -1,50 +1,45 @@
 async function navegarCompra(codigo){
     if(logged !== undefined && logged.admin){
         await AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",()=>{
-            let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
-             request.onsuccess = function(event) {
-                let produto = jsonToProduto(request.result);
-                document.getElementById("nome").value = produto.nomeComercial;
-                document.getElementById("marca").value = produto.marca;
-                document.getElementById("preco").value = produto.preco;
-                document.getElementById("preco_promo").value = produto.precoPromocional;
-                document.getElementById("nome_comp").value = produto.nomeCompleto;
-                document.getElementById("codigo").value = produto.codigo;
-                document.getElementById("codigo").readOnly = true;
-                document.getElementById("qtd").value = produto.qtdEstoque;
-                document.getElementById("lote").value = produto.lote;
-                document.getElementById("validade").value = produto.validade;
-                document.getElementById("desc").value = produto.descricao;
-                let menu = document.getElementById("categoria");
-                for(let i=0; i< menu.length;i++){
-                    if(menu.options[i].value.toLowerCase() === produto.categoria){
-                        menu.options[i].setAttribute("selected","selected");
-                    }
+            let produto = await AJAX_geral(`http://localhost:8081/api/compra?id=${codigo}`);
+            let produto = jsonToProduto(produto);
+            document.getElementById("nome").value = produto.nomeComercial;
+            document.getElementById("marca").value = produto.marca;
+            document.getElementById("preco").value = produto.preco;
+            document.getElementById("preco_promo").value = produto.precoPromocional;
+            document.getElementById("nome_comp").value = produto.nomeCompleto;
+            document.getElementById("codigo").value = produto.codigo;
+            document.getElementById("codigo").readOnly = true;
+            document.getElementById("qtd").value = produto.qtdEstoque;
+            document.getElementById("lote").value = produto.lote;
+            document.getElementById("validade").value = produto.validade;
+            document.getElementById("desc").value = produto.descricao;
+            let menu = document.getElementById("categoria");
+            for(let i=0; i< menu.length;i++){
+                if(menu.options[i].value.toLowerCase() === produto.categoria){
+                    menu.options[i].setAttribute("selected","selected");
                 }
-                menu = document.getElementById("departamento");
-                for(let i=0; i< menu.length;i++){
-                    if(menu.options[i].value.toLowerCase() === produto.departamento){
-                        menu.options[i].setAttribute("selected","selected");
-                    }
+            }
+            menu = document.getElementById("departamento");
+            for(let i=0; i< menu.length;i++){
+                if(menu.options[i].value.toLowerCase() === produto.departamento){
+                    menu.options[i].setAttribute("selected","selected");
                 }
-
-            };
+            }
         });
     }else{
-         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/compra.html","",()=>{
-             let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
-             request.onsuccess = function(event) {
-                let produto = jsonToProduto(request.result);
-                document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
-                document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
-                document.getElementById("nome_completo").innerHTML = produto.nomeCompleto;
-                document.getElementById("espec").innerHTML = produto.descricao;
-                if(produto.qtdEstoque === 0){
-                    document.getElementById("btn_carrinho_add").disable = true;
-                    document.getElementById("btn_carrinho_add").style.opacity = "0.5";
-                    document.getElementById("btn_carrinho_add").style.cursor = "default";
-                }
-            };
+         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/compra.html","",async ()=>{
+            let produto = await AJAX_geral(`http://localhost:8081/api/compra?id=${codigo}`);
+            let produto = jsonToProduto(produto);
+            document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
+            document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
+            document.getElementById("nome_completo").innerHTML = produto.nomeCompleto;
+            document.getElementById("espec").innerHTML = produto.descricao;
+            if(produto.qtdEstoque === 0){
+                document.getElementById("btn_carrinho_add").disable = true;
+                document.getElementById("btn_carrinho_add").style.opacity = "0.5";
+                document.getElementById("btn_carrinho_add").style.cursor = "default";
+            }
          });
     }
 }

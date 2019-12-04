@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const db = require ('./couchDb');
+const db = require ('server/couchDb');
 db.criardb();
 
 async function addUser (user, res) {
@@ -66,7 +66,10 @@ app.get('/index.html', (req, res) => {
 
 app.get('/api/bannersPrincipal',(req,res)=>{
     res.send(db.getBanner("geral"));
-    console.log("banners principais enviados");
+})
+
+app.get('/api/compra',(req,res)=>{
+    findProduto(req.query.id,res);
 })
 
 app.get('/api/estoque/:id', (req, res) => {

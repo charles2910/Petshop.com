@@ -341,5 +341,8 @@ function compare2(a,b){//Ordena pela quantidade em estoque
 
 module.exports = {
     criardb: criarDb,
-    getBanner: getBanner
+    getBanner: getBanner,
+    findProduto : findProduto,
+    findProdutos : findProdutos,
+    findAgendamento : findAgendamento
 }
