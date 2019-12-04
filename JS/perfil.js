@@ -1,6 +1,6 @@
 async function carregaPets(){
     let txt = "";
-    logged = await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`);
+    logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
     if (logged) {
         if (logged.pets && logged.pets.length > 0) {
             carrinho = logged.carrinho;
