@@ -19,6 +19,7 @@ function attCarrinho() {
 
 function addCarrinho(codigo) {
     let request = AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`, () => {
+        console.log(request.result);
         novoProduto = jsonToProduto(request.result);
         let indice = -1;
         carrinho.produtos.forEach((produto, index) => {
