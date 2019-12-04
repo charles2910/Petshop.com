@@ -1,8 +1,13 @@
 let banners = new Banner();
 
 window.onload = () =>{
+    navegarPaginaInicial();
+}
+
+function navegarPaginaInicial(){
     AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/principal.html','',async ()=>{
         let tempBanner = await AJAX_geral("http://trabWeb.ddns.net:8082/api/bannersPrincipal");
+        banners = new Banner();
         for(let i=0;i<3;i++){
             tempBanner[i].forEach((produto)=>{
                 banners["geral"+(i+1)].push(jsonToProduto(produto));
@@ -11,7 +16,6 @@ window.onload = () =>{
         carregarPaginaInicial();
     });
 }
-
 
 class PaginaInicial{
     constructor(banner1,banner2,banner3){

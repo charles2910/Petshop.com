@@ -128,7 +128,7 @@ async function AJAX_geral(rota,callback){
         }
         xhttp.open("GET",rota);
         xhttp.send();
-    })
+    });
 }
 
 async function AJAX_geralPUT(rota,objeto,callback){
@@ -145,8 +145,7 @@ async function AJAX_geralPUT(rota,objeto,callback){
                 }
             }
         };
-    }
-    );
+    });
 }
 
 async function AJAX_geralPOST(rota,objeto,callback){
