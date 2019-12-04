@@ -25,6 +25,7 @@ function attCarrinho() {
     if(logged) {
         logged.carrinho = carrinho;
         //AJAX_geral
+    }
 
 };
 
