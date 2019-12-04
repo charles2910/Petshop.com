@@ -17,7 +17,7 @@ function attCarrinho() {
     }
 };
 
-function addCarrinho(codigo) {
+async function addCarrinho(codigo) {
     let request = await AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
     console.log(request.result);
     novoProduto = jsonToProduto(request.result);
