@@ -37,7 +37,7 @@ for i in range(0,5):
                 arquivo.write('        "validade" :  "{:>02}-{:>02}-{:>02}",\n'.format(random.randint(2020,2023),random.randint(1,12),random.randint(1,28)))
                 arquivo.write('        "descricao" :  "{}",\n'.format(txt))
                 arquivo.write('        "promocao" :  {},\n'.format(promo))
-                arquivo.write('        "imgPath" :  "http://trabWeb.ddns.net:8081/IMAGES/PRODUTOS/produto.png"\n')
+                arquivo.write('        "imgPath" :  "http://trabWeb.ddns.net:8082/IMAGES/PRODUTOS/produto.png"\n')
                 arquivo.write('    },\n')
                 z+=1
     marca = chr(ord(marca) + 1)
