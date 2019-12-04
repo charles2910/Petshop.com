@@ -18,9 +18,7 @@ function attCarrinho() {
 };
 
 async function addCarrinho(codigo) {
-    let request = await AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
-    console.log(request.result);
-    novoProduto = jsonToProduto(request.result);
+    let novoProduto = await AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
     let indice = -1;
     carrinho.produtos.forEach((produto, index) => {
         if (produto.nomeComercial === novoProduto.nomeComercial) {
