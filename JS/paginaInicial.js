@@ -1,7 +1,3 @@
-let db_clientes;
-let db_estoque;
-let db_agendamentos;
-let db_servicos;
 let banners = new Banner();
 
 window.onload = () =>{
