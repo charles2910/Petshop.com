@@ -1,18 +1,14 @@
 let logged;
 
-async function login(novoUsuario){
-    let user
-    if(novoUsuario === undefined){
-        email = document.getElementById("email_login").value;
-        senha = document.getElementById("psw_login").value;
-        let tempUser={
-            email: email,
-            senha: senha
-        }
-        user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/login",tempUser);
-    }else{
-        user = novoUsuario;
+async function login(){
+    email = document.getElementById("email_login").value;
+    senha = document.getElementById("psw_login").value;
+    let tempUser={
+        email: email,
+        senha: senha
     }
+    user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/login",tempUser);
+    console.log(user);
     if(user !== 'false'){
         logged = jsonToUser(JSON.parse(user));
         console.log(logged);

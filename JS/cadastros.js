@@ -38,10 +38,11 @@ async function cadastrarUsuario(admin,att){
                 alert("email já cadastrado!");
             }else{
                 alert("dados cadastrados com sucesso!");
-                login(user);
             }
         }else{
-            if(awaitattDbCliente(cliente)){
+            let user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",cliente);
+            if(user !== 'false'){
+                logged = jsonToUser(JSON.parse(user));
                 alert("Dados alterados com sucesso!");
             }
         }

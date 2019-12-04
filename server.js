@@ -29,6 +29,7 @@ app.get('/api/estoque', async (req, res) => {
 })
 
 app.put('/api/login', async (req, res) => {
+    console.log(await db.validaLogin(req.body.email,req.body.senha))
     res.send(await db.validaLogin(req.body.email,req.body.senha));
 })
 
@@ -38,8 +39,7 @@ app.post('/api/cadastro', async (req, res) => {
 })
 
 app.put('/api/cadastro', async (req, res) => {
-    console.log(await db.addUser(req.body));
-    //res.send(await db.validaLogin(req.body.email,req.body.senha));
+    res.send(await db.updateUser(req.body));
 })
 
 app.get('/api/busca', async (req, res) => {
