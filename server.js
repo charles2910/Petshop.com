@@ -28,6 +28,21 @@ app.get('/api/estoque', async (req, res) => {
     res.send(produtos);
 })
 
+app.post('/api/estoque', async (req, res) => {
+    let produtos = await db.addProduto(req.body);
+    res.send(produtos);
+})
+
+app.put('/api/estoque', async (req, res) => {
+    let produtos = await db.updateProduto(req.body);
+    res.send(produtos);
+})
+
+app.put('/api/estoque/delete', async (req, res) => {
+    let produtos = await db.removeProduto(req.query.id);
+    res.send(produtos);
+})
+
 app.put('/api/login', async (req, res) => {
     console.log(await db.validaLogin(req.body.email,req.body.senha))
     res.send(await db.validaLogin(req.body.email,req.body.senha));
@@ -47,44 +62,6 @@ app.get('/api/busca', async (req, res) => {
     res.send(produtos);
 })
 //==========================================================================================
-app.get('/api/estoque/:id', (req, res) => {
-    api.findProduto(req.params.id, res);
-    return;
-})
-
-app.post('/api/estoque/:id', (req, res) => {
-    api.addProduto(req.body, res);
-    return;
-})
-
-app.put('/api/estoque/:id', (req, res) => {
-    api.updateProduto(req.body, res);
-    return;
-})
-
-app.delete('/api/estoque/:id', (req, res) => {
-    api.removeProduto(req.body, res);
-    return;
-})
-
-app.get('/api/usuarios/:id', (req, res) => {
-    api.findUser(req.params.id, res);
-    return;
-})
-
-app.post('/api/usuarios/:id', (req, res) => {
-    api.addUser(req.body, res);
-    return;
-})
-
-app.put('/api/usuarios/:id', (req, res) => {
-    api.updateUser(req.body, res);
-    return;
-})
-
-app.delete('/api/usuarios/:id', (req, res) => {
-
-})
 
 app.get('/api/agendamentos', (req, res) => {
 
@@ -93,19 +70,6 @@ app.get('/api/agendamentos', (req, res) => {
 app.get('/api/agendamentos/:id', (req, res) => {
     api.findAgendamento(req.params.id, res);
     return;
-})
-
-app.post('/api/agendamentos/:id', (req, res) => {
-    api.addAgendamento(req.body, res);
-    return;
-})
-
-app.put('/api/agendamentos/:id', (req, res) => {
-
-})
-
-app.delete('/api/agendamentos/:id', (req, res) => {
-
 })
 
 app.get('/api/servicos', (req, res) => {
