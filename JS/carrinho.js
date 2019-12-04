@@ -7,7 +7,7 @@ if (logged) {
     carrinho = new Carrinho();
 }
 
-function attCarrinho() {
+async function attCarrinho() {
     carrinho.numProd = carrinho.produtos.length;
     if (carrinho === undefined || carrinho === null || carrinho.numProd === 0) {
         return "Carrinho vazio";
@@ -22,7 +22,11 @@ function attCarrinho() {
     if(carrinho.numProd <1){
 
     }
-    if(logged) logged.carrinho = carrinho;
+    if(logged) {
+        logged.carrinho = carrinho;
+        await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`, logged);
+    }
+
 };
 
 async function addCarrinho(codigo) {
@@ -31,7 +35,7 @@ async function addCarrinho(codigo) {
     carrinho.produtos.forEach((produto, index) => {
         if (produto.nomeComercial === novoProduto.nomeComercial) {
             indice = index;
-        }        
+        }
     });
     if (indice >= 0) {
         carrinho.produtos[indice].qtdCarrinho += 1;
@@ -47,8 +51,12 @@ function changeCarrinho(id, value) {
     prod = prod.trim();
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
+            if (produto.qtdEstoque < parseInt(value)) {
+                alert("Quantidade no estoque não é suficiente.");
+                return;
+            }
             produto.qtdCarrinho = parseInt(value);
-        }        
+        }
     });
     attCarrinho();
     carregarCarrinho();
@@ -60,7 +68,7 @@ function removerProduto(id) {
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
             produto.qtdCarrinho = 0;
-        }        
+        }
     });
     carrinho.produtos = carrinho.produtos.filter((element) => {
         if (element.qtdCarrinho > 0)
@@ -79,7 +87,7 @@ function carregarCarrinho() {
     carrinho.produtos.forEach(produto => {
         txt += toCarrinhoHTML(produto);
     });
-   
+
     txt += '<tr class="item_carrinho"><td><h2>Total:</h2></td><td></td>';
     if (carrinho.numProd === 0) {
         txt += '<td id="carrinho_num_itens">Carrinho vazio</td>';

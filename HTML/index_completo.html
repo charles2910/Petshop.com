@@ -91,7 +91,7 @@
         </div>
     </header>
     <h4 id="navegacao_atual"><a onclick="AJAX_navegacao('trabWeb.ddns.net:8082/conteudos/principal.html','',()=>{carregarPaginaInicial(banners.geral1,banners.geral2,banners.geral3)});navaegacaoInterativa('li0')">Principal</a> > <a id="pagina_atual"></a> </h4>
-    <div id = "janela_de_conteudo">  
+    <div id = "janela_de_conteudo">
     </div>
     <div id="janela_popup_senha">
     <form id="esqueci_senha" onsubmit="popupSenha(false)">
@@ -163,7 +163,7 @@
                 </select>
             </div>
             <div id="rodape_login">
-                <button type="submit">Cadastrar</button>
+                <button type="submit" onclick="cadastrarPet(); popupCadastro(false);">Cadastrar</button>
                 <button type="button" class="cancelar_login" onclick="popupCadastro(false)">Cancelar</button>
             </div>
         </form>

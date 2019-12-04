@@ -85,7 +85,7 @@ async function AJAX_listas(nome,filtro,pagina){
                 lista.banner.push(jsonToProduto(produto));
             })
             console.log(lista);
-            carregarLista(lista); 
+            carregarLista(lista);
         }
     }
     xhttp.open("GET","http://trabWeb.ddns.net:8082/conteudos/listas.html");
@@ -137,7 +137,7 @@ async function AJAX_geralPUT(rota,objeto,callback){
         xhttp.open('PUT', rota);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(objeto));
-        xhttp.onload = function() {  
+        xhttp.onload = function() {
             if (xhttp.status === 200 && this.readyState == 4) {
                 resolve(this.responseText);
                 if(callback !==undefined){
@@ -154,7 +154,7 @@ async function AJAX_geralPOST(rota,objeto,callback){
         xhttp.open('POST', rota);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(objeto));
-        xhttp.onload = function() {  
+        xhttp.onload = function() {
             if (xhttp.status === 200 && this.readyState == 4) {
                 resolve(this.responseText);
                 if(callback !==undefined){

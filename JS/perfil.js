@@ -1,17 +1,21 @@
-function carregaPets(){
-    let request = db_clientes.transaction("clientes").objectStore("clientes").get(logged.email);
-    request.onsuccess = function(event) {
-        let txt = "";
-        let user = jsonToUser(request.result);
-        for(let i=0;i<user.pets.length;i++){
-            let pet = jsonToPet(request.result.pets[i]);
-            txt += pet.petToHtml();
+async function carregaPets(){
+    let txt = "";
+    logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
+    if (logged) {
+        if (logged.pets && logged.pets.length > 0) {
+            carrinho = logged.carrinho;
+            for(let i = 0; i < logged.pets.length; i++) {
+                let pet = jsonToPet(logged.pets[i]);
+                txt += pet.petToHtml();
+            }
+        } else {
+            txt += "Você não possui Pets.";
         }
         document.getElementById("pets_cliente").innerHTML = txt;
     }
 }
 
-function carregaPedidos(){
+async function carregaPedidos(){
     let request = db_clientes.transaction("clientes").objectStore("clientes").get(logged.email);
     request.onsuccess = function(event) {
         pedidoToHtml(request.result.pedidos);
@@ -41,7 +45,7 @@ function pedidoToHtml(pedidos){
                 txt+=        '<td>'+produto.qtdCarrinho+'</td>'
                 txt+=        '<td>R$ '+produto.preco+'</td>'
                 txt+=        '<td> '+pedido.entrega+' </td>'
-                txt+=    '</tr>'   
+                txt+=    '</tr>'
             });
             txt+= '<tr class="item_carrinho">'
             txt+=     '<td><h2>Total:</h2></td>'
