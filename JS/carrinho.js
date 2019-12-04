@@ -1,6 +1,8 @@
 let carrinho;
-if(logged.carrinho && logged.carrinho.numProd) {
-    carrinho = logged.carrinho;
+if (logged) {
+    if (logged.carrinho && logged.carrinho.numProd) {
+        carrinho = logged.carrinho;
+    }
 } else {
     carrinho = new Carrinho();
 }
