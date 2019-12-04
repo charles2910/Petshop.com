@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const api = require('api');
 const db = require('couchDb')
-//db.destruirDb();
-db.criarDb();
+db.destruirDb();
+//db.criarDb();
 app.use(express.json());
 app.get('/', (req, res) => {
    res.sendFile(__dirname + '/HTML/' + 'index_completo.html');
