@@ -41,7 +41,8 @@ async function cadastrarUsuario(admin,att){
                 login(user);
             }
         }else{
-            if(awaitattDbCliente(cliente)){
+            let user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",cliente);
+            if(user !== 'false'){
                 alert("Dados alterados com sucesso!");
             }
         }

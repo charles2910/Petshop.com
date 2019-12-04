@@ -10,6 +10,7 @@ async function login(novoUsuario){
             senha: senha
         }
         user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/login",tempUser);
+        console.log(user);
     }else{
         user = novoUsuario;
     }
