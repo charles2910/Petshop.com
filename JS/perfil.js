@@ -5,7 +5,7 @@ async function carregaPets(){
         if (logged.pets && logged.pets.length > 0) {
             carrinho = logged.carrinho;
             for(let i = 0; i < logged.pets.length; i++) {
-                let pet = jsonToPet(request.result.pets[i]);
+                let pet = jsonToPet(logged.pets[i]);
                 txt += pet.petToHtml();
             }
         } else {
