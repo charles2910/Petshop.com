@@ -152,13 +152,8 @@ app.get('/*', (req, res) => {
    res.sendFile(__dirname + path);
    console.log(`/${path} acessado`);
 })
-<<<<<<< HEAD
 
-const server = app.listen(8082,function () {
-=======
-//host '10.142.0.2'
 const server = app.listen(8082,'10.142.0.2',function () {
->>>>>>> 3094c3e5c6b9468a9b3610bf3952e8341b33c69b
    const host = server.address().address
    const port = server.address().port
    console.log("Example app listening at http://:%s", port)
