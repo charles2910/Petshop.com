@@ -9,7 +9,7 @@ function attCarrinho() {
     carrinho.numProd  = 0;
     carrinho.produtos.forEach(element => {
         carrinho.valorTotal += (parseFloat(this.preco)*((100-parseFloat(this.precoPromocional))/100)).toFixed(2) * element.qtdCarrinho;
-        console.log(carrinho.numProd + "+=" + element.qtdCarrinho);
+        console.log(carrinho.valorTotal);
         carrinho.numProd += element.qtdCarrinho;
     });
     if(carrinho.numProd <1){
