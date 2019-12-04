@@ -235,14 +235,6 @@ const banners = new Banner();
     return true
 }
 
- async function getBanner(nome){
-    if(nome!== "geral"){
-        return banners[nome];
-    }else{
-        return [banners.geral1,banners.geral2,banners.geral3];
-    }
-}
-
  async function findAgendamento(data){
     const agendamentos = nano.use("agendamentos");
     let retorno;
@@ -345,9 +337,20 @@ function compare2(a,b){//Ordena pela quantidade em estoque
 }
 
 module.exports = {
-    criardb: criarDb,
+    addAgendamento: addAgendamento,
+    addProduto: addProduto,
+    addServico: addServico,
+    addUser: addUser,
+    buscaProduto: buscaProduto,
+    criarDb: criarDb,
+    findAgendamento: findAgendamento,
+    findProduto: findProduto,
+    findProdutos: findProdutos,
+    findUser: findUser,
     getBanner: getBanner,
-    findProduto : findProduto,
-    findProdutos : findProdutos,
-    findAgendamento : findAgendamento
+    getServicos: getServicos,
+    removeProduto: removeProduto,
+    updateProduto: updateProduto,
+    updateServico: updateServico,
+    updateUser: updateUser
 }

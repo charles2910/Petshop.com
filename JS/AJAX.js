@@ -1,6 +1,6 @@
 async function navegarCompra(codigo){
     if(logged !== undefined && logged.admin){
-        await AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",()=>{
+        await AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",async ()=>{
             let produto = await AJAX_geral(`http://localhost:8081/api/compra?id=${codigo}`);
             let produto = jsonToProduto(produto);
             document.getElementById("nome").value = produto.nomeComercial;
