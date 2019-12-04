@@ -126,11 +126,12 @@ function navaegacaoInterativa(id){
 }
 
 async function AJAX_geral(rota,callback){
-    return new Promise((resolve)=>{
+    return await new Promise((resolve)=>{
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                resolve(this.responseText);
+                console.log(JSON.parse(this.responseText));//impressao para ver a resposta do servidor
+                resolve(JSON.parse(this.responseText));
                 if(callback !== undefined){
                     callback();
                 }
