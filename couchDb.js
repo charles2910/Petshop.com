@@ -36,14 +36,15 @@ const banners = new Banner();
 
 async function criarDb() {
   const db_list = await nano.db.list();
-  //await nano.db.destroy("estoque").catch();
-  //await nano.db.destroy("usuarios").catch();
-  //await nano.db.destroy("servicos").catch();
-  //await nano.db.destroy("agendamentos").catch();
-  if(db_list.indexOf("estoque")<0){
+  await nano.db.destroy("estoque").catch();
+  await nano.db.destroy("usuarios").catch();
+  await nano.db.destroy("servicos").catch();
+  await nano.db.destroy("agendamentos").catch();
+  /*if(db_list.indexOf("estoque")<0){
     await nano.db.create("estoque").catch();
     const estoque = nano.use("estoque");
     await carregarBancoDeDados(estoque).catch()
+    await estoque.insert({view,_id: view._id, _rev: view._rev});
   }
   if(db_list.indexOf("usuarios")<0){
     await nano.db.create("usuarios").catch();
@@ -63,7 +64,7 @@ async function criarDb() {
   }
   if(db_list.indexOf("servicos")<0) await nano.db.create("servicos").catch();
   if(db_list.indexOf("agendamentos")<0) await nano.db.create("agendamentos").catch();
-  await carregarBanners();
+  await carregarBanners();*/
 }
 
 async function carregarBancoDeDados(estoque){
