@@ -8,7 +8,7 @@ function attCarrinho() {
     carrinho.valorTotal = 0.00;
     carrinho.numProd  = 0;
     carrinho.produtos.forEach(element => {
-        carrinho.valorTotal += (parseFloat(this.preco)*((100-parseFloat(this.precoPromocional))/100)).toFixed(2) * element.qtdCarrinho;
+        carrinho.valorTotal += (parseFloat(this.preco)*(1-parseFloat(this.precoPromocional)/100)) * element.qtdCarrinho;
         console.log(carrinho.valorTotal);
         carrinho.numProd += element.qtdCarrinho;
     });
@@ -98,7 +98,7 @@ function toCarrinhoHTML(produto){
     }
     txt+=            '</select>';
     txt+=        '</td>';
-    txt+=        '<td>R$ ' + produto.preco + '</td>';
+    txt+=        '<td>R$ ' + (parseFloat(produto.preco)*(1-parseFloat(produto.precoPromocional)/100)) + '</td>';
     txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
