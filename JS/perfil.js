@@ -3,7 +3,6 @@ async function carregaPets(){
     logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
     if (logged) {
         if (logged.pets && logged.pets.length > 0) {
-            carrinho = logged.carrinho;
             for(let i = 0; i < logged.pets.length; i++) {
                 let pet = jsonToPet(logged.pets[i]);
                 txt += pet.petToHtml();
@@ -16,9 +15,15 @@ async function carregaPets(){
 }
 
 async function carregaPedidos(){
-    let request = db_clientes.transaction("clientes").objectStore("clientes").get(logged.email);
-    request.onsuccess = function(event) {
-        pedidoToHtml(request.result.pedidos);
+    let txt = "";
+    logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
+    if (logged) {
+        if (logged.pedidos && logged.pedidos.length > 0) {
+            pedidoToHtml(logged.pedidos);
+        } else {
+            txt += "Você não possui Pedidos.";
+        }
+        document.getElementById("pedidos_concluidos").innerHTML = txt;
     }
 }
 
