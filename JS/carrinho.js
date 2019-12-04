@@ -126,9 +126,10 @@ function finalizarCompra(){
     }else if(carrinho.numProd <1){
         alert("Adicione algo no carrinho");
     }else{
+        logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
         logged.pedidos.push(new Pedido(carrinho.produtos,"Pendente",carrinho.valorTotal,carrinho.numProd));
-        attDbCliente(logged);
-        carrinho.produtos = [];
+        logged.carrinho = new Carrinho();
+        await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`, logged);
         attCarrinho();
         carregarCarrinho();
         alert("Compra concluída com sucesso!");
