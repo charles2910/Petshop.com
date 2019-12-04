@@ -1,3 +1,18 @@
+let banners = new Banner();
+
+window.onload = () =>{
+    AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/principal.html','',async ()=>{
+        let tempBanner = await AJAX_geral("http://trabWeb.ddns.net:8082/api/bannersPrincipal");
+        for(let i=0;i<3;i++){
+            tempBanner[i].forEach((produto)=>{
+                banners["geral"+(i+1)].push(jsonToProduto(produto));
+            })
+        }
+        carregarPaginaInicial();
+    });
+}
+
+
 class PaginaInicial{
     constructor(banner1,banner2,banner3){
         this.banner1 = banner1;
@@ -11,8 +26,8 @@ class PaginaInicial{
 
 let paginaInicial;
 
-function carregarPaginaInicial(banner1,banner2,banner3){
-    paginaInicial = new PaginaInicial(banner1,banner2,banner3);
+function carregarPaginaInicial(){
+    paginaInicial = new PaginaInicial(banners.geral1,banners.geral2,banners.geral3);
     addProdutoBannerGeral("ofertas_dia",paginaInicial.banner1,paginaInicial.banner1Pos);
     addProdutoBannerGeral("oferta_economia",paginaInicial.banner2,paginaInicial.banner2Pos);
     addProdutoBannerGeral("oferta_acabando",paginaInicial.banner3,paginaInicial.banner3Pos);
@@ -51,19 +66,20 @@ function configOnclick(){
         }
     }
     document.getElementById("logo").onclick = ()=> {
-        AJAX_navegacao('../conteudos/principal.html','',()=>{
+        AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/principal.html','',()=>{
             carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3)
         });
     }
     document.getElementById("li0").onclick= ()=>{
-        AJAX_navegacao("../conteudos/principal.html","",()=>{
+        AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/principal.html","",()=>{
             carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3)
         }); 
         navaegacaoInterativa("li0");
     }
 
     document.getElementById("btn_buscador").onclick = () =>{
-        AJAX_listas("Busca","nomeCompleto",banners.geral1,0,pesquisar,[],[],[],[])
+        let txt = document.getElementById("buscador").value;
+        AJAX_listas(txt,3,0);
     }
 }
 
@@ -84,7 +100,6 @@ function pesquisar(produto){
     txt = txt.toLowerCase();
     txt = txt.split(" ");
     let compare = produto.nomeCompleto.toLowerCase();
-    console.log(txt)
     for(let i=0; i< txt.length;i++){
         if(compare.includes(txt[i])){
             return true;

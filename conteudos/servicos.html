@@ -1,12 +1,12 @@
 <div id="conteudo_servicos">
         <h1>Seleção de serviços</h1><hr>
         <div id="janela_servicos">
-            <form id="form_servico">
+            <form id="form_servico" onsubmit="return false;">
                 <h3>Selecione o seu pet</h3>
-                <select id="select_pet">
+                <select id="select_pet" required>
                 </select>
                 <h3>Selecione o tipo de serviço</h3>
-                <select id="tipo_servico">
+                <select id="tipo_servico" required>
                     <option>Veterinário</option>
                     <option>Higiene</option>
                 </select>
@@ -20,7 +20,7 @@
                 </div>
                 <h3>Detalhes sobre seu animal ou sobre o serviço</h3>
                 <textarea id="descricao_servico" placeholder="Ex: Banho e tosa" required></textarea>
-                <button id="agendar" type="button" ><i class="fa fa-calendar-check-o"></i> Agendar</button>
+                <button id="agendar" type="submit" ><i class="fa fa-calendar-check-o"></i> Agendar</button>
             </form>
         </div>
         <h2>Especificações dos preços e serviços</h2><hr>

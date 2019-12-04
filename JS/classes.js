@@ -18,7 +18,6 @@ class Cliente{
         this.pets.push(pet);
         logged = this;
         attDbCliente(this);
-        attDbSessao(this);
     }
     addPedido(pedido){
         logged = this;
@@ -27,6 +26,17 @@ class Cliente{
     addCarrinho(produto){
         logged = this;
         this.carrinho.push(produto);
+    }
+
+    attPet(pet){
+        console.log(pet);
+        for(let i=0; i< this.pets.length;i++){
+            if(this.pets[i].nome === pet.nome){
+                this.pets.splice(i,1);
+                this.pets.push(pet);
+                break;
+            }
+        }
     }
 }
 
@@ -72,16 +82,15 @@ class Pet{
             txt +=       "<p>Sexo: "+this.sexo+"</p>";
             txt +=       "<p>Idade: "+this.idade+"</p>";
             txt +=       "<p>Peso: "+this.peso+"</p>";
-            txt +=       "<button>Editar</button>";
             txt +=       "<button onclick=\"servicoPet(true,"+"\'id_"+this.nome+"\');\">Serviços</button>";
             txt +=   "</div>";
             txt +=   "<div class = 'servicos_desc' id="+"id_"+this.nome+">";
             txt +=   '<div class="titulo_serv">';
             txt +=      "<h2>Serviços</h2>";
-            txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="../IMAGES/ICONS/fechar.png">';
+            txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">';
             txt +=      "</div><hr>";
         for(let i =0; i <this.servicos.length;i++){
-            txt += servico[i].toHtmlCliente();
+            txt += jsonToServico(this.servicos[i]).toHtmlCliente();
         }
             txt +=   "</div>";
         return txt;
@@ -89,8 +98,9 @@ class Pet{
 }
 
 class Servico{
-    constructor(id,tipo,data,hora,detalhes,preco,status){
+    constructor(id,dono,tipo,pet,data,hora,detalhes,preco,status){
         this.id = id;
+        this.dono = dono;
         this.pet = pet;
         this.tipo = tipo;
         this.data = data;
@@ -101,15 +111,17 @@ class Servico{
     }
 
     toHtmlCliente(){
+        console.log(this.id);
         let txt = '<div class="servicos_pet">';
             txt+= '<h3>Serviço '+this.id+'</h3><hr>';
             txt+= '<div class="desc_servico">';
             txt+= ' <p>Nome: '+this.tipo+'</p>';
             txt+=        '<p>Preço: R$ '+this.preco+'</p>';
-            txt+=        '<p>Data: '+this.data+'</p>';
+            txt+=        '<p>Data: '+dateToNormalDate(this.data)+", "+this.hora+""+'</p>';
             txt+=        '<p>Status: '+this.status+'</p>';
             txt+=    '</div>';
             txt+= '</div>';
+            return txt;
     }
 }
 
@@ -177,7 +189,12 @@ class Produto{
         }else{
              txt+=  '<h2>Por apenas:</h2> <h1 id="preco_produto">R$ '+(this.preco)+'</h1><h2> à vista</h2><br/>';
         }
-        txt+=   '<button id="btn_carrinho_add" onclick="addCarrinho()"><i class="fa fa-cart-plus"></i> Adicionar ao carrinho</button>';
+        if(this.qtdEstoque !== 0){
+            txt+=   '<button id=\"btn_carrinho_add\" onclick=\"addCarrinho(\''+this.codigo+'\')\"><i class=\"fa fa-cart-plus\"></i> Adicionar ao carrinho</button>';
+        }else{
+            txt+=   '<button id=\"btn_carrinho_add\" onclick=\"alert(\'Produto esgotado!\')\"><i class=\"fa fa-cart-plus\"></i> Adicionar ao carrinho</button>';
+
+        }
         txt+=   '</div>';
         return txt;
     }
@@ -201,19 +218,18 @@ class Produto{
         }else{
             txt+=        '<td>R$ '+this.preco+'</td>';
         }
-        txt+=        '<td><input type="image" src="../IMAGES/ICONS/fechar.png"></td>';
+        txt+=        '<td><input type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png"></td>';
         txt+=    '</tr>'
         return txt;
     }
 }
 
 class Pedido{
-    constructor(imagem,nome,qtd,preco,entrega){
-        this.imagem = imagem;
-        this.nome = nome;
-        this.qtd = qtd;
-        this.preco = preco;
+    constructor(produtos,entrega,precoTotal,qtdItens){
+        this.produtos = produtos;
         this.entrega = entrega;
+        this.precoTotal = precoTotal;
+        this.qtdItens = qtdItens;
     }
 }
 
@@ -243,7 +259,7 @@ class Carrinho{
     }
 }
 
-class DiasDisponiveis{
+class Agendamento{
     constructor(data){
         this.data = data;
         this.horarios= ["8:00","9:00","10:00","11:00","12:00",
@@ -252,4 +268,72 @@ class DiasDisponiveis{
     ocupaHorario(horario){
         this.horarios.splice(this.horarios.indexOf(horario),1);
     }
+}
+
+function jsonToServico(json){
+    return new Servico(
+    json.id,
+    json.dono,
+    json.tipo,
+    json.pet,
+    json.data,
+    json.hora,
+    json.detalhes,
+    json.preco,
+    json.status
+    );
+}
+
+function jsonToUser(json){
+    return new Cliente(
+        json.nome,
+        json.email,
+        json.celular,
+        json.telefone,
+        json.nascimento,
+        json.cpf,
+        json.senha,
+        json.endereco,
+        json.cartao,
+        json.admin,
+        (json.pets !== undefined) ? json.pets : [],
+        (json.pedidos !== undefined) ? json.pedidos : [],
+        (json.carrinho !== undefined) ? json.carrinho : []
+    );
+}
+
+function jsonToProduto(json){
+    let temp = new Produto(json.nomeComercial,
+                            json.marca,
+                            json.categoria,
+                            json.departamento,
+                            json.preco,
+                            json.precoPromocional,
+                            json.nomeCompleto,
+                            json.codigo,
+                            json.qtdEstoque,
+                            json.lote,
+                            json.validade,
+                            json.descricao,
+                            json.promocao,
+                            json.imgPath,
+                            );
+    return temp;
+}
+
+function jsonToPet(json){
+    let pet = new Pet(json.nome,
+                      json.tipo,
+                      json.raca,
+                      json.idade,
+                      json.peso,
+                      json.sexo,
+                      (json.servicos !== undefined) ? json.servicos : []
+    );
+    return pet;
+}
+
+function dateToNormalDate(data){
+    data = data.split("-");
+    return data[2]+"/"+data[1]+"/"+data[0];
 }

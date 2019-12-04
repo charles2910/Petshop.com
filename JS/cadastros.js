@@ -1,4 +1,4 @@
-function cadastrarUsuario(admin,att){
+async function cadastrarUsuario(admin,att){
     if(document.getElementById("senha1").value === document.getElementById("senha2").value){
         let endereco = new Endereco(
             document.getElementById("cep").value,
@@ -8,7 +8,7 @@ function cadastrarUsuario(admin,att){
             document.getElementById("complemento").value,
             document.getElementById("estado").value,
             document.getElementById("cidade").value
-            );
+            );         
         let cartao;
         if(!admin){
             cartao = new Pagamento(
@@ -33,11 +33,16 @@ function cadastrarUsuario(admin,att){
             admin
         );
         if(!att){
-            if(writeDb(cliente)){
-                login(cliente.email, cliente.senha);
+            let user = await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/cadastro",cliente);
+            if(user === 'false'){
+                alert("email já cadastrado!");
+            }else{
+                alert("dados cadastrados com sucesso!");
             }
         }else{
-            if(attDbCliente(cliente)){
+            let user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",cliente);
+            if(user !== 'false'){
+                logged = jsonToUser(JSON.parse(user));
                 alert("Dados alterados com sucesso!");
             }
         }
@@ -60,8 +65,8 @@ function cadastrarProduto(att){
         document.getElementById("lote").value,
         document.getElementById("validade").value,
         document.getElementById("desc").value,
-        document.getElementById("promo_ativ").value,
-        "../IMAGES/PRODUTOS/produto.png"
+        (document.getElementById("promo_ativ").value === "on") ? true : false,
+        "http://trabWeb.ddns.net:8082/IMAGES/PRODUTOS/produto.png"
     );
     if(!att){
         writeDbProduto(produto);
@@ -81,7 +86,6 @@ function cadastrarPet(){
         parseFloat(document.getElementById("peso_pet").value),
         document.getElementById("sexo_pet").value
     );
-    console.log(logged);
     let existe = false;
     for(let i =0; i < logged.pets.length;i++){
         if(logged.pets[i].nome === pet.nome){
@@ -92,7 +96,7 @@ function cadastrarPet(){
     if(!existe){
         logged.addPet(pet);
         popupCadastro(false);
-        AJAX_navegacao('../conteudos/pets.html','Meu Perfil',carregaPets);
+        AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/pets.html','Meu Perfil',carregaPets);
     }else{
         alert("Esse pet já esta cadastrado!");
     }

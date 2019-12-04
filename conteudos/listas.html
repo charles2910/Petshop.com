@@ -3,34 +3,13 @@
 </h1>
 <div class="janela">
         <div class="promocoes_interativo">
-            <input  onclick="moverBanner(-1)" id = "anterior" type="image" src="../IMAGES/ICONS/before.png">
+            <input  onclick="moverBanner(-1)" id = "anterior" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/before.png">
             <div id="banner_lista" class="produtos">
             </div>
-            <input onclick="moverBanner(1)" id = "proximo" type="image" src="../IMAGES/ICONS/next.png">
+            <input onclick="moverBanner(1)" id = "proximo" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/next.png">
         </div>
 </div>
 <div class="listaProdutos">
-    <aside>
-        <h3>Filtros</h3><hr>
-        <p><i class="fa fa-trash"></i><a href="#" onclick="limparFiltros()"> Limpar filtros</a> </p>
-        <h3>Departamentos</h3><hr>
-        <ul id="filtro_tipo">
-        </ul>
-        <h3>Marcas</h3><hr>
-        <ul id="filtro_marca">
-        </ul>
-        <h3>Faixa de preço</h3><hr>
-        <ul id="filtro_preco">
-            <li id="f0" onclick="aplicaFiltro(3,0,10)"><a href="#">R$00,00 - R$10,00</a></li>
-            <li id="f10" onclick="aplicaFiltro(3,10,30)"><a href="#">R$10,00 - R$30,00</a></li>
-            <li id="f30" onclick="aplicaFiltro(3,30,50)"><a href="#">R$30,00 - R$50,00</a></li>
-            <li id="f50" onclick="aplicaFiltro(3,50,80)"><a href="#">R$50,00 - R$80,00</a></li>
-            <li id="f80" onclick="aplicaFiltro(3,80,100)"><a href="#">R$80,00 - R$100,00</a></li>
-            <li id="f100" onclick="aplicaFiltro(3,100,150)"><a href="#">R$100,00 - R$150,00</a></li>
-            <li id="f150" onclick="aplicaFiltro(3,150,200)"><a href="#">R$150,00 - R$200,00</a></li>
-            <li id="f200" onclick="aplicaFiltro(3,200,99999999)"><a href="#">R$200,00 - ...</a></li>
-        </ul>
-    </aside>
     <div class="gridProdutos">
         <div>
             <div class="janela">
@@ -67,14 +46,14 @@
         <div id="selecionar_pagina">
             <div class="janela">
                 <ul>
-                    <li><input onclick="irProInicio()" type="image" id="btn_pag_inicial" src="../IMAGES/ICONS/before.png"></li>
+                    <li><input onclick="irProInicio()" type="image" id="btn_pag_inicial" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/before.png"></li>
                     <li><button id="btn_1" onclick="mudarPagina(this.textContent)" >1</button></li>
                     <li><button id="btn_2" onclick="mudarPagina(this.textContent)" >2</button></li>
                     <li><button id="btn_3" onclick="mudarPagina(this.textContent)" >3</button></li>
                     <li><button id="btn_4" onclick="mudarPagina(this.textContent)" >4</button></li>
                     <li><button id="btn_5" onclick="mudarPagina(this.textContent)" >5</button></li>
                     <li><button id="btn_6" onclick="mudarPagina(this.textContent)" >6</button></li>
-                    <li><input onclick="irProFinal()" type="image" id="btn_pag_final" src="../IMAGES/ICONS/next.png"></li>
+                    <li><input onclick="irProFinal()" type="image" id="btn_pag_final" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/next.png"></li>
                 </ul>
             </div>
         </div>
