@@ -3,7 +3,6 @@ async function navegarCompra(codigo){
         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",async ()=>{
             let produto = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/compra?id=${codigo}`);
             produto = jsonToProduto(produto);
-
             document.getElementById("nome").value = produto.nomeComercial;
             document.getElementById("marca").value = produto.marca;
             document.getElementById("preco").value = produto.preco;
@@ -75,27 +74,18 @@ async function AJAX_listas(nome,filtro,pagina){
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
             if(pagina === undefined) pagina = 0;
             let lista = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/estoque?init=${pagina}&&filtro=${filtro}&&nome=${nome}`);
+            let produtos = lista.itens;
+            lista.itens = [];
+            produtos.forEach((produto)=>{
+                lista.itens.push(jsonToProduto(produto));
+            })
+            produtos = lista.banner;
+            lista.banner = [];
+            produtos.forEach((produto)=>{
+                lista.banner.push(jsonToProduto(produto));
+            })
+            console.log(lista);
             carregarLista(lista); 
-            /*if(banner !== undefined){
-                let result = await qtdPaginas(nome,tipo,filtro);
-                carregarLista(nome,
-                          tipo,
-                          banner,
-                          await carregaItens(nome,tipo,pagina,filtro),
-                          result[0],filtroMarca,filtroPreco,filtroTipo,
-                          result[1],
-                          pagina);
-            }else{
-                filtro = () => {return true};
-                let result = await qtdPaginas(nome,tipo,filtro);
-                carregarLista(nome,
-                          tipo,
-                          escolheBanner(nome,tipo),
-                          await carregaItens(nome,tipo,0,filtro),
-                          result[0],[],[],[],
-                          result[1],
-                          0);
-            }*/
         }
     }
     xhttp.open("GET","http://trabWeb.ddns.net:8082/conteudos/listas.html");
@@ -130,7 +120,6 @@ async function AJAX_geral(rota,callback){
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                console.log(JSON.parse(this.responseText));//impressao para ver a resposta do servidor
                 resolve(JSON.parse(this.responseText));
                 if(callback !== undefined){
                     callback();
@@ -142,3 +131,19 @@ async function AJAX_geral(rota,callback){
     })
 }
 
+async function AJAX_geralPUT(rota,objeto,callback){
+    return await new Promise((resolve)=>{
+        xhttp = new XMLHttpRequest();
+        xhttp.open('PUT', rota);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(objeto));
+        xhttp.onload = function() {  
+            if (xhttp.status === 200 && this.readyState == 4) {
+                resolve(this.responseText);
+                if(callback !==undefined){
+                    callback(this.responseText);
+                }
+            }
+        };
+    });
+}
