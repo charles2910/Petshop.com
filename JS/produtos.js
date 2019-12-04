@@ -57,7 +57,7 @@ function moverBanner(direcao){
 
 function configBotoes(){
     if(lista.qtdTotalPaginas < 6){
-        for(let i = lista.qtdTotalPaginas+2; i<7; i++){
+        for(let i = lista.qtdTotalPaginas+1; i<7; i++){
             document.getElementById("btn_"+i).disabled = true;
             document.getElementById("btn_"+i).style.opacity = "0.3";
             document.getElementById("btn_"+i).style.cursor = "default";
