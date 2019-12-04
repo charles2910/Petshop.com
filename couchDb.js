@@ -34,11 +34,7 @@ class Lista{
 
 const banners = new Banner();
 
-<<<<<<< HEAD:couchDb.js
- async function criarDb() {
-=======
 async function criarDb() {
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
   const db_list = await nano.db.list();
   //await nano.db.destroy("estoque").catch();
   //await nano.db.destroy("usuarios").catch();
@@ -70,11 +66,7 @@ async function criarDb() {
   await carregarBanners();
 }
 
-<<<<<<< HEAD:couchDb.js
- async function carregarBancoDeDados(estoque){
-=======
 async function carregarBancoDeDados(estoque){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     return new Promise(async(resolve)=>{
         let departamento = ["acessórios","alimentos","brinquedos","higiene","saúde"]
         for(let i = 0; i<5;i++){
@@ -88,11 +80,7 @@ async function carregarBancoDeDados(estoque){
     });
 }
 
-<<<<<<< HEAD:couchDb.js
- async function addUser(user){
-=======
 async function addUser(user){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const usuarios = nano.use("usuarios");
     let retorno;
     await usuarios.get(user.email).then((headers)=>{
@@ -104,11 +92,7 @@ async function addUser(user){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function updateUser(user){
-=======
 async function updateUser(user){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const usuarios = nano.use("usuarios");
     let retorno;
     await usuarios.get(user.email).then(async (headers)=>{
@@ -122,11 +106,7 @@ async function updateUser(user){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function findUser(email){
-=======
 async function findUser(email){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const usuarios = nano.use("usuarios");
     let usuario;
     await usuarios.get(email).then((headers)=>{
@@ -139,11 +119,7 @@ async function findUser(email){
     return usuario;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function addProduto(produto){
-=======
 async function addProduto(produto){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const produtos = nano.use("estoque");
     let retorno;
     await produtos.get(produto.codigo).then((headers)=>{
@@ -155,11 +131,7 @@ async function addProduto(produto){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function updateProduto(produto){
-=======
 async function updateProduto(produto){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const estoque = nano.use("estoque");
     let retorno;
     await estoque.get(produto.codigo).then(async (headers)=>{
@@ -173,11 +145,7 @@ async function updateProduto(produto){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function removeProduto(produto){
-=======
 async function removeProduto(produto){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const produtos = nano.use("estoque");
     let retorno;
     await produtos.get(produto.codigo).then(async(headers)=>{
@@ -191,11 +159,7 @@ async function removeProduto(produto){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function findProduto(codigo){
-=======
 async function findProduto(codigo){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const produtos = nano.use("estoque");
     let produto;
     await produtos.get(codigo).then((headers)=>{
@@ -211,11 +175,7 @@ async function findProduto(codigo){
 // filtro 1 = departamento, 2 = categoria
 //nome é ou o departamento ou a categoria em especifico que se quer buscar
 //inicio é qual pagina será carregada
-<<<<<<< HEAD:couchDb.js
- async function findProdutos(inicio, filtro, nome){
-=======
 async function findProdutos(inicio, filtro, nome){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const estoque = nano.use("estoque");
     const produtos = [];
     let qtdTotalpaginas = 0;
@@ -245,11 +205,7 @@ async function findProdutos(inicio, filtro, nome){
     return new Lista(nome,tipo,filtro-1,banners[nome],produtos,qtdTotalpaginas,inicio);
 }
 
-<<<<<<< HEAD:couchDb.js
- async function buscaProduto(inicio,txt){
-=======
 async function buscaProduto(inicio,txt){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     if(txt!=undefined){
         const estoque = nano.use("estoque");
         body = await estoque.view('view', 'view');
@@ -273,21 +229,13 @@ async function buscaProduto(inicio,txt){
     }
 }
 
-<<<<<<< HEAD:couchDb.js
- async function addAgendamento(agendamento){
-=======
 async function addAgendamento(agendamento){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const agendamentos = nano.use("agendamentos");
     await agendamentos.insert(agendamento,agendamento.data);
     return true
 }
 
-<<<<<<< HEAD:couchDb.js
- async function findAgendamento(data){
-=======
 async function findAgendamento(data){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const agendamentos = nano.use("agendamentos");
     let retorno;
     await agendamentos.get(data).then((headers)=>{
@@ -298,11 +246,7 @@ async function findAgendamento(data){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function addServico(servico){
-=======
 async function addServico(servico){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const servicos = nano.use("servicos");
     let retorno;
     await servicos.get(servico.id).then((headers)=>{
@@ -314,11 +258,7 @@ async function addServico(servico){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function updateServico(servico){
-=======
 async function updateServico(servico){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const servicos = nano.use("servicos");
     let retorno;
     await servicos.get(servico.id).then(async (headers)=>{
@@ -332,11 +272,7 @@ async function updateServico(servico){
     return retorno;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function getServicos(){
-=======
 async function getServicos(){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     const servicos = nano.use("servicos");
     let todosServicos = [];
     let body = await servicos.list();
@@ -347,11 +283,7 @@ async function getServicos(){
     return todosServicos;
 }
 
-<<<<<<< HEAD:couchDb.js
- async function carregarBanners(){
-=======
 async function carregarBanners(){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     return new Promise( async(resolve)=> {
         const estoque = nano.use("estoque");
         const promocoes = []
@@ -383,12 +315,7 @@ async function carregarBanners(){
     });
 }
 
-<<<<<<< HEAD:couchDb.js
- function getBanner(nome){
-     console.log(banners)
-=======
 function getBanner(nome){
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
     if(nome!== "geral"){
         return banners[nome];
     }else{
@@ -407,25 +334,3 @@ function compare1(a,b){//ordena pelo desconto real
 function compare2(a,b){//Ordena pela quantidade em estoque
     return a.qtdEstoque - b.qtdEstoque;
 }
-<<<<<<< HEAD:couchDb.js
-
-module.exports = {
-    addAgendamento: addAgendamento,
-    addProduto: addProduto,
-    addServico: addServico,
-    addUser: addUser,
-    buscaProduto: buscaProduto,
-    criarDb: criarDb,
-    findAgendamento: findAgendamento,
-    findProduto: findProduto,
-    findProdutos: findProdutos,
-    findUser: findUser,
-    getBanner: getBanner,
-    getServicos: getServicos,
-    removeProduto: removeProduto,
-    updateProduto: updateProduto,
-    updateServico: updateServico,
-    updateUser: updateUser
-}
-=======
->>>>>>> Restruturação do código do servidor pra tornar a tabela de roteamento mais fácil, novas funções da API que estão encapsuladas em node_modules/api.js:server/couchDb.js
