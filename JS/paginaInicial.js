@@ -1,15 +1,15 @@
-let db_clientes;
-let db_estoque;
-let db_agendamentos;
-let db_servicos;
 let banners = new Banner();
 
-window.onload = async () =>{
-    let tempBanner = await AJAX_navegacao("http://trabWeb.ddns.net:8082/api/bannersPrincipal");
-    banners.geral1 = tempBanner[0];
-    banners.geral1 = tempBanner[1];
-    banners.geral1 = tempBanner[2];
-    carregarPaginaInicial()
+window.onload = () =>{
+    AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/principal.html','',async ()=>{
+        let tempBanner = await AJAX_geral("http://trabWeb.ddns.net:8082/api/bannersPrincipal");
+        for(let i=0;i<3;i++){
+            tempBanner[i].forEach((produto)=>{
+                banners["geral"+(i+1)].push(jsonToProduto(produto));
+            })
+        }
+        carregarPaginaInicial();
+    });
 }
 
 
@@ -27,7 +27,7 @@ class PaginaInicial{
 let paginaInicial;
 
 function carregarPaginaInicial(){
-    paginaInicial = new PaginaInicial(bannesrs.geral1,banners.geral2,banners.geral3);
+    paginaInicial = new PaginaInicial(banners.geral1,banners.geral2,banners.geral3);
     addProdutoBannerGeral("ofertas_dia",paginaInicial.banner1,paginaInicial.banner1Pos);
     addProdutoBannerGeral("oferta_economia",paginaInicial.banner2,paginaInicial.banner2Pos);
     addProdutoBannerGeral("oferta_acabando",paginaInicial.banner3,paginaInicial.banner3Pos);
@@ -78,7 +78,8 @@ function configOnclick(){
     }
 
     document.getElementById("btn_buscador").onclick = () =>{
-        AJAX_listas("Busca","nomeCompleto",banners.geral1,0,pesquisar,[],[],[],[])
+        let txt = document.getElementById("buscador").value;
+        AJAX_listas(txt,3,0);
     }
 }
 

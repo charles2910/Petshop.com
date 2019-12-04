@@ -1,7 +1,7 @@
 async function navegarCompra(codigo){
     if(logged !== undefined && logged.admin){
         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",async ()=>{
-            let produto = await AJAX_geral(`http://localhost:8082/api/compra?id=${codigo}`);
+            let produto = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/compra?id=${codigo}`);
             produto = jsonToProduto(produto);
             document.getElementById("nome").value = produto.nomeComercial;
             document.getElementById("marca").value = produto.marca;
@@ -29,8 +29,10 @@ async function navegarCompra(codigo){
         });
     }else{
          AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/compra.html","",async ()=>{
-            let produto = await AJAX_geral(`http://localhost:8082/api/compra?id=${codigo}`);
+
+            let produto = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/compra?id=${codigo}`);
             produto = jsonToProduto(produto);
+
             document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
             document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
             document.getElementById("nome_completo").innerHTML = produto.nomeCompleto;
@@ -71,28 +73,19 @@ async function AJAX_listas(nome,filtro,pagina){
         if(this.readyState == 4 && this.status == 200){
             document.getElementById("janela_de_conteudo").innerHTML = this.responseText;
             if(pagina === undefined) pagina = 0;
-            let lista = await AJAX_geral(`http://localhost:8082/api/estoque?init=${pagina}&&filtro=${filtro}&&nome=${nome}`);
+            let lista = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/estoque?init=${pagina}&&filtro=${filtro}&&nome=${nome}`);
+            let produtos = lista.itens;
+            lista.itens = [];
+            produtos.forEach((produto)=>{
+                lista.itens.push(jsonToProduto(produto));
+            })
+            produtos = lista.banner;
+            lista.banner = [];
+            produtos.forEach((produto)=>{
+                lista.banner.push(jsonToProduto(produto));
+            })
+            console.log(lista);
             carregarLista(lista);
-            /*if(banner !== undefined){
-                let result = await qtdPaginas(nome,tipo,filtro);
-                carregarLista(nome,
-                          tipo,
-                          banner,
-                          await carregaItens(nome,tipo,pagina,filtro),
-                          result[0],filtroMarca,filtroPreco,filtroTipo,
-                          result[1],
-                          pagina);
-            }else{
-                filtro = () => {return true};
-                let result = await qtdPaginas(nome,tipo,filtro);
-                carregarLista(nome,
-                          tipo,
-                          escolheBanner(nome,tipo),
-                          await carregaItens(nome,tipo,0,filtro),
-                          result[0],[],[],[],
-                          result[1],
-                          0);
-            }*/
         }
     }
     xhttp.open("GET","http://trabWeb.ddns.net:8082/conteudos/listas.html");
@@ -123,11 +116,11 @@ function navaegacaoInterativa(id){
 }
 
 async function AJAX_geral(rota,callback){
-    return new Promise((resolve)=>{
+    return await new Promise((resolve)=>{
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                resolve(this.responseText);
+                resolve(JSON.parse(this.responseText));
                 if(callback !== undefined){
                     callback();
                 }
@@ -136,4 +129,39 @@ async function AJAX_geral(rota,callback){
         xhttp.open("GET",rota);
         xhttp.send();
     })
+}
+
+async function AJAX_geralPUT(rota,objeto,callback){
+    return await new Promise((resolve)=>{
+        xhttp = new XMLHttpRequest();
+        xhttp.open('PUT', rota);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(objeto));
+        xhttp.onload = function() {
+            if (xhttp.status === 200 && this.readyState == 4) {
+                resolve(this.responseText);
+                if(callback !==undefined){
+                    callback(this.responseText);
+                }
+            }
+        };
+    }
+    );
+}
+
+async function AJAX_geralPOST(rota,objeto,callback){
+    return await new Promise((resolve)=>{
+        xhttp = new XMLHttpRequest();
+        xhttp.open('POST', rota);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(objeto));
+        xhttp.onload = function() {
+            if (xhttp.status === 200 && this.readyState == 4) {
+                resolve(this.responseText);
+                if(callback !==undefined){
+                    callback(this.responseText);
+                }
+            }
+        };
+    });
 }

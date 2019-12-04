@@ -1,4 +1,11 @@
-let carrinho = new Carrinho();
+let carrinho;
+if (logged) {
+    if (logged.carrinho && logged.carrinho.numProd) {
+        carrinho = logged.carrinho;
+    }
+} else {
+    carrinho = new Carrinho();
+}
 
 function attCarrinho() {
     carrinho.numProd = carrinho.produtos.length;
@@ -8,33 +15,35 @@ function attCarrinho() {
     carrinho.valorTotal = 0.00;
     carrinho.numProd  = 0;
     carrinho.produtos.forEach(element => {
-        carrinho.valorTotal += element.preco * element.qtdCarrinho;
-        console.log(carrinho.numProd + "+=" + element.qtdCarrinho);
+        carrinho.valorTotal += (parseFloat(element.preco)*(1-parseFloat(element.precoPromocional)/100)).toFixed(2) * element.qtdCarrinho;
+        console.log(carrinho.valorTotal);
         carrinho.numProd += element.qtdCarrinho;
     });
     if(carrinho.numProd <1){
 
     }
+    if(logged) {
+        logged.carrinho = carrinho;
+        //AJAX_geral
+    }
+
 };
 
-function addCarrinho(codigo) {
-    let request = db_estoque.transaction("estoque").objectStore("estoque").get(codigo);
-    request.onsuccess = function(event) {
-        novoProduto = jsonToProduto(request.result);
-        let indice = -1;
-        carrinho.produtos.forEach((produto, index) => {
-            if (produto.nomeComercial === novoProduto.nomeComercial) {
-                indice = index;
-            }        
-        });
-        if (indice >= 0) {
-            carrinho.produtos[indice].qtdCarrinho += 1;
-        } else {
-            novoProduto.qtdCarrinho = 1;
-            carrinho.produtos[carrinho.produtos.length] = novoProduto;
-        }
-        attCarrinho();
+async function addCarrinho(codigo) {
+    let novoProduto = await AJAX_geral(`http://trabweb.ddns.net:8082/api/estoque/${codigo}`);
+    let indice = -1;
+    carrinho.produtos.forEach((produto, index) => {
+        if (produto.nomeComercial === novoProduto.nomeComercial) {
+            indice = index;
+        }        
+    });
+    if (indice >= 0) {
+        carrinho.produtos[indice].qtdCarrinho += 1;
+    } else {
+        novoProduto.qtdCarrinho = 1;
+        carrinho.produtos[carrinho.produtos.length] = novoProduto;
     }
+    attCarrinho();
 }
 
 function changeCarrinho(id, value) {
@@ -42,6 +51,10 @@ function changeCarrinho(id, value) {
     prod = prod.trim();
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
+            if (produto.qtdEstoque < parseInt(value)) {
+                alert("Quantidade no estoque não é suficiente.");
+                return;
+            }
             produto.qtdCarrinho = parseInt(value);
         }        
     });
@@ -101,7 +114,7 @@ function toCarrinhoHTML(produto){
     }
     txt+=            '</select>';
     txt+=        '</td>';
-    txt+=        '<td>R$ ' + produto.preco + '</td>';
+    txt+=        '<td>R$ ' + (parseFloat(produto.preco)*(1-parseFloat(produto.precoPromocional)/100)).toFixed(2) + '</td>';
     txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;

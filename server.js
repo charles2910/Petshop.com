@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const api = require('api');
-
+const db = require('couchDb')
+//db.destruirDb();
+db.criarDb();
 app.use(express.json());
-
 app.get('/', (req, res) => {
    res.sendFile(__dirname + '/HTML/' + 'index_completo.html');
    console.log("/ acessado");
@@ -13,13 +14,13 @@ app.get('/index.html', (req, res) => {
    res.sendFile(__dirname + '/HTML/' + 'index_completo.html');
    console.log("/index.html acessado");
 })
-
+//FUNCIONANDO POREM PODE MUDAR PARA TORNAR O CÓDIGO MAIS LIMPO=============================
 app.get('/api/bannersPrincipal',(req,res)=>{
     res.send(db.getBanner("geral"));
 })
 
 app.get('/api/compra',(req,res)=>{
-    findProduto(req.query.id,res);
+    api.findProduto(req.query.id,res);
 })
 
 app.get('/api/estoque', async (req, res) => {
@@ -27,6 +28,25 @@ app.get('/api/estoque', async (req, res) => {
     res.send(produtos);
 })
 
+app.put('/api/login', async (req, res) => {
+    console.log(await db.validaLogin(req.body.email,req.body.senha))
+    res.send(await db.validaLogin(req.body.email,req.body.senha));
+})
+
+app.post('/api/cadastro', async (req, res) => {
+    console.log(req.body);
+    res.send(await db.addUser(req.body));
+})
+
+app.put('/api/cadastro', async (req, res) => {
+    res.send(await db.updateUser(req.body));
+})
+
+app.get('/api/busca', async (req, res) => {
+    let produtos = await db.buscaProduto(req.query.init,req.query.search);
+    res.send(produtos);
+})
+//==========================================================================================
 app.get('/api/estoque/:id', (req, res) => {
     api.findProduto(req.params.id, res);
     return;
@@ -45,10 +65,6 @@ app.put('/api/estoque/:id', (req, res) => {
 app.delete('/api/estoque/:id', (req, res) => {
     api.removeProduto(req.body, res);
     return;
-})
-
-app.get('/api/usuarios', (req, res) => {
-
 })
 
 app.get('/api/usuarios/:id', (req, res) => {
@@ -120,8 +136,13 @@ app.get('/*', (req, res) => {
    res.sendFile(__dirname + path);
    console.log(`/${path} acessado`);
 })
+<<<<<<< HEAD
 
 const server = app.listen(8082,function () {
+=======
+//host '10.142.0.2'
+const server = app.listen(8082,'10.142.0.2',function () {
+>>>>>>> 3094c3e5c6b9468a9b3610bf3952e8341b33c69b
    const host = server.address().address
    const port = server.address().port
    console.log("Example app listening at http://:%s", port)

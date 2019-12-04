@@ -57,7 +57,7 @@ function moverBanner(direcao){
 
 function configBotoes(){
     if(lista.qtdTotalPaginas < 6){
-        for(let i = qtdTotalPaginas+2; i<7; i++){
+        for(let i = lista.qtdTotalPaginas+1; i<7; i++){
             document.getElementById("btn_"+i).disabled = true;
             document.getElementById("btn_"+i).style.opacity = "0.3";
             document.getElementById("btn_"+i).style.cursor = "default";
@@ -69,7 +69,7 @@ function configBotoes(){
     let btn4 = document.getElementById("btn_4");
     let btn5 = document.getElementById("btn_5");
     let btn6 = document.getElementById("btn_6");
-    while(parseInt(btn6.textContent) <= lista.qtdTotalPaginas && parseInt(btn3.textContent) <= lista.pag){
+    while(parseInt(btn6.textContent) <= lista.qtdTotalPaginas-1 && parseInt(btn3.textContent) <= lista.pag){
         btn1.textContent = parseInt(btn1.textContent) + 1;
         btn2.textContent = parseInt(btn2.textContent) + 1;
         btn3.textContent = parseInt(btn3.textContent) + 1;
@@ -77,24 +77,25 @@ function configBotoes(){
         btn5.textContent = parseInt(btn5.textContent) + 1;
         btn6.textContent = parseInt(btn6.textContent) + 1;
     }
+    
     for(let i=1 ; i<7;i++){
-        if(parseInt(document.getElementById("btn_"+i).textContent) === lista.pag+1){
+        if(parseInt(document.getElementById("btn_"+i).textContent) === parseInt(lista.pag)+1){
             document.getElementById("btn_"+i).style.backgroundColor = "lightgray";
+            break;
         }
     }
 }
 
 function irProFinal(){
-    AJAX_listas(lista.nome,lista.tipo,lista.banner,lista.qtdTotalPaginas,filtroLista,lista.filtroMarca,lista.filtroPreco,lista.filtroTipo);
+    AJAX_listas(lista.nome,lista.filtro,lista.qtdTotalPaginas-1);
 }
 
 function irProInicio(){
-    AJAX_listas(lista.nome,lista.tipo,lista.banner,0,filtroLista,lista.filtroMarca,lista.filtroPreco,lista.filtroTipo);
+    AJAX_listas(lista.nome,lista.filtro,0);
 }
 
 function mudarPagina(pagina){
-    lista.pag = pagina -1;
-    AJAX_listas(lista.nome,lista.filtro,lista.banner)
+    AJAX_listas(lista.nome,lista.filtro,pagina-1);
 }
 
 function deletaProduto(){
