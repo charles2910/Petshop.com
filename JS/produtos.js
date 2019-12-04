@@ -1,23 +1,19 @@
 class Lista{
-    constructor(nome,tipo,banner,itens,qtdTotalPaginas,filtroMarca,filtroPreco,filtroTipo,marcas,pag){
+    constructor(nome,tipo,banner,itens,qtdTotalPaginas,pag){
     this.qtdTotalPaginas = qtdTotalPaginas;
     this.tipo = tipo;
     this.nome = nome;
     this.banner = banner;
     this.itens = itens;
     this.bannerPos = 0;
-    this.filtroMarca = filtroMarca;
-    this.filtroPreco = filtroPreco;
-    this.filtroTipo = filtroTipo;
-    this.marcas = marcas;
     this.pag = pag;
     }
 }
 
 let lista = new Lista();
 
-function carregarLista(nome,tipo,banner,itens,qtdTotalPaginas,filtroMarca,filtroPreco,filtroTipo,marcas,pag){
-    lista = new Lista(nome,tipo,banner,itens,qtdTotalPaginas,filtroMarca,filtroPreco,filtroTipo,marcas,pag);
+function carregarLista(novaLista){
+    lista = novaLista;
     document.getElementById("anterior").disabled = true;
     addProdutoLinha();
     addProdutoBanner();
