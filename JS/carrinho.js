@@ -22,7 +22,10 @@ function attCarrinho() {
     if(carrinho.numProd <1){
 
     }
-    if(logged) logged.carrinho = carrinho;
+    if(logged) {
+        logged.carrinho = carrinho;
+        //AJAX_geral
+
 };
 
 async function addCarrinho(codigo) {
@@ -47,6 +50,10 @@ function changeCarrinho(id, value) {
     prod = prod.trim();
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
+            if (produto.qtdEstoque < parseInt(value)) {
+                alert("Quantidade no estoque não é suficiente.");
+                return;
+            }
             produto.qtdCarrinho = parseInt(value);
         }        
     });
