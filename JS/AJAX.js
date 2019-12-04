@@ -3,6 +3,7 @@ async function navegarCompra(codigo){
         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",async ()=>{
             let produto = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/compra?id=${codigo}`);
             produto = jsonToProduto(produto);
+
             document.getElementById("nome").value = produto.nomeComercial;
             document.getElementById("marca").value = produto.marca;
             document.getElementById("preco").value = produto.preco;
@@ -135,6 +136,24 @@ async function AJAX_geralPUT(rota,objeto,callback){
     return await new Promise((resolve)=>{
         xhttp = new XMLHttpRequest();
         xhttp.open('PUT', rota);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(objeto));
+        xhttp.onload = function() {  
+            if (xhttp.status === 200 && this.readyState == 4) {
+                resolve(this.responseText);
+                if(callback !==undefined){
+                    callback(this.responseText);
+                }
+            }
+        };
+    }
+    );
+}
+
+async function AJAX_geralPOST(rota,objeto,callback){
+    return await new Promise((resolve)=>{
+        xhttp = new XMLHttpRequest();
+        xhttp.open('POST', rota);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(objeto));
         xhttp.onload = function() {  

@@ -1,4 +1,4 @@
-function cadastrarUsuario(admin,att){
+async function cadastrarUsuario(admin,att){
     if(document.getElementById("senha1").value === document.getElementById("senha2").value){
         let endereco = new Endereco(
             document.getElementById("cep").value,
@@ -8,7 +8,7 @@ function cadastrarUsuario(admin,att){
             document.getElementById("complemento").value,
             document.getElementById("estado").value,
             document.getElementById("cidade").value
-            );
+            );         
         let cartao;
         if(!admin){
             cartao = new Pagamento(
@@ -33,7 +33,13 @@ function cadastrarUsuario(admin,att){
             admin
         );
         if(!att){
-            writeDbCliente(cliente);
+            let user = await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/cadastro",cliente);
+            if(user === 'false'){
+                alert("email já cadastrado!");
+            }else{
+                alert("dados cadastrados com sucesso!");
+                login(user);
+            }
         }else{
             if(awaitattDbCliente(cliente)){
                 alert("Dados alterados com sucesso!");

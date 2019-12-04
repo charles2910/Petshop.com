@@ -32,6 +32,16 @@ app.put('/api/login', async (req, res) => {
     res.send(await db.validaLogin(req.body.email,req.body.senha));
 })
 
+app.post('/api/cadastro', async (req, res) => {
+    console.log(req.body);
+    res.send(await db.addUser(req.body));
+})
+
+app.put('/api/cadastro', async (req, res) => {
+    console.log(await db.addUser(req.body));
+    //res.send(await db.validaLogin(req.body.email,req.body.senha));
+})
+
 app.get('/api/busca', async (req, res) => {
     let produtos = await db.buscaProduto(req.query.init,req.query.search);
     res.send(produtos);

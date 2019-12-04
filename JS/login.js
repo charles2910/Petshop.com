@@ -1,15 +1,21 @@
 let logged;
 
-async function login(){
-    email = document.getElementById("email_login").value;
-    senha = document.getElementById("psw_login").value;
-    let tempUser={
-        email: email,
-        senha: senha
+async function login(novoUsuario){
+    let user
+    if(novoUsuario === undefined){
+        email = document.getElementById("email_login").value;
+        senha = document.getElementById("psw_login").value;
+        let tempUser={
+            email: email,
+            senha: senha
+        }
+        user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/login",tempUser);
+    }else{
+        user = novoUsuario;
     }
-    let user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/login",tempUser);
     if(user !== 'false'){
         logged = jsonToUser(JSON.parse(user));
+        console.log(logged);
         if(logged.admin === true){
             document.getElementById("btn_login").innerText = "Admin";
             addOpcoesAdmin();
