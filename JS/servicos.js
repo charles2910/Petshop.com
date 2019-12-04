@@ -48,7 +48,6 @@ function carregarServicos(){
             )
             pet_cliente.addServicos(servico);
             logged.attPet(pet_cliente);
-            attDbCliente(logged);
             await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",logged);
             await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/servicos",servico);
             let agendamento = new Agendamento(data);
@@ -57,7 +56,7 @@ function carregarServicos(){
             await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/agenda",agendamento);
             carregarServicos();
             alert("Serviço agendado com sucesso!");
-            navegarPaginaInicial();
+            //navegarPaginaInicial();
             return false;
         }
     }
@@ -98,7 +97,7 @@ function carregarServicosAdmin(){
     });
 }
 
-function statusServico(id,status){
+function alteraStatusServico(id,status){
     let request = db_servicos.transaction("servicos").objectStore("servicos").get(id);
     request.onsuccess = function(event) {
         request.result.status = status;
@@ -137,8 +136,8 @@ function jsonToHtmlAdminServico(json){
         txt+=        '</div>'
         if(json.status === "Agendado"){
             txt+=        '<div class="botoes_servico">'
-            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">'
-            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Concluído\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/check.png">'
+            txt+=            '<input onclick="alteraStatusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">'
+            txt+=            '<input onclick="alteraStatusServico(\''+json.id+'\',\'Concluído\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/check.png">'
             txt+=        '</div>'
         }else{
             txt+=        '<div class="servico_status">'
