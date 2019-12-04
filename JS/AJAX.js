@@ -2,7 +2,7 @@ async function navegarCompra(codigo){
     if(logged !== undefined && logged.admin){
         AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/att_produto.html","Cadastro de produto",async ()=>{
             let produto = await AJAX_geral(`http://localhost:8081/api/compra?id=${codigo}`);
-            let produto = jsonToProduto(produto);
+            produto = jsonToProduto(produto);
             document.getElementById("nome").value = produto.nomeComercial;
             document.getElementById("marca").value = produto.marca;
             document.getElementById("preco").value = produto.preco;
@@ -30,7 +30,7 @@ async function navegarCompra(codigo){
     }else{
          AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/compra.html","",async ()=>{
             let produto = await AJAX_geral(`http://localhost:8081/api/compra?id=${codigo}`);
-            let produto = jsonToProduto(produto);
+            produto = jsonToProduto(produto);
             document.getElementById("tela_compra").innerHTML = produto.toCompraHtml();
             document.getElementById("nome_produto_compra").innerHTML = produto.nomeComercial;
             document.getElementById("nome_completo").innerHTML = produto.nomeCompleto;
