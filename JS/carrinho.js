@@ -98,7 +98,7 @@ function toCarrinhoHTML(produto){
     }
     txt+=            '</select>';
     txt+=        '</td>';
-    txt+=        '<td>R$ ' + (parseFloat(produto.preco)*(1-parseFloat(produto.precoPromocional)/100)) + '</td>';
+    txt+=        '<td>R$ ' + (parseFloat(produto.preco)*(1-parseFloat(produto.precoPromocional)/100)).toFixed(2) + '</td>';
     txt+=        '<td><input id="carrinho_remover' + produto.nomeComercial + '" onclick="removerProduto(id)" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png"></td>';
     txt+=    '</tr>'
     return txt;
