@@ -8,7 +8,7 @@ async function cadastrarUsuario(admin,att){
             document.getElementById("complemento").value,
             document.getElementById("estado").value,
             document.getElementById("cidade").value
-            );         
+            );
         let cartao;
         if(!admin){
             cartao = new Pagamento(
@@ -97,10 +97,12 @@ function cadastrarPet(){
         document.getElementById("sexo_pet").value
     );
     let existe = false;
-    for(let i =0; i < logged.pets.length;i++){
-        if(logged.pets[i].nome === pet.nome){
-            existe = true;
-            break;
+    if(logged.pets.length > 0) {
+        for(let i =0; i < logged.pets.length;i++){
+            if(logged.pets[i].nome === pet.nome){
+                existe = true;
+                break;
+            }
         }
     }
     if(!existe){
