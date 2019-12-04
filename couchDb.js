@@ -182,7 +182,11 @@ const banners = new Banner();
     body = await estoque.view('view', 'view', {
         'key': [filtro,nome]
     })
-    qtdTotalpaginas = body.rows.length;
+    if(body.rows.length%16 == 0){
+        qtdTotalpaginas = (body.rows.length/16);
+    }else{
+        qtdTotalpaginas = ((body.rows.length-(body.rows.length%16))/16)+1;
+    }
     for(let i=0;i<body.rows.length;i++){
         if(i>=(inicio*16) && produtos.length < 16){
             produtos.push(body.rows[i].value);
@@ -197,7 +201,7 @@ const banners = new Banner();
     }else{
         tipo = "categoria";
     }
-    return Lista(nome,tipo,banners[nome],produtos,qtdTotalpaginas,inicio);
+    return new Lista(nome,tipo,banners[nome],produtos,qtdTotalpaginas,inicio);
 }
 
  async function buscaProduto(inicio,txt){
