@@ -5,8 +5,9 @@ window.onload = () =>{
 }
 
 function navegarPaginaInicial(){
-    AJAX_navegacao('http://localhost:12345/conteudos/principal.html','',async ()=>{
-        let tempBanner = await AJAX_geral("http://localhost:12345/api/bannersPrincipal");
+    AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/principal.html','',async ()=>{
+        let tempBanner = await AJAX_geral("http://trabWeb.ddns.net:8082/api/bannersPrincipal");
+        banners = new Banner();
         for(let i=0;i<3;i++){
             tempBanner[i].forEach((produto)=>{
                 banners["geral"+(i+1)].push(jsonToProduto(produto));
