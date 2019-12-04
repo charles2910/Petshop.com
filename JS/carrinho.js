@@ -1,4 +1,9 @@
-let carrinho = new Carrinho();
+let carrinho;
+if(logged.carrinho && logged.carrinho.numProd) {
+    carrinho = logged.carrinho;
+} else {
+    carrinho = new Carrinho();
+}
 
 function attCarrinho() {
     carrinho.numProd = carrinho.produtos.length;
@@ -15,6 +20,7 @@ function attCarrinho() {
     if(carrinho.numProd <1){
 
     }
+    if(logged) logged.carrinho = carrinho;
 };
 
 async function addCarrinho(codigo) {
