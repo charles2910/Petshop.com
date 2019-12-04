@@ -9,7 +9,6 @@ function carregarServicos(){
     dataAtual.setDate(dataAtual.getDate()+30);
     calendario.setAttribute("max",dataAtual.getFullYear()+"-"+(dataAtual.getMonth()+1)+"-"+(dataAtual.getDate()));
     if(logged === undefined){
-
         document.getElementById("select_pet").onclick = () =>{
             alert("É preciso estar logado para ver os seus Pets");
         }
