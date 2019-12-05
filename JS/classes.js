@@ -74,29 +74,30 @@ class Pet{
     addServicos(servico){
         this.servicos.push(servico);
     }
-    async function petToHtml(){
-        let txt =    "<h2>"+this.nome+"</h2><hr>";
-            txt +=   '<div class="dados_pet">';
-            txt +=       "<p>Tipo: "+this.tipo+"</p>";
-            txt +=       "<p>Raça: "+this.raca+"</p>";
-            txt +=       "<p>Sexo: "+this.sexo+"</p>";
-            txt +=       "<p>Idade: "+this.idade+"</p>";
-            txt +=       "<p>Peso: "+this.peso+"</p>";
-            txt +=       "<button onclick=\"servicoPet(true,"+"\'id_"+this.nome+"\');\">Serviços</button>";
-            txt +=   "</div>";
-            txt +=   "<div class = 'servicos_desc' id="+"id_"+this.nome+">";
-            txt +=   '<div class="titulo_serv">';
-            txt +=      "<h2>Serviços</h2>";
-            txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">';
-            txt +=      "</div><hr>";
-        for(let i =0; i <this.servicos.length;i++){
-            let servico = await AJAX_geral(`http://trabweb.ddns.net:8082/api/servicos/${this.servicos[i]}`);
-                console.log(servico);
-            txt += jsonToServico(servico).toHtmlCliente();
-        }
-            txt +=   "</div>";
-        return txt;
+}
+
+async function petToHtml(pet){
+    let txt =    "<h2>"+pet.nome+"</h2><hr>";
+        txt +=   '<div class="dados_pet">';
+        txt +=       "<p>Tipo: "+pet.tipo+"</p>";
+        txt +=       "<p>Raça: "+pet.raca+"</p>";
+        txt +=       "<p>Sexo: "+pet.sexo+"</p>";
+        txt +=       "<p>Idade: "+pet.idade+"</p>";
+        txt +=       "<p>Peso: "+pet.peso+"</p>";
+        txt +=       "<button onclick=\"servicoPet(true,"+"\'id_"+pet.nome+"\');\">Serviços</button>";
+        txt +=   "</div>";
+        txt +=   "<div class = 'servicos_desc' id="+"id_"+pet.nome+">";
+        txt +=   '<div class="titulo_serv">';
+        txt +=      "<h2>Serviços</h2>";
+        txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+pet.nome+'\');\" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">';
+        txt +=      "</div><hr>";
+    for(let i =0; i < pet.servicos.length;i++){
+        let servico = await AJAX_geral(`http://trabweb.ddns.net:8082/api/servicos/${pet.servicos[i]}`);
+            console.log(servico);
+        txt += jsonToServico(servico).toHtmlCliente();
     }
+        txt +=   "</div>";
+    return txt;
 }
 
 class Servico{
