@@ -118,7 +118,7 @@ class Servico{
         let txt = '<div class="servicos_pet">';
             txt+= '<h3>Serviço '+this.id+'</h3><hr>';
             txt+= '<div class="desc_servico">';
-            txt+= ' <p>Nome: '+this.tipo+'</p>';
+            txt+= ' <p>'+this.detalhes+'</p>';
             txt+=        '<p>Preço: R$ '+this.preco+'</p>';
             txt+=        '<p>Data: '+dateToNormalDate(this.data)+", "+this.hora+""+'</p>';
             txt+=        '<p>Status: '+this.status+'</p>';
