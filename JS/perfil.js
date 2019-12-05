@@ -3,7 +3,6 @@ async function carregaPets(){
     logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
     if (logged) {
         if (logged.pets && logged.pets.length > 0) {
-            carrinho = logged.carrinho;
             for(let i = 0; i < logged.pets.length; i++) {
                 let pet = jsonToPet(logged.pets[i]);
                 txt += pet.petToHtml();
@@ -16,9 +15,17 @@ async function carregaPets(){
 }
 
 async function carregaPedidos(){
-    let request = db_clientes.transaction("clientes").objectStore("clientes").get(logged.email);
-    request.onsuccess = function(event) {
-        pedidoToHtml(request.result.pedidos);
+    let txt = "";
+    logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
+    if (logged) {
+        if (logged.pedidos && logged.pedidos.length > 0) {
+            pedidoToHtml(logged.pedidos);
+        } else {
+            txt += "Você não possui Pedidos.";
+            document.getElementById("pedidos_concluidos").innerHTML = txt;
+            document.getElementById("pedidos_pendentes").innerHTML = txt;
+
+        }
     }
 }
 
@@ -43,7 +50,7 @@ function pedidoToHtml(pedidos){
                 txt+=        '<td><img src="'+produto.imgPath+'"></td>'
                 txt+=        '<td><p>'+produto.nomeCompleto+'</p></td>'
                 txt+=        '<td>'+produto.qtdCarrinho+'</td>'
-                txt+=        '<td>R$ '+produto.preco+'</td>'
+                txt+=        '<td>R$ '+(parseFloat(produto.preco)*(1-parseFloat(produto.precoPromocional)/100)).toFixed(2)+'</td>'
                 txt+=        '<td> '+pedido.entrega+' </td>'
                 txt+=    '</tr>'
             });
@@ -70,8 +77,8 @@ function pedidoToHtml(pedidos){
     document.getElementById("pedidos_concluidos").innerHTML = concluido;
 }
 
-function concluirPedido(index){
+async function concluirPedido(index){
     logged.pedidos[index].entrega = "Concluída";
-    attDbCliente(logged);
+    await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`, logged);
     carregaPedidos();
 }
