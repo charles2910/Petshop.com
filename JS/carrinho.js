@@ -47,6 +47,7 @@ async function addCarrinho(codigo) {
         carrinho.produtos[carrinho.produtos.length] = novoProduto;
     }
     attCarrinho();
+    alert("Produto adicionado ao carrinho.");
 }
 
 function changeCarrinho(id, value) {
