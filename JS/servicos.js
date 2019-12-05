@@ -1,3 +1,4 @@
+let servicos=[];
 function carregarServicos(){
     let calendario = document.getElementById("data");
     let select_horarios = document.getElementById("hora");
@@ -77,33 +78,30 @@ function carregarServicos(){
 function carregarServicosAdmin(){
     let concluidos = "";
     let agendados = "";
-    return new Promise((resolve) => {
-        let objectStore = db_servicos.transaction("servicos").objectStore("servicos");
-        objectStore.openCursor().onsuccess = (event)=>{
-            let cursor = event.target.result;
-            if(cursor){
-                if(cursor.value.status === "Agendado"){
-                    agendados+= jsonToHtmlAdminServico(cursor.value);
-                }else{
-                    concluidos+= jsonToHtmlAdminServico(cursor.value);
-                }
-                cursor.continue();
-            }else{
-                document.getElementById("prox_servicos").innerHTML = agendados;
-                document.getElementById("ant_servicos").innerHTML = concluidos;
-            }
+    servicosJSON = await AJAX_geral("http://trabWeb.ddns.net:8082/api/servicos");
+    servicosJSON.forEach((servico)=>{
+        if(servico.status === "Agendado"){
+            agendados+= jsonToHtmlAdminServico(servico);
+        }else{
+            concluidos+= jsonToHtmlAdminServico(servico);
         }
+        servicos.push(jsonToServico(servico));
     });
+    document.getElementById("prox_servicos").innerHTML = agendados;
+    document.getElementById("ant_servicos").innerHTML = concluidos;
 }
 
 function alteraStatusServico(id,status){
-    let request = db_servicos.transaction("servicos").objectStore("servicos").get(id);
-    request.onsuccess = function(event) {
-        request.result.status = status;
-        writeDbServico(request.result);
-        carregarServicosAdmin();
+    let servico;
+    for(servicoProcurado of servicos){
+        if(servicoProcurado.id === id){
+            servico = servicoProcurado;
+            break;
+        }
     }
-    
+    servico.status = status;
+    await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/servicos",servico);
+    carregarServicosAdmin();
 }
 
 function jsonToHtmlAdminServico(json){
