@@ -14,6 +14,7 @@ async function navegarCompra(codigo){
             document.getElementById("lote").value = produto.lote;
             document.getElementById("validade").value = produto.validade;
             document.getElementById("desc").value = produto.descricao;
+            document.getElementById("promo_ativ").checked = produto.promocao;
             let menu = document.getElementById("categoria");
             for(let i=0; i< menu.length;i++){
                 if(menu.options[i].value.toLowerCase() === produto.categoria){
