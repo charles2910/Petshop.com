@@ -44,7 +44,6 @@ app.put('/api/estoque/delete', async (req, res) => {
 })
 
 app.put('/api/login', async (req, res) => {
-    console.log(await db.validaLogin(req.body.email,req.body.senha))
     res.send(await db.validaLogin(req.body.email,req.body.senha));
 })
 
@@ -122,7 +121,7 @@ app.get('/api/agendamentos', (req, res) => {
 })
 
 app.get('/api/agendamentos/:id', (req, res) => {
-    api.findAgendamento(req.params.id, res);
+    api.findAgendamento(req.params.id, res); 
     return;
 })
 

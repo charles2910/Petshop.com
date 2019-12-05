@@ -46,7 +46,7 @@ function carregarServicos(){
                 "-",
                 "Agendado"
             )
-            pet_cliente.addServicos(servico);
+            pet_cliente.addServicos(servico.id);
             logged.attPet(pet_cliente);
             await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",logged);
             await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/servicos",servico);
@@ -54,9 +54,8 @@ function carregarServicos(){
             agendamento.horarios = horarios; 
             agendamento.ocupaHorario(hora);
             await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/agenda",agendamento);
-            carregarServicos();
             alert("Serviço agendado com sucesso!");
-            //navegarPaginaInicial();
+            navegarPaginaInicial();
             return false;
         }
     }
