@@ -5,7 +5,7 @@ async function carregaPets(){
         if (logged.pets && logged.pets.length > 0) {
             for(let i = 0; i < logged.pets.length; i++) {
                 let pet = jsonToPet(logged.pets[i]);
-                txt += pet.petToHtml();
+                txt += await petToHtml(pet);
             }
         } else {
             txt += "Você não possui Pets.";

@@ -1,10 +1,13 @@
 let carrinho;
-if (logged) {
-    if (logged.carrinho && logged.carrinho.numProd) {
-        carrinho = logged.carrinho;
+inicializaCarrinho();
+function inicializaCarrinho(){
+    if (logged) {
+        if (logged.carrinho && logged.carrinho.numProd) {
+            carrinho = logged.carrinho;
+        }
+    } else if(!carrinho) {
+        carrinho = new Carrinho();
     }
-} else {
-    carrinho = new Carrinho();
 }
 
 async function attCarrinho() {
@@ -44,6 +47,7 @@ async function addCarrinho(codigo) {
         carrinho.produtos[carrinho.produtos.length] = novoProduto;
     }
     attCarrinho();
+    alert("Produto adicionado ao carrinho.");
 }
 
 function changeCarrinho(id, value) {
@@ -81,6 +85,7 @@ function removerProduto(id) {
 }
 
 function carregarCarrinho() {
+    inicializaCarrinho();
     let txt = '<div id="conteudo_carrinho"><h1>Meu carrinho</h1><hr><table>  <tr><th>Produto</th><th>Nome</th><th>Quantidade</th><th>Preço</th><th>Remover</th></tr>';
 
     if (carrinho.numProd !== 0)

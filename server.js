@@ -121,7 +121,7 @@ app.get('/api/agendamentos', (req, res) => {
 })
 
 app.get('/api/agendamentos/:id', (req, res) => {
-    api.findAgendamento(req.params.id, res); 
+    api.findAgendamento(req.params.id, res);
     return;
 })
 
@@ -144,7 +144,8 @@ app.get('/api/servicos', (req, res) => {
 })
 
 app.get('/api/servicos/:id', (req, res) => {
-
+    api.getServico(req.params.id, res);
+    return;
 })
 
 app.post('/api/servicos/:id', (req, res) => {
