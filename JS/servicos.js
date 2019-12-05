@@ -1,5 +1,5 @@
 let servicos=[];
-function carregarServicos(){
+async function carregarServicos(){
     let calendario = document.getElementById("data");
     let select_horarios = document.getElementById("hora");
     let select_pet = document.getElementById("select_pet")
@@ -52,7 +52,7 @@ function carregarServicos(){
             await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",logged);
             await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/servicos",servico);
             let agendamento = new Agendamento(data);
-            agendamento.horarios = horarios; 
+            agendamento.horarios = horarios;
             agendamento.ocupaHorario(hora);
             await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/agenda",agendamento);
             alert("Serviço agendado com sucesso!");
@@ -75,7 +75,7 @@ function carregarServicos(){
     }
 }
 
-function carregarServicosAdmin(){
+async function carregarServicosAdmin(){
     let concluidos = "";
     let agendados = "";
     servicosJSON = await AJAX_geral("http://trabWeb.ddns.net:8082/api/servicos");
@@ -91,7 +91,7 @@ function carregarServicosAdmin(){
     document.getElementById("ant_servicos").innerHTML = concluidos;
 }
 
-function alteraStatusServico(id,status){
+async function alteraStatusServico(id,status){
     let servico;
     for(servicoProcurado of servicos){
         if(servicoProcurado.id === id){
