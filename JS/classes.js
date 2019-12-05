@@ -74,7 +74,7 @@ class Pet{
     addServicos(servico){
         this.servicos.push(servico);
     }
-    petToHtml(){
+    async petToHtml(){
         let txt =    "<h2>"+this.nome+"</h2><hr>";
             txt +=   '<div class="dados_pet">';
             txt +=       "<p>Tipo: "+this.tipo+"</p>";
@@ -90,7 +90,7 @@ class Pet{
             txt +=      '<input onclick=\"servicoPet(false,\''+'id_'+this.nome+'\');\" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">';
             txt +=      "</div><hr>";
         for(let i =0; i <this.servicos.length;i++){
-            txt += jsonToServico(this.servicos[i]).toHtmlCliente();
+            txt += jsonToServico(await AJAX_geral(`http://trabweb.ddns.net:8082/api/servicos/${this.servicos[i]}`)).toHtmlCliente();
         }
             txt +=   "</div>";
         return txt;
