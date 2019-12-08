@@ -109,7 +109,5 @@ function cadastrarPet(){
         logged.addPet(pet);
         popupCadastro(false);
         AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/pets.html','Meu Perfil',carregaPets);
-    }else{
-        alert("Esse pet já esta cadastrado!");
     }
 }
