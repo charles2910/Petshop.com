@@ -47,7 +47,7 @@ async function addCarrinho(codigo) {
         }
         carrinho.produtos[indice].qtdCarrinho += 1;
     } else {
-        if(carrinho.produtos[indice].qtdEstoque === 0) {
+        if(novoProduto.qtdEstoque === 0) {
             alert("Não foi possível adicionar ao carrinho, sem estoque.");
             return;
         }
