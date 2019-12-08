@@ -143,7 +143,7 @@ async function finalizarCompra() {
         logged.pedidos.push(new Pedido(carrinho.produtos, "Pendente", parseFloat(carrinho.valorTotal), parseInt(carrinho.numProd)));
         carrinho.produtos.forEach(element => {
             element.qtdEstoque -= parseInt(element.qtdCarrinho);
-            await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/estoque/${element.codigo}`, jsonToProduto(element));
+            AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/estoque/${element.codigo}`, jsonToProduto(element));
         })
         logged.carrinho = new Carrinho();
         carrinho = logged.carrinho;
