@@ -1,13 +1,16 @@
 let carrinho;
-if (logged) {
-    if (logged.carrinho && logged.carrinho.numProd) {
-        carrinho = logged.carrinho;
+inicializaCarrinho();
+function inicializaCarrinho(){
+    if (logged) {
+        if (logged.carrinho && logged.carrinho.numProd) {
+            carrinho = logged.carrinho;
+        }
+    } else if(!carrinho) {
+        carrinho = new Carrinho();
     }
-} else {
-    carrinho = new Carrinho();
 }
 
-function attCarrinho() {
+async function attCarrinho() {
     carrinho.numProd = carrinho.produtos.length;
     if (carrinho === undefined || carrinho === null || carrinho.numProd === 0) {
         return "Carrinho vazio";
@@ -24,7 +27,7 @@ function attCarrinho() {
     }
     if(logged) {
         logged.carrinho = carrinho;
-        //AJAX_geral
+        await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`, logged);
     }
 
 };
@@ -35,15 +38,24 @@ async function addCarrinho(codigo) {
     carrinho.produtos.forEach((produto, index) => {
         if (produto.nomeComercial === novoProduto.nomeComercial) {
             indice = index;
-        }        
+        }
     });
     if (indice >= 0) {
+        if(carrinho.produtos[indice].qtdEstoque <= carrinho.produtos[indice].qtdCarrinho) {
+            alert("Não foi possível adicionar ao carrinho, sem estoque.");
+            return;
+        }
         carrinho.produtos[indice].qtdCarrinho += 1;
     } else {
+        if(novoProduto.qtdEstoque === 0) {
+            alert("Não foi possível adicionar ao carrinho, sem estoque.");
+            return;
+        }
         novoProduto.qtdCarrinho = 1;
         carrinho.produtos[carrinho.produtos.length] = novoProduto;
     }
     attCarrinho();
+    alert("Produto adicionado ao carrinho.");
 }
 
 function changeCarrinho(id, value) {
@@ -56,7 +68,7 @@ function changeCarrinho(id, value) {
                 return;
             }
             produto.qtdCarrinho = parseInt(value);
-        }        
+        }
     });
     attCarrinho();
     carregarCarrinho();
@@ -68,7 +80,7 @@ function removerProduto(id) {
     carrinho.produtos.forEach((produto) => {
         if (produto.nomeComercial === prod) {
             produto.qtdCarrinho = 0;
-        }        
+        }
     });
     carrinho.produtos = carrinho.produtos.filter((element) => {
         if (element.qtdCarrinho > 0)
@@ -81,13 +93,14 @@ function removerProduto(id) {
 }
 
 function carregarCarrinho() {
+    inicializaCarrinho();
     let txt = '<div id="conteudo_carrinho"><h1>Meu carrinho</h1><hr><table>  <tr><th>Produto</th><th>Nome</th><th>Quantidade</th><th>Preço</th><th>Remover</th></tr>';
 
     if (carrinho.numProd !== 0)
     carrinho.produtos.forEach(produto => {
         txt += toCarrinhoHTML(produto);
     });
-   
+
     txt += '<tr class="item_carrinho"><td><h2>Total:</h2></td><td></td>';
     if (carrinho.numProd === 0) {
         txt += '<td id="carrinho_num_itens">Carrinho vazio</td>';
@@ -120,15 +133,21 @@ function toCarrinhoHTML(produto){
     return txt;
 }
 
-function finalizarCompra(){
+async function finalizarCompra() {
     if(logged === undefined){
         alert("Você precisa estar logado para finalizar a compra");
-    }else if(carrinho.numProd <1){
+    } else if(parseInt(carrinho.numProd) < 1) {
         alert("Adicione algo no carrinho");
-    }else{
-        logged.pedidos.push(new Pedido(carrinho.produtos,"Pendente",carrinho.valorTotal,carrinho.numProd));
-        attDbCliente(logged);
-        carrinho.produtos = [];
+    } else {
+        logged = jsonToUser(await AJAX_geral(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`));
+        logged.pedidos.push(new Pedido(carrinho.produtos, "Pendente", parseFloat(carrinho.valorTotal), parseInt(carrinho.numProd)));
+        carrinho.produtos.forEach(element => {
+            element.qtdEstoque -= parseInt(element.qtdCarrinho);
+            AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/estoque/${element.codigo}`, jsonToProduto(element));
+        })
+        logged.carrinho = new Carrinho();
+        carrinho = logged.carrinho;
+        await AJAX_geralPUT(`http://trabweb.ddns.net:8082/api/usuarios/${logged.email}`, logged);
         attCarrinho();
         carregarCarrinho();
         alert("Compra concluída com sucesso!");

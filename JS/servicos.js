@@ -1,4 +1,5 @@
-function carregarServicos(){
+let servicos=[];
+async function carregarServicos(){
     let calendario = document.getElementById("data");
     let select_horarios = document.getElementById("hora");
     let select_pet = document.getElementById("select_pet")
@@ -8,8 +9,8 @@ function carregarServicos(){
     calendario.setAttribute("min",dataAtual.getFullYear()+"-"+(dataAtual.getMonth()+1)+"-"+(dataAtual.getDate()));
     dataAtual.setDate(dataAtual.getDate()+30);
     calendario.setAttribute("max",dataAtual.getFullYear()+"-"+(dataAtual.getMonth()+1)+"-"+(dataAtual.getDate()));
+    console.log(logged);
     if(logged === undefined){
-
         document.getElementById("select_pet").onclick = () =>{
             alert("É preciso estar logado para ver os seus Pets");
         }
@@ -18,14 +19,10 @@ function carregarServicos(){
             return false;
         }
     }else{
-        let request = db_clientes.transaction("clientes").objectStore("clientes").get(logged.email);
-        request.onsuccess = function(event) {
-            let cliente = jsonToUser(request.result);
-            for(let i=0; i< cliente.pets.length;i++){
-                let elem = document.createElement('option')
-                elem.text  = cliente.pets[i].nome;
-                select_pet.add(elem, select_pet.options[i]);
-            }
+        for(let i=0; i< logged.pets.length;i++){
+            let elem = document.createElement('option')
+            elem.text  = logged.pets[i].nome;
+            select_pet.add(elem, select_pet.options[i]);
         }
         document.getElementById("form_servico").onsubmit = async () =>{
             let data = document.getElementById("data").value;
@@ -50,77 +47,61 @@ function carregarServicos(){
                 "-",
                 "Agendado"
             )
-            pet_cliente.addServicos(servico);
+            pet_cliente.addServicos(servico.id);
             logged.attPet(pet_cliente);
-            attDbCliente(logged);
-            await writeDbServico(servico);
+            await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",logged);
+            await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/servicos",servico);
             let agendamento = new Agendamento(data);
-            agendamento.horarios = horarios; 
+            agendamento.horarios = horarios;
             agendamento.ocupaHorario(hora);
-            await writeDbData(agendamento);
-            carregarServicos();
+            await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/agenda",agendamento);
             alert("Serviço agendado com sucesso!");
-            banners.geral1,banners.geral2
-            AJAX_navegacao("http://trabWeb.ddns.net:8082/conteudos/principal.html","",()=>{
-                carregarPaginaInicial(paginaInicial.banner1,paginaInicial.banner2,paginaInicial.banner3);
-            }); 
-            navaegacaoInterativa("li0");
+            navegarPaginaInicial();
             return false;
-        }   
-       
+        }
     }
-
-    calendario.onchange= () =>{
+    calendario.onchange = async() =>{
+        console.log("teste");
         while(select_horarios.length !== 0){
             select_horarios.remove(0);
         }
-        let request = db_agendamentos.transaction("agendamentos").objectStore("agendamentos").get(calendario.value);
-        request.onsuccess = function(event) {
-            if(request.result !== undefined){
-                horarios = request.result.horarios;
-            }else{
-                let data = new Agendamento();
-                horarios = data.horarios;
-            }
-            for(let i=0; i< horarios.length;i++){
-                let elem = document.createElement('option')
-                elem.text  = horarios[i];
-                select_horarios.add(elem, select_horarios.options[i]);
-            }
+        let data = await AJAX_geral(`http://trabWeb.ddns.net:8082/api/agendamentos?data=${calendario.value}`)
+        horarios = data.horarios;
+        for(let i=0; i< horarios.length;i++){
+            let elem = document.createElement('option')
+            elem.text  = horarios[i];
+            select_horarios.add(elem, select_horarios.options[i]);
         }
-    } 
+    }
 }
 
-function carregarServicosAdmin(){
+async function carregarServicosAdmin(){
     let concluidos = "";
     let agendados = "";
-    return new Promise((resolve) => {
-        let objectStore = db_servicos.transaction("servicos").objectStore("servicos");
-        objectStore.openCursor().onsuccess = (event)=>{
-            let cursor = event.target.result;
-            if(cursor){
-                if(cursor.value.status === "Agendado"){
-                    agendados+= jsonToHtmlAdminServico(cursor.value);
-                }else{
-                    concluidos+= jsonToHtmlAdminServico(cursor.value);
-                }
-                cursor.continue();
-            }else{
-                document.getElementById("prox_servicos").innerHTML = agendados;
-                document.getElementById("ant_servicos").innerHTML = concluidos;
-            }
+    servicosJSON = await AJAX_geral("http://trabWeb.ddns.net:8082/api/servicos");
+    servicosJSON.forEach((servico)=>{
+        if(servico.status === "Agendado"){
+            agendados+= jsonToHtmlAdminServico(servico);
+        }else{
+            concluidos+= jsonToHtmlAdminServico(servico);
         }
+        servicos.push(jsonToServico(servico));
     });
+    document.getElementById("prox_servicos").innerHTML = agendados;
+    document.getElementById("ant_servicos").innerHTML = concluidos;
 }
 
-function statusServico(id,status){
-    let request = db_servicos.transaction("servicos").objectStore("servicos").get(id);
-    request.onsuccess = function(event) {
-        request.result.status = status;
-        writeDbServico(request.result);
-        carregarServicosAdmin();
+async function alteraStatusServico(id,status){
+    let servico;
+    for(servicoProcurado of servicos){
+        if(servicoProcurado.id === id){
+            servico = servicoProcurado;
+            break;
+        }
     }
-    
+    servico.status = status;
+    await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/servicos",servico);
+    carregarServicosAdmin();
 }
 
 function jsonToHtmlAdminServico(json){
@@ -152,8 +133,8 @@ function jsonToHtmlAdminServico(json){
         txt+=        '</div>'
         if(json.status === "Agendado"){
             txt+=        '<div class="botoes_servico">'
-            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">'
-            txt+=            '<input onclick="statusServico(\''+json.id+'\',\'Concluído\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/check.png">'
+            txt+=            '<input onclick="alteraStatusServico(\''+json.id+'\',\'Cancelado\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/fechar.png">'
+            txt+=            '<input onclick="alteraStatusServico(\''+json.id+'\',\'Concluído\')" type="image" src="http://trabWeb.ddns.net:8082/IMAGES/ICONS/check.png">'
             txt+=        '</div>'
         }else{
             txt+=        '<div class="servico_status">'

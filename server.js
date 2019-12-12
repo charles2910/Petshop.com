@@ -28,8 +28,22 @@ app.get('/api/estoque', async (req, res) => {
     res.send(produtos);
 })
 
+app.post('/api/estoque', async (req, res) => {
+    let produtos = await db.addProduto(req.body);
+    res.send(produtos);
+})
+
+app.put('/api/estoque', async (req, res) => {
+    let produtos = await db.updateProduto(req.body);
+    res.send(produtos);
+})
+
+app.put('/api/estoque/delete', async (req, res) => {
+    let produtos = await db.removeProduto(req.query.id);
+    res.send(produtos);
+})
+
 app.put('/api/login', async (req, res) => {
-    console.log(await db.validaLogin(req.body.email,req.body.senha))
     res.send(await db.validaLogin(req.body.email,req.body.senha));
 })
 
@@ -46,7 +60,23 @@ app.get('/api/busca', async (req, res) => {
     let produtos = await db.buscaProduto(req.query.init,req.query.search);
     res.send(produtos);
 })
+
+app.get('/api/agendamentos', async (req, res) => {
+    let produtos = await db.findAgendamento(req.query.data);
+    res.send(produtos);
+})
+
+app.post('/api/servicos', async (req, res) => {
+    let produtos = await db.addServico(req.body);
+    res.send(produtos);
+})
+
+app.post('/api/agenda', async (req, res) => {
+    let produtos = await db.addAgendamento(req.body);
+    res.send(produtos);
+})
 //==========================================================================================
+
 app.get('/api/estoque/:id', (req, res) => {
     api.findProduto(req.params.id, res);
     return;
@@ -114,7 +144,8 @@ app.get('/api/servicos', (req, res) => {
 })
 
 app.get('/api/servicos/:id', (req, res) => {
-
+    api.getServico(req.params.id, res);
+    return;
 })
 
 app.post('/api/servicos/:id', (req, res) => {
@@ -136,7 +167,7 @@ app.get('/*', (req, res) => {
    res.sendFile(__dirname + path);
    console.log(`/${path} acessado`);
 })
-//host '10.142.0.2'
+
 const server = app.listen(8082,'10.142.0.2',function () {
    const host = server.address().address
    const port = server.address().port

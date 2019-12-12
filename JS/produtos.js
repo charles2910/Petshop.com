@@ -100,8 +100,7 @@ function mudarPagina(pagina){
 
 function deletaProduto(){
     let codigo = document.getElementById("codigo").value;
-    let request = db_estoque.transaction(["estoque"], "readwrite").objectStore("estoque").delete(codigo);
-    request.onsuccess = function(event) {
-        alert("Produto removido do estoque");
-    };
+    AJAX_geralPUT(`http://trabWeb.ddns.net:8082/api/estoque/delete?id=${codigo}`);
+    alert("Produto removido do estoque");
+    navegarPaginaInicial();
 }

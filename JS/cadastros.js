@@ -8,7 +8,7 @@ async function cadastrarUsuario(admin,att){
             document.getElementById("complemento").value,
             document.getElementById("estado").value,
             document.getElementById("cidade").value
-            );         
+            );
         let cartao;
         if(!admin){
             cartao = new Pagamento(
@@ -38,12 +38,14 @@ async function cadastrarUsuario(admin,att){
                 alert("email já cadastrado!");
             }else{
                 alert("dados cadastrados com sucesso!");
+                navegarPaginaInicial();
             }
         }else{
             let user = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/cadastro",cliente);
             if(user !== 'false'){
                 logged = jsonToUser(JSON.parse(user));
                 alert("Dados alterados com sucesso!");
+                navegarPaginaInicial();
             }
         }
     }else{
@@ -51,7 +53,7 @@ async function cadastrarUsuario(admin,att){
     }
 }
 
-function cadastrarProduto(att){
+async function cadastrarProduto(att){
     let produto = new Produto(
         document.getElementById("nome").value,
         document.getElementById("marca").value,
@@ -65,16 +67,24 @@ function cadastrarProduto(att){
         document.getElementById("lote").value,
         document.getElementById("validade").value,
         document.getElementById("desc").value,
-        (document.getElementById("promo_ativ").value === "on") ? true : false,
+        document.getElementById("promo_ativ").checked,
         "http://trabWeb.ddns.net:8082/IMAGES/PRODUTOS/produto.png"
     );
     if(!att){
-        writeDbProduto(produto);
+        produto = await AJAX_geralPOST("http://trabWeb.ddns.net:8082/api/estoque",produto);
+        if(produto !== 'false'){
+            alert("Produto cadastrado com sucesso!");
+            navegarPaginaInicial();
+        }else{
+            alert("Produto já cadastrado!");
+        }
     }else{
-        attDbProduto(produto);
-        alert("Dados alterados com sucesso!");
+        produto = await AJAX_geralPUT("http://trabWeb.ddns.net:8082/api/estoque",produto);
+        if(produto !== 'false'){
+            alert("Dados alterados com sucesso!");
+            navegarPaginaInicial();
+        }
     }
-    carregaBanners();
 }
 
 function cadastrarPet(){
@@ -87,17 +97,17 @@ function cadastrarPet(){
         document.getElementById("sexo_pet").value
     );
     let existe = false;
-    for(let i =0; i < logged.pets.length;i++){
-        if(logged.pets[i].nome === pet.nome){
-            existe = true;
-            break;
+    if(logged.pets.length > 0) {
+        for(let i =0; i < logged.pets.length;i++){
+            if(logged.pets[i].nome === pet.nome){
+                existe = true;
+                break;
+            }
         }
     }
     if(!existe){
         logged.addPet(pet);
         popupCadastro(false);
         AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/pets.html','Meu Perfil',carregaPets);
-    }else{
-        alert("Esse pet já esta cadastrado!");
     }
 }

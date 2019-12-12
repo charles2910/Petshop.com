@@ -17,9 +17,10 @@ async function login(){
             addOpcoesAdmin();
         }else{
             document.getElementById("btn_login").innerText = "Perfil";
-            document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");  
+            document.getElementById("btn_login").setAttribute('onclick',"AJAX_navegacao('http://trabWeb.ddns.net:8082/conteudos/perfil.html','Meu Perfil',carregaPerfil);navaegacaoInterativa(id)");
         }
         popupLogin(false);
+        navegarPaginaInicial();
     }else{
         console.log(user);
         window.alert("Email ou senha incorretos");
